@@ -53,7 +53,7 @@ function uploadImageToStorage(files, userId, mainFolder) {
 
         const url = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(fileUpload.name)}?alt=media&token=${tokenId}`
         fileUpload.getSignedUrl({ action: 'read' })
-        arrayFile.push({ url: url, type: file.mimetype })
+        arrayFile.push({ url: url, type: file.mimetype, code: nameFile.toString() })
 
         if (arrayFile.length == (files.length))
           resolve(arrayFile);

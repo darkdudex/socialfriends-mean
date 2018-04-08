@@ -1,14 +1,27 @@
 <nav-root></nav-root>
 
-<!-- Modal de las notificaciones -->
-<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <img id="imgp" src="" height="100%" width="100%">
-    </div>
+<!-- Modal de las publicaciones -->
+<div id="myModal1" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <!-- This element change with javascript -->
+    <div id="filep" class="modal-content"></div>
   </div>
 </div>
 <!--  -->
+
+<div id="Loading" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div style="text-align: center">
+      <img src="https://firebasestorage.googleapis.com/v0/b/rober-firebase.appspot.com/o/Requiem-project%2FServer_data%2Floading.gif?alt=media&token=d38ae349-7842-4dd6-972c-119380050d92"
+        style="height: 50px; widows: 50px; ">
+      <button style="display: none" id="CloseButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+
+  </div>
+</div>
+
 
 <!-- Modal info likes  -->
 <div class="modal fade" id="modaLike" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -106,12 +119,17 @@
 
                       <div *ngIf="userPublication.filePublication.length > 0">
                         <div *ngFor="let p of userPublication.filePublication">
-                          <img onclick="$('#myModal1').modal('show')" (click)="PublicationClick(p.url)" style="cursor: pointer" src="{{p.url}}" height="100"
-                            width="100" *ngIf="p.type.includes('image')">
-                          <video style="cursor: pointer" width="320" height="240" controls *ngIf="p.type.includes('video')">
-                            <source src="{{p.url}}" type="video/mp4">
-                          </video>
+                          <div style="margin: 5px">
+                            <img onclick="$('#myModal1').modal('show')" (click)="PublicationClick(p.type,p.url)" style="cursor: pointer" src="{{p.url}}"
+                              height="80%" width="80%" *ngIf="p.type.includes('image')">
+                            <video style="cursor: pointer" width="80%" height="80%" controls *ngIf="p.type.includes('video')" onclick="$('#myModal1').modal('show')"
+                              (click)="PublicationClick(p.type,p.url)">
+                              <source src="{{p.url}}" type="video/mp4">
+                            </video>
+                          </div>
+
                         </div>
+                        <br>
                       </div>
 
                     </div>
@@ -213,7 +231,7 @@
               </a>
             </div>
 
-            <button class="btn btn-lg btn-success btn-block" type="submit">
+            <button onclick="$('#Loading').modal('show')" class="btn btn-lg btn-success btn-block" type="submit">
               <i id="icon" class="fa fa-share-square-o" aria-hidden="true"></i>Publicar</button>
           </ul>
         </form>

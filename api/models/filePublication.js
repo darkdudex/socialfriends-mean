@@ -6,6 +6,7 @@ const Schema = config.db.Schema
 const FilePublicationSchema = new Schema({
   url: String,
   type: String,
+  code: String
 },{ versionKey: false })
 
 module.exports = mongoose.db.model('FilePublication', FilePublicationSchema)

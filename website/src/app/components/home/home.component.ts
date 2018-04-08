@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   public page = 1;
   public finished: boolean = true;
   public filesToUpload: Array<File> = [];
+  public typeFiles = ['image', 'video']
 
   constructor(private userService: UserService, private publicationService: PublicationService, private fileService: FileService, private route: Router) {
     this.user = JSON.parse(localStorage.getItem('userInfo'));
@@ -27,8 +28,14 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  PublicationClick(src){
-    $( "#imgp" ).attr( "src", src );
+  PublicationClick(type, src) {
+
+    if (type.includes('image'))
+      $("#filep").html(`<img id="imgp" src="${src}" height="100%" width="100%">`)
+
+    if (type.includes('video'))
+      $("#filep").html(`<video width="100%" height="100%" controls> <source id="imgp" src="${src}" type="video/mp4"> </video>`)
+    
   }
 
   onScroll() {
@@ -63,19 +70,20 @@ export class HomeComponent implements OnInit {
 
       this.fileService.AddFile(this.filesToUpload).subscribe(
         res => {
-          
+
           publication.filePublication = res
 
           this.publicationService.AddPublication(publication).subscribe(
             res => {
               console.log(res)
+              document.getElementById("CloseButton").click()
               dataForm.reset();
             },
             err => {
               console.log(err)
             })
 
-        },
+        },  
         err => {
           console.log(err)
         }
