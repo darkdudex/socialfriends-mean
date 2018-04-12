@@ -33,14 +33,23 @@ async function signUp(req, res) {
 
 async function signIn(req, res) {
   try {
+    
     const email = req.body.email;
     const password = req.body.password
+    
     const user = await userModel.findOne({ email });
     req.user = user
 
     if(DecodePassword(password,user.password)){
+
+      if(user.state){
+        return res.status(200).send({
+          token: service.CreateToken(user)
+        })
+      }
+      
       return res.status(200).send({
-        token: service.CreateToken(user)
+        message: 'Verifica tu cuenta en el link que te enviamos por correo electrónico'
       })
     }
 
@@ -55,7 +64,35 @@ async function signIn(req, res) {
   }
 }
 
+async function getUsers(req,res){
+  
+  let page = req.query.page
+  const limit = 5;  
+  
+  try {
+    const users = await userModel.find().select(['-password']).limit(limit).skip(page * limit) 
+    return res.status(200).send(users)
+  } catch (error) {
+    return res.status(500).send({ 
+      message: 'Error en el servidor' 
+    })
+  }
+  
+}
+
+async function getUser(req,res){
+
+  const id = req.params.id
+  let page = req.params.page
+  const limit = 5;
+  
+  const user = await userModel.findOne({ _id: id}).select(['-password']).limit(limit).sort(page * limit)
+  console.log(user)
+}
+
 module.exports = {
   signUp,
-  signIn
+  signIn,
+  getUser,
+  getUsers
 }
