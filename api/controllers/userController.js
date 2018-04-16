@@ -86,7 +86,7 @@ async function signIn(req, res) {
 
 async function getUsers(req, res) {
 
-  let page = req.query.page
+  let page = req.query.page 
   const limit = 5;
 
   try {
