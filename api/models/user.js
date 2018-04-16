@@ -4,9 +4,10 @@ const mongoose = require('../config/config')
 const Schema = mongoose.db.Schema
 
 const UserSchema = new Schema({
-  email: { type: String, unique: true, lowercase: true },
-  displayName: { type: String, /* unique: true, */ lowercase: true},
+  displayName: String,
   avatar: String,
+  email: { type: String, unique: true, lowercase: true },
+  username: { type: String, lowercase: true},
   password: String,
   signupDate: { type: Date, default: Date.now() },
   lastLogin: Date,
