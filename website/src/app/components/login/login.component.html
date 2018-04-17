@@ -1,0 +1,97 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+
+<!-- Barra de navegacion cuando el usuario no está logeado -->
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-primary fixed-top">
+
+    <button style="border: none; outline: none; margin-left: -50px; margin-top: 12px" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
+        aria-label="Toggle navigation">
+      <i class="fa fa-bars fa-lg" aria-hidden="true" title="Toggle navigation"></i>
+    </button>
+
+    <a class="navbar-brand d-flex align-self-start mr-3" id="item" style="font-size: 25px; margin-top: 3px; color: white">
+        <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/456/456129.svg" style="width: 35px;"><b class="test" style="margin-left: -10px; font-family: 'Pacifico', cursive;">SocialFriends </b>
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto" style="margin-top: 4px">
+            <li class="nav-item">
+                <a class="navbar-brand d-flex align-self-start mr-3" id="item" style="font-size: 15px; color: white">
+                    <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/448/448505.svg" style="width: 22px;"><b style="margin-left: -10px">Entrar</b>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="navbar-brand d-flex align-self-start mr-3" id="item" style="font-size: 15px; color: white" routerLink="register">
+                    <img class="d-flex align-self-start mr-3" src="https://www.flaticon.es/premium-icon/icons/svg/436/436305.svg" style="width: 22px;"><b style="margin-left: -10px">Registro</b>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<br>
+<div class="container">
+    
+    <div class="container">
+  
+      <div class="kpx_login">
+  
+        <div class="row justify-content-center">
+          <div class="col-xs-12 col-sm-12 col-lg-7 col-md-7 col-xl-7">
+            <form class="kpx_loginForm" id="form" #form="ngForm" (ngSubmit)="LoginUserWithEmailandPassword()">
+              <div class="form-group" style="text-align: left">
+                <label for="exampleInputEmail1"><b><i class="fa fa-envelope" aria-hidden="true"></i> Correo Electrónico</b></label>
+                <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Escribe tu correo" name="emailUser" #emailUser="ngModel"
+                  [(ngModel)]="email">
+              </div>
+  
+              <div class="form-group" style="text-align: left">
+                <label for="exampleInputEmail1"><b><i class="fa fa-lock" aria-hidden="true"></i> Contraseña</b></label>
+                <input type="password" class="form-control" aria-describedby="emailHelp" placeholder="Escribe tu contraseña" name="passUser"
+                  #passUser="ngModel" [(ngModel)]="password">
+              </div>
+              <button class="btn btn-lg btn-primary btn-block" type="submit"><b><i class="fa fa-sign-in"></i> Ingresar</b></button>
+  
+  
+            </form><br>
+  
+            <div id="alertmsj" class="alert text-center animated" [class.alert-info]="info == 1" [class.alert-danger]="info == 2" >
+              <strong>{{message}}</strong>
+            </div>
+  
+          </div>
+        </div>
+  
+        <div style="text-align: center;">
+          <a style="color: #2285E3" href="#">¿Has olvidado tu contraseña?</a>
+        </div>
+  
+        <div class="row kpx_row-sm-offset-3 kpx_loginOr">
+          <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 col-xl-6">
+            <hr class="kpx_hrOr">
+            <span class="kpx_spanOr">o</span>
+          </div>
+        </div>
+  
+        <div class="row kpx_row-sm-offset-3 kpx_socialButtons">
+          <div class="col-xs-2 col-sm-4 col-md-2" id="test">
+            <a href="#" class="btn btn-lg btn-block kpx_btn-facebook" data-toggle="tooltip" data-placement="top" (click)="loginFacebook()">
+                <i class="fa fa-facebook fa-2x"></i>
+                <span class="hidden-xs"></span>
+              </a>
+          </div>
+          <div class="col-xs-2 col-sm-4 col-md-2" id="test">
+            <a href="#" class="btn btn-lg btn-block kpx_btn-twitter" data-toggle="tooltip" data-placement="top" (click)="loginTwitter()">
+                <i class="fa fa-twitter fa-2x"></i>
+                <span class="hidden-xs"></span>
+              </a>
+          </div>
+          <div class="col-xs-2 col-sm-4 col-md-2" id="test">
+            <a href="#" class="btn btn-lg btn-block kpx_btn-google-plus" data-toggle="tooltip" data-placement="top" (click)="loginGoogle()">
+                <i class="fa fa-google-plus fa-2x"></i>
+                <span class="hidden-xs"></span>
+              </a>
+          </div>
+        </div><br>
+      </div>
+    </div>
