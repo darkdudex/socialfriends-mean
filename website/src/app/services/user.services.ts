@@ -8,10 +8,10 @@ export class UserService {
 
   public url:string = "http://localhost:3000/api";
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private http: HttpClient) { }
   
   public GetUser():Observable<any>{
-    return this.httpClient.get(`${this.url}/user`);
+    return this.http.get(`${this.url}/user`);
   }
 
 }

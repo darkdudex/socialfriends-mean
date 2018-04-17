@@ -3,8 +3,8 @@ import { UserService } from '../../services/user.services'
 
 @Component({
   selector: 'user-root',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  templateUrl: 'user.component.html',
+  styleUrls: ['user.component.css']
 })
 export class UserComponent implements OnInit {
 

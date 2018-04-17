@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserComponent } from '../app/components/user/user.component'
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-root',
