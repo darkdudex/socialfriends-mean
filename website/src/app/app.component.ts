@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserComponent } from '../app/components/user/user.component'
 import { RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router'; 
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,6 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
-  public title = 'app';
 
   constructor(){
 
