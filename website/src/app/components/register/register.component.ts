@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../services/user.services';
 
 @Component({
   selector: 'app-register',
@@ -7,18 +8,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
+    
   }
 
   Register(dataForm) {
-    
-    console.log(dataForm.value);
 
-    if (dataForm.value.email != dataForm.value.Verificationemail ||
-      dataForm.value.password != dataForm.value.Verificationpassword)
+    let user = dataForm.value;
+
+    if (user.email != user.Verificationemail || user.password != user.Verificationpassword)
       return;
+
+    user.providerId = 'email.com';
+    user.avatar = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+    delete user.Verificationemail;
+    delete user.Verificationpassword;
+
+    this.userService.RegisterUser(user).subscribe(res => {
+      console.log(res)
+    }, err => {
+      console.log(err.error)
+    });
 
     dataForm.reset();
   }

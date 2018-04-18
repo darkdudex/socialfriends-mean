@@ -9,17 +9,17 @@ function EncodePassword(password) {
 }
 
 function DecodePassword(password, passwordEncode) {
-  return bcrypt.compareSync(password, passwordEncode);
+  return bcrypt.compareSync(password, passwordEncode)
 }
 
 function checkisEmail(account) {
 
-  var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+  var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
 
   if (!reg.test(account))
     return false
 
-  return true;
+  return true
 }
 
 async function signUp(req, res) {
@@ -32,10 +32,12 @@ async function signUp(req, res) {
       providerId: req.body.providerId,
       avatar: req.body.avatar,
       username: req.body.username
-    });
-    return res.status(200).send({
-      token: service.CreateToken(user)
     })
+
+    return res.status(200).send({
+      message: 'Verifica tu cuenta en el link que te enviamos por correo electrónico'
+    })
+
   } catch (error) {
     return res.status(500).send({
       message: `Error al crear el usuario: ${error}`
@@ -52,9 +54,9 @@ async function signIn(req, res) {
     let user = null
 
     if (checkisEmail(account))
-      user = await userModel.findOne({ email: account });
+      user = await userModel.findOne({ email: account })
     else
-      user = await userModel.findOne({ username: account });
+      user = await userModel.findOne({ username: account })
 
     req.user = user
 
@@ -86,8 +88,8 @@ async function signIn(req, res) {
 
 async function getUsers(req, res) {
 
-  let page = req.query.page 
-  const limit = 5;
+  let page = req.query.page
+  const limit = 5
 
   try {
     const users = await userModel.find().select(['-password']).limit(limit).skip(page * limit)
@@ -104,7 +106,7 @@ async function getUser(req, res) {
 
   const id = req.params.id
   let page = req.params.page
-  const limit = 5;
+  const limit = 5
 
   const user = await userModel.findOne({ _id: id }).select(['-password']).limit(limit).sort(page * limit)
   console.log(user)
