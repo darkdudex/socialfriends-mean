@@ -12,7 +12,8 @@ function DecodePassword(password, passwordEncode) {
   return bcrypt.compareSync(password, passwordEncode)
 }
 
-function checkisEmail(account) {
+//#region CheckIsEmail 
+function CheckIsEmail(account) {
 
   var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
 
@@ -21,8 +22,10 @@ function checkisEmail(account) {
 
   return true
 }
+//#endregion
 
-async function signUp(req, res) {
+//#region SignUp 
+async function SignUp(req, res) {
 
   try {
     const user = await userModel.insertMany({
@@ -44,8 +47,10 @@ async function signUp(req, res) {
     })
   }
 }
+//#endregion
 
-async function signIn(req, res) {
+//#region SignIn 
+async function SignIn(req, res) {
 
   try {
     const account = req.body.account
@@ -53,7 +58,7 @@ async function signIn(req, res) {
 
     let user = null
 
-    if (checkisEmail(account))
+    if (CheckIsEmail(account))
       user = await userModel.findOne({ email: account })
     else
       user = await userModel.findOne({ username: account })
@@ -65,13 +70,15 @@ async function signIn(req, res) {
       // The user account is valid and state is verify.
       if (user.state) {
         return res.status(200).send({
-          token: service.CreateToken(user)
+          token: service.CreateToken(user),
+          status: 200
         })
       }
 
       // The user account is valid but a state account is not verify in the email.
       return res.status(200).send({
-        message: 'Verifica tu cuenta en el link que te enviamos por correo electrónico'
+        message: 'Verifica tu cuenta en el link que te enviamos por correo electrónico',
+        status: 200
       })
     }
 
@@ -85,8 +92,10 @@ async function signIn(req, res) {
     })
   }
 }
+//#endregion
 
-async function getUsers(req, res) {
+//#region GetUsers 
+async function GetUsers(req, res) {
 
   let page = req.query.page
   const limit = 5
@@ -101,8 +110,10 @@ async function getUsers(req, res) {
   }
 
 }
+//#endregion
 
-async function getUser(req, res) {
+//#region GetUser 
+async function GetUser(req, res) {
 
   const id = req.params.id
   let page = req.params.page
@@ -111,10 +122,11 @@ async function getUser(req, res) {
   const user = await userModel.findOne({ _id: id }).select(['-password']).limit(limit).sort(page * limit)
   console.log(user)
 }
+//#endregion
 
 module.exports = {
-  signUp,
-  signIn,
-  getUser,
-  getUsers
+  SignUp,
+  SignIn,
+  GetUser,
+  GetUsers
 }

@@ -38,21 +38,18 @@
   
         <div class="row justify-content-center">
           <div class="col-xs-12 col-sm-12 col-lg-7 col-md-7 col-xl-7">
-            <form class="kpx_loginForm" id="form" #form="ngForm" (ngSubmit)="LoginUserWithEmailandPassword()">
+            <form class="kpx_loginForm" id="form" #form="ngForm" (ngSubmit)="Login(form)">
               <div class="form-group" style="text-align: left">
-                <label for="exampleInputEmail1"><b><i class="fa fa-envelope" aria-hidden="true"></i> Correo Electrónico</b></label>
-                <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Escribe tu correo" name="emailUser" #emailUser="ngModel"
-                  [(ngModel)]="email">
+                <label for="exampleInputEmail1"><b><i class="fa fa-user" aria-hidden="true"></i> Usuario o Correo Electrónico</b></label>
+                <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Escribe tu usuario o correo electrónico" name="account" ngModel>
               </div>
   
               <div class="form-group" style="text-align: left">
                 <label for="exampleInputEmail1"><b><i class="fa fa-lock" aria-hidden="true"></i> Contraseña</b></label>
-                <input type="password" class="form-control" aria-describedby="emailHelp" placeholder="Escribe tu contraseña" name="passUser"
-                  #passUser="ngModel" [(ngModel)]="password">
+                <input type="password" class="form-control" aria-describedby="emailHelp" placeholder="Escribe tu contraseña" name="password" ngModel>
               </div>
               <button class="btn btn-lg btn-primary btn-block" type="submit"><b><i class="fa fa-sign-in"></i> Ingresar</b></button>
-  
-  
+    
             </form><br>
   
             <div id="alertmsj" class="alert text-center animated" [class.alert-info]="info == 1" [class.alert-danger]="info == 2" >

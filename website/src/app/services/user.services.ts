@@ -20,6 +20,11 @@ export class UserService {
     return this.http.get(`${this.url}/user`);
   }
 
+  public Login(account_and_password): Observable<any>  {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post(`${this.url}/user/signin`, account_and_password, { headers: headers });
+  }
+
   public RegisterUser(user): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.post(`${this.url}/user/signup`, user, { headers: headers });
