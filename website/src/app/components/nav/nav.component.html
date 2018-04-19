@@ -1,3 +1,104 @@
-<p>
-  nav works!
-</p>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+  crossorigin="anonymous">
+
+<!-- Modal de las notificaciones -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a class="navbar-brand d-flex  center mr-3" id="item" style="font-size: 15px; color: #F1C40F ; cursor: pointer;">
+        <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/309/309601.svg" style="width: 22px;"><b style="margin-left: -10px">Notificaciones</b>
+      </a>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+        <!-- <div style="color: gray">En este momento no tienes notificaciones</div> -->
+        <a style="color: #2285E3"><i class="fa fa-info-circle" aria-hidden="true"></i> <b style="font-size: 13px">SocialFriends te da la bienvenida</b></a><br>
+        <a style="color: #2285E3"><i class="fa fa-info-circle" aria-hidden="true"></i> <b style="font-size: 13px">Las notificaciones están en desarrollo</b></a><br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  -->
+
+<!-- Barra de navegacion cuando el usuario está logeado -->
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-primary fixed-top">
+
+  <button style="border: none; outline: none; margin-left: -50px; margin-top: 12px" class="navbar-toggler navbar-toggler-right"
+    type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
+    aria-label="Toggle navigation">
+        <i class="fa fa-bars fa-lg" aria-hidden="true" title="Toggle navigation"></i>
+      </button>
+
+
+  <a class="navbar-brand d-flex align-self-start mr-3" [routerLink]="['/home']" id="item" style="font-size: 25px; margin-top: 3px">
+        <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/456/456129.svg" style="width: 35px;"><b style="margin-left: -10px; font-family: 'Pacifico', cursive;">SocialFriends </b>
+      </a>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <!--<a class="navbar-brand" href="#" id="item" style="font-size: 15px"><b><i class="fa fa-home" aria-hidden="true"></i> Inicio</b></a>-->
+      <a class="navbar-brand d-flex align-self-start mr-3" [routerLink]="['/home']" id="item" style="font-size: 15px">
+        <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/309/309574.svg" style="width: 22px;"><b style="margin-left: -10px">Inicio</b>
+      </a>
+      <a class="navbar-brand d-flex align-self-start mr-3" [routerLink]="['/users']" id="item" style="font-size: 15px">
+        <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/163/163829.svg" style="width: 22px;"><b style="margin-left: -10px">Buscar Personas</b>
+      </a>
+      <a class="navbar-brand d-flex align-self-start mr-3" [routerLink]="['/users']" id="item" style="font-size: 15px">
+        <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/559/559736.svg" style="width: 22px;"><b style="margin-left: -10px">Buscar Grupos</b>
+      </a>
+      <!--
+      <a class="navbar-brand d-flex align-self-start mr-3" [routerLink]="['/home']" id="item" style="font-size: 15px">
+        <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/309/309585.svg" style="width: 22px;"><b style="margin-left: -10px">Mensajes privados</b>
+      </a> -->
+      <a class="navbar-brand d-flex align-self-start mr-3" onclick="$('#myModal').modal('show')" id="item" style="font-size: 15px; color: white; cursor: pointer">
+        <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/309/309601.svg" style="width: 22px;"><b style="margin-left: -10px">Notificaciones 
+          <span class="badge badge-danger">2</span>
+        </b>
+      </a>
+      <a class="navbar-brand d-flex align-self-start mr-3" [routerLink]="['/chat']" id="item" style="font-size: 15px; color: white; cursor: pointer">
+        <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/456/456113.svg" style="width: 22px;"><b style="margin-left: -10px">Chat</b>
+      </a>
+      <!-- <form class="form-inline">
+        <input class="form-control mr-sm-2" type="text" placeholder="Buscar gente">    
+      </form>
+      <button class="btn btn-danger" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button> -->
+
+    </ul>
+
+    <div class="form-inline my-2 my-lg-0">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+              <b id="user">{{user.displayName}}</b>&nbsp;
+              <img src="{{user.avatar}}" class="rounded-circle" style="width: 35px"></a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown01" style="margin-top: 10px">
+            <a class="dropdown-item d-flex align-self-start mr-3" href="#">
+              <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/456/456111.svg" style="width: 22px;"><b style="margin-left: -10px">{{user.email}}</b>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item d-flex align-self-start mr-3" [routerLink]="['/home']">
+              <img class="d-flex align-self-start mr-3" src="https://www.flaticon.es/premium-icon/icons/svg/436/436305.svg" style="width: 22px;"><label style="margin-left: -10px">Perfil</label>
+            </a>
+            <a class="dropdown-item d-flex align-self-start mr-3" onclick="document.getElementById('profile').click()" *ngIf="user.providerId == 'email.com'">
+              <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/502/502629.svg" style="width: 22px;"><label style="margin-left: -10px">Cambiar imágen de perfil</label>
+            </a>
+            <a class="dropdown-item d-flex align-self-start mr-3" [routerLink]="['/home']">
+              <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/456/456167.svg" style="width: 22px;"><label style="margin-left: -10px">Configuración</label>
+            </a>
+            <a class="dropdown-item d-flex align-self-start mr-3" href="#" (click)="SignOut()">
+              <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/248/248927.svg" style="width: 22px;"><label style="margin-left: -10px">Cerrar Sesión</label>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<input type="file" class="form-control-file" (change)="detectFiles($event)" id="profile" style="display: none">

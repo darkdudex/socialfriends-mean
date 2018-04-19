@@ -5,10 +5,10 @@ const Schema = mongoose.db.Schema
 
 const UserSchema = new Schema({
   displayName: String,
-  avatar: String,
+  avatar: { type: String, default: 'https://gracegb.org/instance/00-12/themes/default/images/profile.png' },
   email: { type: String, unique: true, lowercase: true },
   username: { type: String, lowercase: true},
-  password: String,
+  password: { type: String },
   signupDate: { type: Date, default: Date.now() },
   lastLogin: Date,
   state: { type: Boolean, default: false },

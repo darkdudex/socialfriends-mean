@@ -28,6 +28,7 @@ function CheckIsEmail(account) {
 async function SignUp(req, res) {
 
   try {
+
     const user = await userModel.insertMany({
       email: req.body.email,
       displayName: req.body.displayName,
@@ -42,9 +43,11 @@ async function SignUp(req, res) {
     })
 
   } catch (error) {
+
     return res.status(500).send({
       message: `Error al crear el usuario: ${error}`
     })
+
   }
 }
 //#endregion
@@ -53,10 +56,11 @@ async function SignUp(req, res) {
 async function SignIn(req, res) {
 
   try {
+    
     const account = req.body.account
     const password = req.body.password
 
-    let user = null
+    let user = {}
 
     if (CheckIsEmail(account))
       user = await userModel.findOne({ email: account })
@@ -67,10 +71,12 @@ async function SignIn(req, res) {
 
     if (DecodePassword(password, user.password)) {
 
+      user.password = null;
       // The user account is valid and state is verify.
       if (user.state) {
         return res.status(200).send({
           token: service.CreateToken(user),
+          user: user,
           status: 200
         })
       }
@@ -83,12 +89,12 @@ async function SignIn(req, res) {
     }
 
     return res.status(404).send({
-      message: 'No existe el usuario'
+      status: 404
     })
 
   } catch (error) {
-    return res.status(500).send({
-      message: 'No existe el usuario'
+    return res.status(404).send({
+      status: 404
     })
   }
 }
@@ -98,7 +104,12 @@ async function SignIn(req, res) {
 async function GetUsers(req, res) {
 
   let page = req.query.page
-  const limit = 5
+  const limit = 2
+
+  if (page >= 1)
+    page = page - 1
+  else
+    page = 0
 
   try {
     const users = await userModel.find().select(['-password']).limit(limit).skip(page * limit)

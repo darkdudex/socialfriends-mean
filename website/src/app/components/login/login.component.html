@@ -52,8 +52,8 @@
     
             </form><br>
   
-            <div id="alertmsj" class="alert text-center animated" [class.alert-info]="info == 1" [class.alert-danger]="info == 2" >
-              <strong>{{message}}</strong>
+            <div style="text-align: center;" class="alert animated" [class.alert-info]="ind_Notication == 1" [class.alert-danger]="ind_Notication == 2" role="alert" *ngIf="sta_Notication">
+              <strong>{{msg_Notification}}</strong>
             </div>
   
           </div>
