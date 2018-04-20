@@ -12,6 +12,7 @@ export class NavComponent implements OnInit {
 
   constructor(private route: Router) { 
     
+    // Test - Temporal//
     this.user = JSON.parse(localStorage.getItem('userInfo'));
     if (this.user == null) 
       this.route.navigate(['/']);
