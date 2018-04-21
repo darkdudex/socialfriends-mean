@@ -52,7 +52,7 @@ async function GetPublicationByUserId(req, res) {
 
     const userId = req.params.userId
     const publications = await publicationModel.find({ userId }).limit(limit).skip(page * limit)
-    const total = await publicationModel.count()
+    const total = await publicationModel.find({ userId }).count()
 
     return res.status(200).send({ publications, total })
 

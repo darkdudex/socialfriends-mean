@@ -8,7 +8,7 @@ const urlMongoDBService = {
 }
 
 mongoose.Promise = global.Promise;
-mongoose.connect(urlMongoDBService.dev)
+mongoose.connect(urlMongoDBService.production)
 
 module.exports = {
   port: process.env.PORT || 3000,

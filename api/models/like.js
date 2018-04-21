@@ -1,7 +1,7 @@
 'use strict'
 
-const config = require('../config/config')
-const Schema = config.db.Schema
+const mongoose = require('../config/config')
+const Schema = mongoose.db.Schema
 
 const LikeSchema = new Schema({
   publicationId: String,

@@ -5,7 +5,7 @@ const controllers = require('../controllers/controller')
 const auth = require('../middlewares/auth')
 const api = express.Router()
 
-// #region API RUNNING 
+//#region API RUNNING 
 api.get('/', (req,res) => {
   res.status(200).send('<style>*{ font-family: Arial; font-size: 50px; text-decoration: underline; color: #4c0094; text-align: center; margin-top: 30px}</style><h1>API RUNNING</h1>')
 })
@@ -36,9 +36,9 @@ api.get('/comment/:publicationId', controllers.publicationController.GetPublicat
 //#endregion
 
 //#region Like Endpoints 
-api.post('/like', controllers.publicationController.AddPublication)
-api.delete('/like', controllers.publicationController.RemovePublication)
-api.get('/like/:publicationId', controllers.publicationController.GetPublicationByUserId)
+api.post('/like', controllers.likeController.AddLike)
+api.delete('/like', controllers.likeController.RemoveLike)
+api.get('/like/:publicationId', controllers.likeController.GetLikeByPublicationId)
 //#endregion
 
 //#region Follower Endpoints 
