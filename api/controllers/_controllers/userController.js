@@ -123,22 +123,17 @@ async function GetUsers(req, res) {
 }
 //#endregion
 
-//#region GetUser 
-async function GetUser(req, res) {
+//#region GetUserById 
+async function GetUserById(req, res) {
 
   try {
 
     const id = req.params.id
-    let page = req.params.page
-    const limit = 5
-
-    const user = await userModel.findOne({ _id: id }).select(['-password']).limit(limit).sort(page * limit)
+    const user = await userModel.findOne({ _id: id }).select(['-password'])
     return res.status(200).send(user)
 
   } catch (error) {
-    return res.status(500).send({
-      message: 'Error en el servidor'
-    })
+    return res.status(500).send({})
   }
 
 }
@@ -147,6 +142,6 @@ async function GetUser(req, res) {
 module.exports = {
   SignUp,
   SignIn,
-  GetUser,
-  GetUsers
+  GetUsers,
+  GetUserById
 }

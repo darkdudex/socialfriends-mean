@@ -1,6 +1,6 @@
 'use strict'
 
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const urlMongoDBService = {
   dev: 'mongodb://localhost:27017/socialfriends-mean',
@@ -8,7 +8,7 @@ const urlMongoDBService = {
 }
 
 mongoose.Promise = global.Promise;
-mongoose.connect(urlMongoDBService.dev);
+mongoose.connect(urlMongoDBService.dev)
 
 module.exports = {
   port: process.env.PORT || 3000,

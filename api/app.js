@@ -13,8 +13,10 @@ app.use((req, res, next) => {
 });
 
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+app.get('/', (req, res) => { res.status(200).redirect('/api') })
 app.use('/api', api)
 
 module.exports = app

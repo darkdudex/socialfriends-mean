@@ -1,13 +1,13 @@
 'use strict'
 
-const config = require('../config/config')
-const Schema = config.db.Schema
+const mongoose = require('../config/config')
+const Schema = mongoose.db.Schema
 
 const PublicationSchema = new Schema({
   message: String,
   userId: String,
-  filePublication: String,
-  creationDate: String,
+  filePublication: Array,
+  creationDate: { type: Date, default: Date.now()},
 },{ versionKey: false })
 
 module.exports = mongoose.db.model('Publication', PublicationSchema)
