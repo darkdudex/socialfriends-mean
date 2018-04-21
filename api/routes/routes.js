@@ -1,13 +1,13 @@
 'use strict'
 
 const express = require('express')
-const userCtrl = require('../controllers/userController')
+const controllers = require('../controllers/controller')
 const auth = require('../middlewares/auth')
 const api = express.Router()
 
-api.post('/user/signup', userCtrl.SignUp)
-api.post('/user/signin', userCtrl.SignIn)
-api.get('/user/:id', userCtrl.GetUser)
-api.get('/user', userCtrl.GetUsers)
+api.post('/signup', controllers.userController.SignUp)
+api.post('/signin', controllers.userController.SignIn)
+api.get('/user/:id', controllers.userController.GetUser)
+api.get('/user', controllers.userController.GetUsers)
 
 module.exports = api

@@ -1,7 +1,7 @@
 'use strict'
 
-const userModel = require('../models/user')
-const service = require('../services/services')
+const userModel = require('../../models/user')
+const service = require('../../services/services')
 const bcrypt = require('bcrypt-nodejs')
 
 function EncodePassword(password) {
@@ -56,7 +56,7 @@ async function SignUp(req, res) {
 async function SignIn(req, res) {
 
   try {
-    
+
     const account = req.body.account
     const password = req.body.password
 
@@ -104,7 +104,7 @@ async function SignIn(req, res) {
 async function GetUsers(req, res) {
 
   let page = req.query.page
-  const limit = 2
+  const limit = 6
 
   if (page >= 1)
     page = page - 1
@@ -126,12 +126,21 @@ async function GetUsers(req, res) {
 //#region GetUser 
 async function GetUser(req, res) {
 
-  const id = req.params.id
-  let page = req.params.page
-  const limit = 5
+  try {
 
-  const user = await userModel.findOne({ _id: id }).select(['-password']).limit(limit).sort(page * limit)
-  console.log(user)
+    const id = req.params.id
+    let page = req.params.page
+    const limit = 5
+
+    const user = await userModel.findOne({ _id: id }).select(['-password']).limit(limit).sort(page * limit)
+    return res.status(200).send(user)
+
+  } catch (error) {
+    return res.status(500).send({
+      message: 'Error en el servidor'
+    })
+  }
+
 }
 //#endregion
 
