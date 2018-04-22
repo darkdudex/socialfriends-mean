@@ -3,6 +3,7 @@
 const userModel = require('../../models/user')
 const service = require('../../services/services')
 const bcrypt = require('bcrypt-nodejs')
+const config = require('../../config/config')
 
 function EncodePassword(password) {
   return bcrypt.hashSync(password)
@@ -29,14 +30,22 @@ async function SignUp(req, res) {
 
   try {
 
-    const user = await userModel.insertMany({
+    const u = {
       email: req.body.email,
       displayName: req.body.displayName,
       password: EncodePassword(req.body.password),
       providerId: req.body.providerId,
       avatar: req.body.avatar,
       username: req.body.username
-    })
+    }
+
+    if (config.isEmpty(u)) {
+      return res.status(400).send({
+        message: 'Complete los campos requeridos'
+      })
+    }
+
+    const user = await userModel.insertMany(u)
 
     return res.status(200).send({
       message: 'Verifica tu cuenta en el link que te enviamos por correo electrónico'
@@ -57,19 +66,27 @@ async function SignIn(req, res) {
 
   try {
 
-    const account = req.body.account
-    const password = req.body.password
+    const u = {
+      account: req.body.account,
+      password: req.body.password
+    }
+
+    if (config.isEmpty(u)) {
+      return res.status(400).send({
+        message: 'Complete los campos requeridos'
+      })
+    }
 
     let user = {}
 
-    if (CheckIsEmail(account))
-      user = await userModel.findOne({ email: account })
+    if (CheckIsEmail(u.account))
+      user = await userModel.findOne({ email: u.account })
     else
-      user = await userModel.findOne({ username: account })
+      user = await userModel.findOne({ username: u.account })
 
     req.user = user
 
-    if (DecodePassword(password, user.password)) {
+    if (DecodePassword(u.password, user.password)) {
 
       user.password = null;
       // The user account is valid and state is verify.
@@ -113,7 +130,8 @@ async function GetUsers(req, res) {
 
   try {
     const users = await userModel.find().select(['-password']).limit(limit).skip(page * limit)
-    return res.status(200).send(users)
+    const total = await userModel.find().count()
+    return res.status(200).send({users, total})
   } catch (error) {
     return res.status(500).send({
       message: 'Error en el servidor'

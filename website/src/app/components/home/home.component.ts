@@ -10,7 +10,11 @@ import { NavComponent } from '../nav/nav.component';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private userService: UserService, private route: Router) { }
+  public user = {}
+
+  constructor(private userService: UserService, private route: Router) { 
+    this.user = JSON.parse(localStorage.getItem('userInfo'));
+  }
 
   ngOnInit() {
   }

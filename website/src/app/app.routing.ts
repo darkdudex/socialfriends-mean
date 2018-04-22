@@ -2,11 +2,11 @@ import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 //#region Components 
-import { UserService } from './services/user.services';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { UserComponent } from './components/user/user.component';
 //#endregion
 
 const appRoutes: Routes = [
@@ -29,6 +29,10 @@ const appRoutes: Routes = [
   {
     path: 'forgetpassword',
     component: HomeComponent
+  },
+  {
+    path: 'user',
+    component: UserComponent
   },
   {
     path: '**',

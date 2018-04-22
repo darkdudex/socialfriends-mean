@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { HttpClientModule } from '@angular/common/http';
 
 import { UserService } from './services/user.services';
@@ -29,6 +30,7 @@ import { appRouting } from './app.routing';
   ],
   imports: [
     BrowserModule,
+    InfiniteScrollModule,
     FormsModule,
     HttpClientModule,
     appRouting

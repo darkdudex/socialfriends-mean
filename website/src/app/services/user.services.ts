@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class UserService {
 
-  public url: string = "http://localhost:3000/api";
+  public url: string = "http://192.168.1.67:3000/api";
 
   constructor(private http: HttpClient) {
 
@@ -16,18 +16,18 @@ export class UserService {
     return this.http.get(`${this.url}/token?username=${username}`);
   }
 
-  public GetUser(): Observable<any> {
-    return this.http.get(`${this.url}/user`);
+  public GetUser(page): Observable<any> {
+    return this.http.get(`${this.url}/user?page=${page}`);
   }
 
   public Login(account_and_password): Observable<any>  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post(`${this.url}/user/signin`, account_and_password, { headers: headers });
+    return this.http.post(`${this.url}/signin`, account_and_password, { headers: headers });
   }
 
   public RegisterUser(user): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post(`${this.url}/user/signup`, user, { headers: headers });
+    return this.http.post(`${this.url}/signup`, user, { headers: headers });
   }
 
 }
