@@ -1,21 +1,31 @@
 <nav-root></nav-root>
 
 <!-- Modal info likes  -->
-<div class="modal fade" id="modaLike" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modaLike" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+  infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <a class="navbar-brand d-flex  center mr-3" id="item" style="font-size: 15px; color: #DB3C3C; cursor: pointer;">
-        <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/237/237645.svg" style="width: 22px;"><b style="margin-left: -10px">Me gustas</b>
-      </a>
+          <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/237/237645.svg" style="width: 22px;">
+          <b style="margin-left: -10px">Me gustas</b>
+        </a>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <!-- <div style="color: gray">En este momento no tienes notificaciones</div> -->
-        <a style="color: #2285E3"><i class="fa fa-info-circle" aria-hidden="true"></i> <b style="font-size: 13px">SocialFriends te da la bienvenida</b></a><br>
-        <a style="color: #2285E3"><i class="fa fa-info-circle" aria-hidden="true"></i> <b style="font-size: 13px">Las notificaciones están en desarrollo</b></a><br>
+        <a style="color: #2285E3">
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+          <b style="font-size: 13px">SocialFriends te da la bienvenida</b>
+        </a>
+        <br>
+        <a style="color: #2285E3">
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+          <b style="font-size: 13px">Las notificaciones están en desarrollo</b>
+        </a>
+        <br>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
@@ -53,52 +63,109 @@
         </div>
 
         <div class="container">
-          <div *ngIf="listPublication?.length == 0" style="color: gray"><br>Aún no tienes publicaciones<br><br></div><br>
+          <div *ngIf="listPublications?.length == 0" style="color: gray">
+            <br>Aún no tienes publicaciones
+            <br>
+            <br>
+          </div>
+          <br>
           <div>
             <div class="card">
-              <div class="row" style="margin: 10px"></div>
-            </div><br>
+
+              <!-------------------------------------------------------->
+
+              <div *ngFor="let userPublication of listPublications; let i = index">
+                <div class="card" style="margin: 10px">
+                  <div class="row" style="margin: 10px">
+                    <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-lg-2 text-center">
+                      <img class="d-flex align-self-center mr-3" src="{{user.avatar}}" class="rounded-circle" style="width: 100px; border: 2px solid #D8D8D8">
+                    </div>
+                    <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10 col-lg-10">
+                      <h5 class="text-xl-left text-lg-left text-md-left text-center">
+                        <b>{{user.displayName}}</b>
+                      </h5>
+                      <p class="text-muted text-xl-left text-lg-left text-md-left text-center" style="font-size: 11px; margin-top: -5px">{{userPublication.creationDate | amTimeAgo}}</p>
+
+                      <div class="text-xl-left text-lg-left text-md-left text-center" style="cursor: pointer">
+
+                        <!-- <img *ngIf="userPublication.type == 'image'" src="{{userPublication.picture}}" style="width: 80%; border-radius: 10px"> -->
+
+                        <!-- <video *ngIf="userPublication.type == 'video'" id="my-video" style="width: 100%; height:250px ; border-radius: 10px" class="video-js"
+                          controls preload="auto" data-setup="{}">
+                          <source src="{{userPublication.picture}}" type='video/mp4'>
+                        </video> -->
+
+                      </div>
+                      <p style="text-align: justify; margin-top: 6px">{{userPublication.message}}</p>
+
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+
+
+              <!-------------------------------------------------------->
+
+
+            </div>
+            <br>
           </div>
         </div>
-      </div><br>
+      </div>
+      <br>
 
       <div class="card">
         <div class="card-header">
           Publicaciones de las personas que sigo
-        </div><br>
+        </div>
+        <br>
 
         <!-- este es el nuevo -->
         <div class="container">
-          <div *ngIf="listPublicationFollowers?.length == 0" style="color: gray">Aún no sigues a nadie, o el usuario al que sigues no tiene publicaciones.<br><br></div>
+          <div *ngIf="listPublicationFollowers?.length == 0" style="color: gray">Aún no sigues a nadie, o el usuario al que sigues no tiene publicaciones.
+            <br>
+            <br>
+          </div>
           <div>
             <div class="card">
               <div class="row" style="margin: 10px"></div>
-            </div><br>
+            </div>
+            <br>
           </div>
         </div>
 
-      </div><br>
+      </div>
+      <br>
 
     </div>
     <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
       <div class="card">
         <div class="card-block">
           <div style="text-align: center">
-            <img class="d-flex align-self-center mr-3" src="{{user.avatar}}" class="rounded-circle" style="width: 100px; border: 2px solid #D8D8D8"><br>
-            <b>{{user.displayName}}</b><br>
+            <img class="d-flex align-self-center mr-3" src="{{user.avatar}}" class="rounded-circle" style="width: 100px; border: 2px solid #D8D8D8">
+            <br>
+            <b>{{user.displayName}}</b>
+            <br>
             <span class="badge badge-pill badge-success">Disponible</span>
             <div class="row">
               <div class="col-xl-3 col-lg-3 col-md-6 col-6 font10">
-                Siguiendo<br>0
+                Siguiendo
+                <br>0
               </div>
               <div class="col-xl-3 col-lg-3 col-md-6 col-6  font10">
-                Seguidores<br>0
+                Seguidores
+                <br>0
               </div>
               <div class="col-xl-3 col-lg-3 col-md-6 col-6 font10">
-                Publicaciones<br>0
+                Publicaciones
+                <br>{{listPublications?.length}}
               </div>
               <div class="col-xl-3 col-lg-3 col-md-6 col-6 font10">
-                Me gustas<br>0
+                Me gustas
+                <br>0
               </div>
             </div>
           </div>
@@ -109,28 +176,33 @@
       <div class="card">
         <div class="card-header">
           Crear Publicación
-        </div><br>
-        <form id="formP" #formP="ngForm" (ngSubmit)="addPublication()">
+        </div>
+        <br>
+        <form id="publicationForm" #publicationForm="ngForm" (ngSubmit)="AddPublication(publicationForm)">
           <ul class="list-unstyled" style="margin: 5px">
             <div class="form-group">
               <label for="exampleTextarea">Mensaje</label>
-              <textarea class="form-control" name="mensaje" rows="10" #mensaje="ngModel" [(ngModel)]="msj" placeholder="Escribe aquí tu mensaje..."></textarea>
+              <textarea class="form-control" name="message" ngModel rows="10" placeholder="Escribe aquí tu mensaje..."></textarea>
             </div>
             <div class="form-group">
               <label for="exampleInputFile">Foto</label>
               <input type="file" class="form-control-file" (change)="detectFiles($event)" id="pic" style="display: none">
               <a class="navbar-brand d-flex align-self-start mr-3" onclick="document.getElementById('pic').click()" id="item" style="font-size: 15px; margin-top: -10px; color:#0174DF; cursor: pointer">
-        <img class="d-flex align-self-start mr-3" src="https://www.flaticon.es/premium-icon/icons/svg/205/205714.svg" style="width: 22px;"><b style="margin-left: -10px">Seleccionar imágen o vídeo</b>
-      </a>
+                <img class="d-flex align-self-start mr-3" src="https://www.flaticon.es/premium-icon/icons/svg/205/205714.svg" style="width: 22px;">
+                <b style="margin-left: -10px">Seleccionar imágen o vídeo</b>
+              </a>
             </div>
 
-            <button class="btn btn-lg btn-success btn-block" type="submit"><i id="icon" class="fa fa-share-square-o" aria-hidden="true"></i>Publicar</button>
+            <button class="btn btn-lg btn-success btn-block" type="submit">
+              <i id="icon" class="fa fa-share-square-o" aria-hidden="true"></i>Publicar</button>
           </ul>
-        </form><br>
+        </form>
+        <br>
 
       </div>
     </div>
   </div>
 </div>
-<br><br>
+<br>
+<br>
 <button id="resetScroll" style="display: none" onclick="$(body).scrollTop(0)">Reset Scroll</button>

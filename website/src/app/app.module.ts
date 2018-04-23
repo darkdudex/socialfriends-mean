@@ -4,7 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { HttpClientModule } from '@angular/common/http';
 
-import { UserService } from './services/user.services';
+//#region Services 
+import { UserService } from './services/user.service';
+import { LoginService } from './services/login.service';
+import { PublicationService } from './services/publication.service';
+//#endregion
 
 //#region Components 
 import { AppComponent } from './app.component';
@@ -17,6 +21,11 @@ import { ForgetPasswordComponent } from './components/forget-password/forget-pas
 //#endregion
 
 import { appRouting } from './app.routing';
+
+/* Moment.js Angular Settings */
+import { MomentModule } from 'angular2-moment';
+import * as moment from 'moment';
+moment.locale('es');
 
 @NgModule({
   declarations: [
@@ -33,10 +42,13 @@ import { appRouting } from './app.routing';
     InfiniteScrollModule,
     FormsModule,
     HttpClientModule,
+    MomentModule,
     appRouting
   ],
   providers: [
-    UserService
+    UserService,
+    LoginService,
+    PublicationService
   ],
   bootstrap: [AppComponent]
 })

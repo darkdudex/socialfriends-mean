@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.services';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { UserService } from '../../services/user.service';
+import { LoginService } from '../../services/login.service';
 
 
 @Component({
@@ -14,7 +16,7 @@ export class LoginComponent implements OnInit {
   public ind_Notication: number;
   public sta_Notication: boolean;
 
-  constructor(private userService: UserService, private route: Router) { 
+  constructor(private userService: UserService, private loginService: LoginService, private route: Router) { 
   }
 
   ngOnInit() {
@@ -28,7 +30,7 @@ export class LoginComponent implements OnInit {
 
   Login(dataForm){
     const account_and_password = dataForm.value
-    this.userService.Login(account_and_password).subscribe(res => {
+    this.loginService.Login(account_and_password).subscribe(res => {
 
       if (res.token != undefined || res.token != null){
         localStorage.setItem('userToken', res.token)

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.services';
+import { UserService } from '../../services/user.service';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-register',
@@ -8,7 +9,7 @@ import { UserService } from '../../services/user.services';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private loginService: LoginService) { }
 
   ngOnInit() {
     
@@ -26,7 +27,7 @@ export class RegisterComponent implements OnInit {
     delete user.Verificationemail;
     delete user.Verificationpassword;
 
-    this.userService.RegisterUser(user).subscribe(res => {
+    this.loginService.RegisterUser(user).subscribe(res => {
       console.log(res)
     }, err => {
       console.log(err.error)

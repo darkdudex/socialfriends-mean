@@ -5,10 +5,19 @@ const controllers = require('../controllers/controller')
 const auth = require('../middlewares/auth')
 const api = express.Router()
 
+const Multer = require('multer');
+const multer = Multer({
+  storage: Multer.memoryStorage()
+});
+
 //#region API RUNNING 
 api.get('/', (req,res) => {
   res.status(200).send('<style>*{ font-family: Arial; font-size: 50px; text-decoration: underline; color: #4c0094; text-align: center; margin-top: 30px}</style><h1>API RUNNING</h1>')
 })
+//#endregion
+
+//#region Files
+api.post('/fileupload', multer.array('files', 100), controllers.fileController.AddFile)
 //#endregion
 
 //#region Login and Register Enpoints 
