@@ -51,7 +51,7 @@ async function GetPublicationByUserId(req, res) {
   try {
 
     const userId = req.params.userId
-    const publications = await publicationModel.find({ userId }).limit(limit).skip(page * limit)
+    const publications = await publicationModel.find({ userId }).limit(limit).skip(page * limit).sort({ creationDate: 'desc' })
     const total = await publicationModel.find({ userId }).count()
 
     return res.status(200).send({ publications, total })

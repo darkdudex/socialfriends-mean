@@ -1,8 +1,7 @@
 <nav-root></nav-root>
 
 <!-- Modal info likes  -->
-<div class="modal fade" id="modaLike" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-  infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">
+<div class="modal fade" id="modaLike" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -72,7 +71,7 @@
           <div>
             <div class="card">
 
-              <!-------------------------------------------------------->
+                            <!-------------------------------------------------------->
 
               <div *ngFor="let userPublication of listPublications; let i = index">
                 <div class="card" style="margin: 10px">
@@ -102,10 +101,12 @@
 
                   </div>
                 </div>
-
+               
               </div>
 
-
+              <div class="row justify-content-center" *ngIf="finished" style="margin-top: -10px">
+                <img src="https://www.pongomilogo.es/skin/frontend/default/em0060/images/ksi/topmegamenu/spinner.1429027063.gif" alt="">
+              </div>
 
               <!-------------------------------------------------------->
 
@@ -115,6 +116,8 @@
           </div>
         </div>
       </div>
+      <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
+
       <br>
 
       <div class="card">

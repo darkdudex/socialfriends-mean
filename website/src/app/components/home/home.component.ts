@@ -24,6 +24,11 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
+  onScroll() {
+    this.page++;
+    this.GetPublicationByUserId();
+  }
+
   public AddPublication(dataForm) {
 
     const publication = dataForm.value
@@ -45,13 +50,17 @@ export class HomeComponent implements OnInit {
     this.publicationService.GetPublicationByUserId(JSON.parse(localStorage.getItem('userInfo'))._id, this.page).subscribe(
       res => {
 
-        console.log(res)
-
         if (res.publications.length != 6)
           this.finished = false
 
-        if (this.listPublications.length == 0) 
+        if (this.listPublications.length == 0) {
           this.listPublications = res.publications;
+
+        } else {
+          res.publications.map(item => {
+            this.listPublications.push(item);
+          })
+        }
 
         },
       err => {
