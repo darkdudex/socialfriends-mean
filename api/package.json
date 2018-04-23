@@ -9,7 +9,7 @@
     },
     "keywords": [],
     "author": "",
-    "license": "MIT",
+    "license": "GNU GPLv3",
     "dependencies": {
         "@google-cloud/storage": "^1.6.0",
         "bcrypt-nodejs": "0.0.3",
