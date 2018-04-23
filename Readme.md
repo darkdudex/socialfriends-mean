@@ -23,7 +23,7 @@ Clone of a social network [WebSite: Angular - AppMobile: ReactNative - Api: Node
   <img src="https://image.ibb.co/hBVAdc/003.png"></img>
 </p>
 <p align="center">
-  <img src="https://preview.ibb.co/fWGGJc/005.png"></img>
+  <img src="https://image.ibb.co/hKJkBx/005.png"></img>
 </p>
 <p align="center">
   <img src="https://image.ibb.co/izLXrx/004.png"></img>
