@@ -53,7 +53,7 @@ function uploadImageToStorage(files, userId, mainFolder) {
 
         const url = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(fileUpload.name)}?alt=media&token=${tokenId}`
         fileUpload.getSignedUrl({ action: 'read' })
-        arrayFile.push({ url: url, type: file.mimetype})
+        arrayFile.push({ url: url, type: file.mimetype })
 
         if (arrayFile.length == (files.length))
           resolve(arrayFile);
@@ -75,8 +75,8 @@ async function AddFile(req, res) {
   try {
 
     let files = req.files;
-    let userId = req.body.userId
-    let mainFolder = req.body.mainFolder
+    let userId = '12345' //req.body.userId
+    let mainFolder = 'test' //req.body.mainFolder
 
     if (files.length >= 1) {
 
@@ -95,118 +95,9 @@ async function AddFile(req, res) {
     });
   }
 
-
-
-
-
 }
 
 module.exports = {
   uploadImageToStorage,
   AddFile
 }
-
-
-// 'use strict'
-
-// const firebase = require('firebase');
-// const googleStorage = require('@google-cloud/storage');
-// const Multer = require('multer');
-// const shortid = require('shortid');
-
-// let formData_Key = 'file';
-// let tokenId = shortid.generate();
-
-// const multer = Multer({
-//   storage: Multer.memoryStorage(),
-//   limits: {
-//     fileSize: 5 * 1024 * 1024 // no larger than 5mb, you can change as needed.
-//   }
-// });
-
-// const storage = googleStorage({
-//   keyFilename: __dirname + "/../../config/googleapi-credentials.json"
-// });
-
-// const bucket = storage.bucket("gs://db-firebase-5cf99.appspot.com");
-
-// function uploadImageToStorage(file, userId, mainFolder) {
-
-//   let prom = new Promise((resolve, reject) => {
-
-//     if (!file) {
-//       reject('Not file');
-//     }
-
-//     let nameFile = Date.now();
-//     let folderPath = `socialfriends-mean/${mainFolder}/${userId}`;
-//     let newFileName = `${folderPath}/${nameFile}`;
-
-//     let fileUpload = bucket.file(newFileName);
-
-//     const blobStream = fileUpload.createWriteStream({
-//       metadata: {
-//         contentType: file.mimetype,
-//         metadata: {
-//           firebaseStorageDownloadTokens: tokenId
-//         }
-//       },
-//     });
-
-//     blobStream.on('error', error => {
-//       reject(error);
-//     });
-
-//     blobStream.on('finish', data => {
-//       // The public URL can be used to directly access the file via HTTP.
-//       const url = "https://firebasestorage.googleapis.com/v0/b/" + bucket.name + "/o/" + encodeURIComponent(fileUpload.name) + "?alt=media&token=" + tokenId;
-//       fileUpload.getSignedUrl({
-//         action: 'read'
-//       }).then(signedUrls => {
-//         // signedUrls[0] contains the file's public URL
-//       });
-//       resolve(url);
-//     });
-
-//     blobStream.end(file.buffer);
-//   });
-//   return prom;
-// }
-
-// function AddFile(req, res) {
-
-//   let files = req.files;
-//   let userId = req.body.userId
-//   let mainFolder = req.body.mainFolder
-
-//   if (files.length >= 1) {
-
-//     files.map(file => {
-
-//       uploadImageToStorage(file, userId, mainFolder)
-//         .then(data => {
-
-//           return res.status(200).send(data);
-
-//         })
-//         .catch(err => {
-//           console.log(err)
-//         })
-//     })
-
-
-
-//   } else {
-
-//     return res.status(400).send({
-//       status: 'File required'
-//     });
-
-//   }
-
-// }
-
-// module.exports = {
-//   uploadImageToStorage,
-//   AddFile
-// }

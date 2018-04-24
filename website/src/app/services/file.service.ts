@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { config } from '../../config';
 
 @Injectable()
-export class UserService {
+export class FileService {
 
   public url: string = config.url;
 
@@ -13,12 +13,15 @@ export class UserService {
 
   }
 
-  public GetToken(username): Observable<any> {
-    return this.http.get(`${this.url}/token?username=${username}`);
-  }
+  public AddFile(files: Array<File>) {
 
-  public GetUser(page): Observable<any> {
-    return this.http.get(`${this.url}/user?page=${page}`);
+    const formData:any = new FormData();
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files", files[i], files[i]['name']);
+    }
+
+    return this.http.post(`${this.url}/fileupload`, formData)
   }
 
 }

@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './services/user.service';
 import { LoginService } from './services/login.service';
 import { PublicationService } from './services/publication.service';
+import { FileService } from './services/file.service';
 //#endregion
 
 //#region Components 
@@ -25,6 +26,7 @@ import { appRouting } from './app.routing';
 /* Moment.js Angular Settings */
 import { MomentModule } from 'angular2-moment';
 import * as moment from 'moment';
+
 moment.locale('es');
 
 @NgModule({
@@ -48,7 +50,8 @@ moment.locale('es');
   providers: [
     UserService,
     LoginService,
-    PublicationService
+    PublicationService,
+    FileService
   ],
   bootstrap: [AppComponent]
 })

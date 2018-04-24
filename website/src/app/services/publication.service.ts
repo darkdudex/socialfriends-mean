@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
+import { config } from '../../config';
 
 @Injectable()
 export class PublicationService {
 
-  public url: string = "http://192.168.1.67:3000/api";
+  public url: string = config.url;
 
   constructor(private http: HttpClient) {
 
