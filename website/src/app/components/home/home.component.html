@@ -14,14 +14,12 @@
   aria-hidden="true" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div style="text-align: center">
-      <img src="https://firebasestorage.googleapis.com/v0/b/rober-firebase.appspot.com/o/Requiem-project%2FServer_data%2Floading.gif?alt=media&token=d38ae349-7842-4dd6-972c-119380050d92"
-        style="height: 50px; widows: 50px; ">
+        <img class="fa-spin" src="https://image.flaticon.com/icons/svg/456/456129.svg" style="height: 50px; widows: 50px; ">
+      <h5 style="margin-top: 2px; font-size: 25px; color: white; font-weight: bold; font-family: 'Pacifico', cursive;">Cargando...</h5>
       <button style="display: none" id="CloseButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
     </div>
-
   </div>
 </div>
-
 
 <!-- Modal info likes  -->
 <div class="modal fade" id="modaLike" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -56,26 +54,6 @@
   </div>
 </div>
 
-<!-- <div class="modal fade" id="loader" onclick="$('#loader').modal('show')" ondblclick="$('#loader').modal('hide')" tabindex="-1"
-  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <a class="navbar-brand d-flex  center mr-3" id="item" style="font-size: 15px; color: #E68116 ; cursor: pointer;">
-        <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/309/309603.svg" style="width: 22px;">
-        <b style="margin-left: -10px">Su publicación se está procesando <i class='fa fa-spinner fa-spin ' id="icon_close" onclick="$('#btnClose').click() ;"></i></b>
-      </a>
-      </div>
-      <div class="progress">
-        <div class="progress-bar bg-warning" role="progressbar" [style.width]="progressText + '%'" aria-valuemin="0" aria-valuemax="100"></div>
-      </div>
-      <button id="btnClose" type="button" class="close" data-dismiss="modal" aria-label="Close" style="display: none">
-          <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-  </div>
-</div> -->
-
 <div class="container">
   <div class="row">
     <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
@@ -94,10 +72,8 @@
           <div>
             <div class="card">
 
-              <!-------------------------------------------------------->
-
               <div *ngFor="let userPublication of listPublications; let i = index">
-                <div class="card" style="margin: 10px">
+                <div class="card card-user" style="margin: 10px">
 
                   <div class="row" style="margin: 10 px; margin-top: 10px">
                     <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-lg-2 text-center">
@@ -142,9 +118,6 @@
               <div class="row justify-content-center" *ngIf="finished" style="margin-top: -10px">
                 <img src="https://www.pongomilogo.es/skin/frontend/default/em0060/images/ksi/topmegamenu/spinner.1429027063.gif" alt="">
               </div>
-
-              <!-------------------------------------------------------->
-
 
             </div>
             <br>

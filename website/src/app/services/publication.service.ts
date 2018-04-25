@@ -22,7 +22,7 @@ export class PublicationService {
     return this.http.get(`${this.url}/publication/${userId}?page=${page}`);
   }
 
-  public FileUpload() {
+  public FileUpleoad() {
 
   }
 
