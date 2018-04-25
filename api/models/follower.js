@@ -1,19 +1,11 @@
 'use strict'
 
-const config = require('../config/config')
-const Schema = config.db.Schema
+const mongoose = require('../config/config')
+const Schema = mongoose.db.Schema
 
 const FollowerSchema = new Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
-    required: true
-  },
-  followed: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
-    required: true
-  },
+  publicationId: String,
+  userId: String,
   followDate: { type: Date, default: Date.now() }
 },{ versionKey: false })
 

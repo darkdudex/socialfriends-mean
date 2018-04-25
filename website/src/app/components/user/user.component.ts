@@ -48,4 +48,9 @@ export class UserComponent implements OnInit {
       })
   }
 
+  public AddFollower(userId, followId){
+    const r = { userId, followId }
+    console.log(r)
+  }
+
 }
