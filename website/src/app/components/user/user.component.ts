@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { FollowerService } from '../../services/follower.service';
 
 @Component({
   selector: 'app-user',
@@ -13,7 +14,7 @@ export class UserComponent implements OnInit {
   public page = 1;
   public finished: boolean = true;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private followerService: FollowerService) {
     this.user = JSON.parse(localStorage.getItem('userInfo'));
   }
 
@@ -48,9 +49,15 @@ export class UserComponent implements OnInit {
       })
   }
 
-  public AddFollower(userId, followId){
-    const r = { userId, followId }
-    console.log(r)
+  public AddFollower(userId, followerId) {
+    const data = { userId, followerId }
+    this.followerService.AddFollower(data).subscribe(
+      res => {
+        console.log(res)
+      },
+      err => {
+        console.log(err)
+      })
   }
 
 }

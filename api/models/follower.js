@@ -4,8 +4,8 @@ const mongoose = require('../config/config')
 const Schema = mongoose.db.Schema
 
 const FollowerSchema = new Schema({
-  publicationId: String,
   userId: String,
+  followerId: String,
   followDate: { type: Date, default: Date.now() }
 },{ versionKey: false })
 

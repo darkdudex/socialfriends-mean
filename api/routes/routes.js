@@ -51,10 +51,9 @@ api.get('/like/:publicationId', controllers.likeController.GetLikeByPublicationI
 //#endregion
 
 //#region Follower Endpoints 
-api.post('/follower', controllers.publicationController.AddPublication)
-api.delete('/follower', controllers.publicationController.RemovePublication)
-api.get('/follower/:userId', controllers.publicationController.GetPublicationByUserId)
-api.get('/following/:userId', controllers.publicationController.GetPublicationByUserId)
+api.post('/follower', controllers.followerController.AddFollower)
+api.get('/follower/:userId', controllers.followerController.GetFollowerByUserId)
+api.delete('/follower', controllers.followerController.RemoveFollower)
 //#endregion
 
 module.exports = api

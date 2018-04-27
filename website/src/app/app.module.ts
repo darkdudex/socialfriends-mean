@@ -26,6 +26,7 @@ import { appRouting } from './app.routing';
 /* Moment.js Angular Settings */
 import { MomentModule } from 'angular2-moment';
 import * as moment from 'moment';
+import { FollowerService } from './services/follower.service';
 
 moment.locale('es');
 
@@ -51,6 +52,7 @@ moment.locale('es');
     UserService,
     LoginService,
     PublicationService,
+    FollowerService,
     FileService
   ],
   bootstrap: [AppComponent]
