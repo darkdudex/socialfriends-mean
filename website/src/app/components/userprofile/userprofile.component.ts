@@ -7,11 +7,11 @@ import { FileService } from '../../services/file.service';
 import * as $ from 'jquery';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'userprofile-root',
+  templateUrl: './userprofile.component.html',
+  styleUrls: ['./userprofile.component.css']
 })
-export class HomeComponent implements OnInit {
+export class UserProfileComponent implements OnInit {
 
   public listPublications: Array<any> = []
   public user:any = {}
@@ -20,9 +20,19 @@ export class HomeComponent implements OnInit {
   public filesToUpload: Array<File> = [];
   public typeFiles = ['image', 'video']
 
-  constructor(private userService: UserService, private publicationService: PublicationService, private fileService: FileService, private route: Router) {
-    this.user = JSON.parse(localStorage.getItem('userInfo'));
-    this.GetPublicationByUserId()
+  constructor(private userService: UserService, private publicationService: PublicationService, private fileService: FileService, private route: Router, private activeRoute: ActivatedRoute) {
+
+    this.activeRoute.params.subscribe(params => {
+      this.userService.GetUserById(params.userId).subscribe(
+        res => {
+          this.user = res;
+          this.GetPublicationByUserId()
+        },
+        err => {
+          console.log(err)
+        })
+    })
+
   }
 
   ngOnInit() {
@@ -35,62 +45,12 @@ export class HomeComponent implements OnInit {
 
     if (type.includes('video'))
       $("#filep").html(`<video width="100%" height="100%" controls> <source id="imgp" src="${src}" type="video/mp4"> </video>`)
-    
+
   }
 
   onScroll() {
     this.page++;
     this.GetPublicationByUserId();
-  }
-
-  Files(event: any) {
-    this.filesToUpload = <Array<File>>event.target.files;
-    console.log('archivos seleccionados --> ' + this.filesToUpload.length)
-  }
-
-  public AddPublication(dataForm) {
-
-    const publication = dataForm.value
-
-    publication.userId = this.user._id
-
-    if (this.filesToUpload.length == 0) {
-
-      publication.filePublication = []
-
-      this.publicationService.AddPublication(publication).subscribe(
-        res => {
-          dataForm.reset();
-        },
-        err => {
-          console.log(err)
-        })
-
-    } else {
-
-      this.fileService.AddFile(this.filesToUpload, this.user._id, 'publications').subscribe(
-        res => {
-
-          publication.filePublication = res
-
-          this.publicationService.AddPublication(publication).subscribe(
-            res => {
-              console.log(res)
-              document.getElementById("CloseButton").click()
-              dataForm.reset();
-            },
-            err => {
-              console.log(err)
-            })
-
-        },  
-        err => {
-          console.log(err)
-        }
-      )
-
-    }
-
   }
 
   public GetPublicationByUserId() {

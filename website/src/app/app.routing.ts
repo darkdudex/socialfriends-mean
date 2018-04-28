@@ -7,6 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { UserComponent } from './components/user/user.component';
+import { UserProfileComponent } from './components/userprofile/userprofile.component';
 //#endregion
 
 const appRoutes: Routes = [
@@ -33,6 +34,10 @@ const appRoutes: Routes = [
   {
     path: 'user',
     component: UserComponent
+  },
+  {
+    path: 'profile/:userId',
+    component: UserProfileComponent
   },
   {
     path: '**',

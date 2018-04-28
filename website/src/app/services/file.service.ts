@@ -13,9 +13,12 @@ export class FileService {
 
   }
 
-  public AddFile(files: Array<File>) {
+  public AddFile(files: Array<File>, userId, folderName) {
 
     const formData:any = new FormData();
+
+    formData.append("userId", userId);
+    formData.append("folderName", folderName);
 
     for (let i = 0; i < files.length; i++) {
       formData.append("files", files[i], files[i]['name']);

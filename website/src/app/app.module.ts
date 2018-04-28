@@ -9,6 +9,7 @@ import { UserService } from './services/user.service';
 import { LoginService } from './services/login.service';
 import { PublicationService } from './services/publication.service';
 import { FileService } from './services/file.service';
+import { FollowerService } from './services/follower.service';
 //#endregion
 
 //#region Components 
@@ -19,6 +20,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NavComponent } from './components/nav/nav.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { UserProfileComponent } from './components/userprofile/userprofile.component';
 //#endregion
 
 import { appRouting } from './app.routing';
@@ -26,7 +28,6 @@ import { appRouting } from './app.routing';
 /* Moment.js Angular Settings */
 import { MomentModule } from 'angular2-moment';
 import * as moment from 'moment';
-import { FollowerService } from './services/follower.service';
 
 moment.locale('es');
 
@@ -38,7 +39,8 @@ moment.locale('es');
     HomeComponent,
     NavComponent,
     RegisterComponent,
-    ForgetPasswordComponent
+    ForgetPasswordComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

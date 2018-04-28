@@ -74,13 +74,15 @@ async function AddFile(req, res) {
 
   try {
 
-    let files = req.files;
-    let userId = '12345' //req.body.userId
-    let mainFolder = 'test' //req.body.mainFolder
+    let data = {
+      files: req.files,
+      userId: req.body.userId,
+      folderName: req.body.folderName
+    }
 
-    if (files.length >= 1) {
+    if (data.files.length >= 1) {
 
-      const response = await uploadImageToStorage(files, userId, mainFolder)
+      const response = await uploadImageToStorage(data.files, data.userId, data.folderName)
       return res.status(200).send(response);
 
     }

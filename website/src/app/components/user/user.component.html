@@ -24,8 +24,7 @@
 
           <div *ngFor="let p of listUsers">
 
-            <div class="card card-user">
-              <!--  *ngIf="user._id != p._id" -->
+            <div *ngIf="user._id != p._id" class="card card-user">
               <div class="row" style="margin: 10px">
                 <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-lg-2 text-center">
                   <img class="d-flex align-self-center mr-3" src="{{p.avatar}}" class="rounded-circle" style="width: 100px; border: 2px solid #D8D8D8">
