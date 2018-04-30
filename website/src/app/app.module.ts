@@ -28,8 +28,9 @@ import { appRouting } from './app.routing';
 /* Moment.js Angular Settings */
 import { MomentModule } from 'angular2-moment';
 import * as moment from 'moment';
-
 moment.locale('es');
+
+import { FilterUserPipe } from './pipes/filterUser.pipe'
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ moment.locale('es');
     NavComponent,
     RegisterComponent,
     ForgetPasswordComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    FilterUserPipe
   ],
   imports: [
     BrowserModule,

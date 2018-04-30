@@ -13,6 +13,7 @@ export class UserComponent implements OnInit {
   public user = {}
   public page = 1;
   public finished: boolean = true;
+  public UserFind:string
 
   constructor(private userService: UserService, private followerService: FollowerService) {
     this.user = JSON.parse(localStorage.getItem('userInfo'));

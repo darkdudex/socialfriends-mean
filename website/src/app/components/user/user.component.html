@@ -3,7 +3,7 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <input type="text" class="form-control" [(ngModel)]="busqueda" placeholder="Buscar persona por su nombre">
+      <input type="text" class="form-control" [(ngModel)]="UserFind" placeholder="Buscar persona por su nombre">
     </div>
   </div>
 </div>
@@ -22,7 +22,7 @@
         <ul class="list-unstyled" style="margin: 20px">
           <div *ngIf="listUsers?.length == 0" style="color: gray">Aún no hay usuarios registrados</div>
 
-          <div *ngFor="let p of listUsers">
+          <div *ngFor="let p of listUsers | userfilter: UserFind">
 
             <div *ngIf="user._id != p._id" class="card card-user">
               <div class="row" style="margin: 10px">

@@ -1,5 +1,71 @@
 <nav-root></nav-root>
 
+<!-- Modal (Siguiendo) -->
+<div class="modal fade" id="siguiendo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <a class="navbar-brand d-flex  center mr-3" id="item" style="font-size: 15px; color: #02A2F7 ; cursor: pointer;">
+          <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/747/747835.svg" style="width: 22px;"><b style="margin-left: -10px">Siguiendo</b>
+        </a>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <a data-dismiss="modal" aria-label="Close" [routerLink]="['/profile/5ad759fefa654c199037593c']" class="navbar-brand d-flex align-self-start mr-3" id="item" style="font-size: 15px" href="/user">
+          <img class="rounded-circle" height="40" style="border: 2px solid #D8D8D8" width="40" src="https://scontent.fbaq1-1.fna.fbcdn.net/v/t1.0-9/17861541_105464440010285_2410770716287754895_n.jpg?_nc_cat=0&oh=b3a40940f143a6aeb39e9b009c96307a&oe=5B4FDC5C">
+          <b style="margin-left: 5px; margin-top: 8px; color: black">Maria Rebeca Batty Linero</b>
+        </a>
+        <a data-dismiss="modal" aria-label="Close" [routerLink]="['/profile/5ad640bca86cca23545f8e1e']" class="navbar-brand d-flex align-self-start mr-3" id="item" style="font-size: 15px" href="/user">
+          <img class="rounded-circle" height="40" style="border: 2px solid #D8D8D8" width="40" src="https://avatars2.githubusercontent.com/u/28882108">
+          <b style="margin-left: 5px; margin-top: 8px; color: black">Roberto Andrés Batty Linero</b>
+        </a>
+        <a data-dismiss="modal" aria-label="Close" [routerLink]="['/profile/5ae63d5390ce57129c38b841']" class="navbar-brand d-flex align-self-start mr-3" id="item" style="font-size: 15px" href="/user">
+          <img class="rounded-circle" height="40" style="border: 2px solid #D8D8D8" width="40" src="https://pbs.twimg.com/profile_images/928951694557433861/5Agr9ZeJ_400x400.jpg">
+          <b style="margin-left: 5px; margin-top: 8px; color: black">Ricardo Kaka</b>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  -->
+
+<!-- Modal (Seguidores) -->
+<div class="modal fade" id="seguidores" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <a class="navbar-brand d-flex  center mr-3" id="item" style="font-size: 15px; color: #02A2F7 ; cursor: pointer;">
+          <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/747/747835.svg" style="width: 22px;"><b style="margin-left: -10px">Seguidores</b>
+        </a>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <a data-dismiss="modal" aria-label="Close" [routerLink]="['/profile/5ad759fefa654c199037593c']" class="navbar-brand d-flex align-self-start mr-3" id="item" style="font-size: 15px" href="/user">
+          <img class="rounded-circle" height="40" style="border: 2px solid #D8D8D8" width="40" src="https://scontent.fbaq1-1.fna.fbcdn.net/v/t1.0-9/17861541_105464440010285_2410770716287754895_n.jpg?_nc_cat=0&oh=b3a40940f143a6aeb39e9b009c96307a&oe=5B4FDC5C">
+          <b style="margin-left: 5px; margin-top: 8px; color: black">Maria Rebeca Batty Linero</b>
+        </a>
+        <a data-dismiss="modal" aria-label="Close" [routerLink]="['/profile/5ad640bca86cca23545f8e1e']" class="navbar-brand d-flex align-self-start mr-3" id="item" style="font-size: 15px" href="/user">
+          <img class="rounded-circle" height="40" style="border: 2px solid #D8D8D8" width="40" src="https://avatars2.githubusercontent.com/u/28882108">
+          <b style="margin-left: 5px; margin-top: 8px; color: black">Roberto Andrés Batty Linero</b>
+        </a>
+        <a data-dismiss="modal" aria-label="Close" [routerLink]="['/profile/5ae63d5390ce57129c38b841']" class="navbar-brand d-flex align-self-start mr-3" id="item" style="font-size: 15px" href="/user">
+          <img class="rounded-circle" height="40" style="border: 2px solid #D8D8D8" width="40" src="https://pbs.twimg.com/profile_images/928951694557433861/5Agr9ZeJ_400x400.jpg">
+          <b style="margin-left: 5px; margin-top: 8px; color: black">Ricardo Kaka</b>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  -->
+
 <!-- Modal de las publicaciones -->
 <div id="myModal1" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
@@ -96,7 +162,7 @@
                       <div *ngIf="userPublication.filePublication.length > 0">
                         <div *ngFor="let p of userPublication.filePublication">
                           <div style="margin: 5px">
-                            <img onclick="$('#myModal1').modal('show')" (click)="PublicationClick(p.type,p.url)" style="cursor: pointer" src="{{p.url}}"
+                            <img onclick="$('#myModal1').modal('show')" (click)="PublicationClick(p.type,p.url)" style="cursor: pointer; border-radius: 8px" src="{{p.url}}"
                               height="80%" width="80%" *ngIf="p.type.includes('image')">
                             <video style="cursor: pointer" width="80%" height="80%" controls *ngIf="p.type.includes('video')" onclick="$('#myModal1').modal('show')"
                               (click)="PublicationClick(p.type,p.url)">
@@ -162,11 +228,11 @@
             <br>
             <span class="badge badge-pill badge-success">Disponible</span>
             <div class="row">
-              <div class="col-xl-3 col-lg-3 col-md-6 col-6 font10">
+              <div onclick="$('#siguiendo').modal('show')" class="col-xl-3 col-lg-3 col-md-6 col-6 font10" style="cursor: pointer;">
                 Siguiendo
                 <br>0
               </div>
-              <div class="col-xl-3 col-lg-3 col-md-6 col-6  font10">
+              <div onclick="$('#seguidores').modal('show')" class="col-xl-3 col-lg-3 col-md-6 col-6  font10" style="cursor: pointer;">
                 Seguidores
                 <br>0
               </div>
