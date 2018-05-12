@@ -1,6 +1,8 @@
 # socialfriends-mean
 Clone of a social network [WebSite: Angular - AppMobile: ReactNative - Api: Nodejs/Express]
 
+* Bootstrap version (Angular) : v4.0.0-alpha.6
+
 ## Project under construction
 
 <h3>Angular - partial views </h3>
