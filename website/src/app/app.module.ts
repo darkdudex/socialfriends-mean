@@ -10,6 +10,7 @@ import { LoginService } from './services/login.service';
 import { PublicationService } from './services/publication.service';
 import { FileService } from './services/file.service';
 import { FollowerService } from './services/follower.service';
+import { CommentService } from './services/comment.service';
 //#endregion
 
 //#region Components 
@@ -31,6 +32,7 @@ import * as moment from 'moment';
 moment.locale('es');
 
 import { FilterUserPipe } from './pipes/filterUser.pipe'
+
 
 @NgModule({
   declarations: [
@@ -57,7 +59,8 @@ import { FilterUserPipe } from './pipes/filterUser.pipe'
     LoginService,
     PublicationService,
     FollowerService,
-    FileService
+    FileService,
+    CommentService
   ],
   bootstrap: [AppComponent]
 })
