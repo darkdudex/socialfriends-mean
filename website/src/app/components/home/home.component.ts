@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../../services/user.service';
 import { NavComponent } from '../nav/nav.component';
+
+import { UserService } from '../../services/user.service';
 import { PublicationService } from '../../services/publication.service';
 import { FileService } from '../../services/file.service';
+import { CommentService } from '../../services/comment.service';
+import { FollowerService } from '../../services/follower.service';
+
 import * as $ from 'jquery';
 
 @Component({
@@ -14,13 +18,23 @@ import * as $ from 'jquery';
 export class HomeComponent implements OnInit {
 
   public listPublications: Array<any> = []
-  public user:any = {}
+  public listComments: Array<any> = []
+  public user: any = {}
   public page = 1;
   public finished: boolean = true;
   public filesToUpload: Array<File> = [];
-  public typeFiles = ['image', 'video']
+  public typeFiles = ['image', 'video'];
 
-  constructor(private userService: UserService, private publicationService: PublicationService, private fileService: FileService, private route: Router) {
+  public message: String;
+
+  constructor(
+    private userService: UserService,
+    private publicationService: PublicationService,
+    private commentService: CommentService,
+    private followerService: FollowerService,
+    private fileService: FileService,
+    private route: Router
+  ) {
     this.user = JSON.parse(localStorage.getItem('userInfo'));
     this.GetPublicationByUserId()
   }
@@ -35,7 +49,7 @@ export class HomeComponent implements OnInit {
 
     if (type.includes('video'))
       $("#filep").html(`<video width="100%" height="100%" controls> <source id="imgp" src="${src}" type="video/mp4"> </video>`)
-    
+
   }
 
   onScroll() {
@@ -84,7 +98,7 @@ export class HomeComponent implements OnInit {
               console.log(err)
             })
 
-        },  
+        },
         err => {
           console.log(err)
         }
@@ -99,6 +113,8 @@ export class HomeComponent implements OnInit {
     this.publicationService.GetPublicationByUserId(this.user._id, this.page).subscribe(
       res => {
 
+        console.log(res) 
+        
         if (res.publications.length != 6)
           this.finished = false
 
@@ -114,8 +130,23 @@ export class HomeComponent implements OnInit {
       },
       err => {
         console.log(err)
-      }
-    )
+      })
   }
+
+  public AddComment(id) {
+    const body = {
+      comment: this.message,
+      publicationId: id,
+      userId: this.user._id,
+    }
+    this.commentService.AddComment(body).subscribe(
+      res => {
+        this.message = null
+      },
+      err => {
+        console.log(err)
+      })
+  }
+
 
 }

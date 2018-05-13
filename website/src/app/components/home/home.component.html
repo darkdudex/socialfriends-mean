@@ -136,7 +136,7 @@
         <div class="card-header">
           Mis Publicaciones
         </div>
-
+        <br>
         <div class="container">
           <div *ngIf="listPublications?.length == 0" style="color: gray">
             <br>Aún no tienes publicaciones
@@ -150,7 +150,7 @@
 
                   <div class="row" style="margin: 10 px; margin-top: 10px">
                     <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-lg-2 text-center">
-                      <img class="d-flex align-self-center mr-3" src="{{user.avatar}}" class="rounded-circle" height="50" width="50" style="border: 2px solid #D8D8D8">
+                      <img class="d-flex align-self-center mr-3" src="{{user.avatar}}" class="rounded-circle" height="60" width="60" style="border: 2px solid #D8D8D8">
                     </div>
                     <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10 col-lg-10">
 
@@ -164,7 +164,7 @@
                       </p>
 
 
-                      <p style="text-align: justify; margin-top: 6px">{{userPublication.message}}</p>
+
 
                       <div *ngIf="userPublication.filePublication.length > 0">
 
@@ -178,70 +178,70 @@
                             <video style="cursor: pointer" width="80%" height="80%" controls *ngIf="p.type.includes('video')" onclick="$('#myModal1').modal('show')"
                               (click)="PublicationClick(p.type,p.url)">
                               <source src="{{p.url}}" type="video/mp4">
-
                             </video>
 
                           </div>
 
                         </div>
-                        <br>
+
 
                       </div>
 
+                      <p style="text-align: justify; margin-top: 6px">{{userPublication.message}}</p>
+
                       <hr>
 
-                      <div class="row" style="margin: 10 px; margin-top: 10px">
+
+                      <div *ngFor="let p of userPublication.comment" class="row" style="margin: 10 px; margin-top: -5px">
+
                         <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-lg-2 text-center">
-                          <img class="d-flex align-self-center mr-3" src="{{user.avatar}}" class="rounded-circle" height="30" width="30" style="border: 2px solid #D8D8D8">
+                          <img class="d-flex align-self-center mr-3" src="{{p.userId.avatar}}" class="rounded-circle" height="30" width="30" style="border: 2px solid #D8D8D8">
                         </div>
+
                         <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10 col-lg-10" style="margin-left: -40px">
 
                           <p href="#" class="text-xl-left text-lg-left text-md-left text-center" style="font-size: 12px">
-                            <b>{{user.displayName}}</b>
+                            <b>{{p.userId.displayName}}</b>
                           </p>
                           <p class=" text-xl-left text-lg-left text-md-left text-center" style="font-size: 11px; margin-top: -15px; color: black">
-                            Hola, ¿Cómo estás?
+                            {{p.comment}}
                           </p>
                         </div>
 
                         <hr/>
 
-                        <textarea class="form-control" name="message" ngModel rows="10" placeholder="Escribe aquí tu mensaje..."></textarea>
+                      </div>
 
 
-                        <div>
-                          <br>
 
-                          <div class="row">
 
-                            <div class="col-12">
+                      <div class="row">
 
-                              <div onclick="$('#modaLike').modal('show')" class="media" style="cursor: pointer">
-                                <b class="mt-0" style="color:#DB3C3C">3 Me gusta</b>&nbsp;
-                                <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/237/237645.svg" style="width: 22px;">
-                              </div>
+                        <textarea class="form-control" [(ngModel)]="message" #textarea="ngModel" id="textarea" rows="5" style="width: 80%" placeholder="Escribe aquí tu mensaje..."></textarea>
+                        <button (click)="AddComment(userPublication._id)">Envíar</button>
 
-                            </div>
+                        <div class="col-12">
 
-                            <!-- <div class="col5">
-
-                              <div style="cursor: pointer">
-                                <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/456/456115.svg" style="width: 25px" align="right" (click)="getLike(lp.id,user.uid)">
-                              </div>
-                              <div style="cursor: pointer">
-                                <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/456/456257.svg" style="width: 25px" align="right" (click)="btnLike(lp.id,user.uid,lp.user)">
-                              </div>
-                              <div style="cursor: pointer">
-                                <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/390/390902.svg" style="width: 25px" align="right" (click)="deletePublication(lp.id,user.uid)">
-                              </div>
-
-                            </div> -->
-
+                          <div onclick="$('#modaLike').modal('show')" class="media" style="cursor: pointer">
+                            <b class="mt-0" style="color:#DB3C3C">3 Me gusta</b>&nbsp;
+                            <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/237/237645.svg" style="width: 22px;">
                           </div>
-                          <br>
-
 
                         </div>
+
+                        <!-- <div class="col5">
+
+                            <div style="cursor: pointer">
+                              <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/456/456115.svg" style="width: 25px" align="right" (click)="getLike(lp.id,user.uid)">
+                            </div>
+                            <div style="cursor: pointer">
+                              <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/456/456257.svg" style="width: 25px" align="right" (click)="btnLike(lp.id,user.uid,lp.user)">
+                            </div>
+                            <div style="cursor: pointer">
+                              <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/390/390902.svg" style="width: 25px" align="right" (click)="deletePublication(lp.id,user.uid)">
+                            </div>
+
+                          </div> -->
 
                       </div>
 
@@ -298,7 +298,7 @@
             <br>
             <b>{{user.displayName}}</b>
             <br>
-            <span class="badge badge-pill badge-success">Disponible</span>
+            <span class="badge badge-pill badge-success">Conectado</span>
             <div class="row">
               <div onclick="$('#siguiendo').modal('show')" class="col-xl-3 col-lg-3 col-md-6 col-6 font10" style="cursor: pointer;">
                 Siguiendo
