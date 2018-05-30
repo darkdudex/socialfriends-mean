@@ -1,5 +1,5 @@
 # socialfriends-mean
-Clone of a social network [WebSite: Angular - AppMobile: ReactNative - Api: Nodejs/Express]
+Clone of a social network [WebSite: Angular - AppMobile: Ionic 3 - Api: Nodejs/Express]
 
 * Bootstrap version (Angular) : v4.0.0-alpha.6
 
