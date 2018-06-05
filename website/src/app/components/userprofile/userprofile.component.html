@@ -94,19 +94,25 @@
                       <p style="text-align: justify; margin-top: 6px">{{userPublication.message}}</p>
 
                       <div *ngIf="userPublication.filePublication.length > 0">
-                        <div *ngFor="let p of userPublication.filePublication">
-                          <div style="margin: 5px">
-                            <img onclick="$('#myModal1').modal('show')" (click)="PublicationClick(p.type,p.url)" style="cursor: pointer" src="{{p.url}}"
-                              height="80%" width="80%" *ngIf="p.type.includes('image')">
-                            <video style="cursor: pointer" width="80%" height="80%" controls *ngIf="p.type.includes('video')" onclick="$('#myModal1').modal('show')"
-                              (click)="PublicationClick(p.type,p.url)">
-                              <source src="{{p.url}}" type="video/mp4">
-                            </video>
-                          </div>
 
+                          <div class="row">
+  
+                            <div *ngFor="let p of userPublication.filePublication" class="col-sm-6" style="margin: 0px; padding: 0px; margin-right: -50px; margin-bottom: -4%">
+  
+                              <img onclick="$('#myModal1').modal('show')" (click)="PublicationClick(p.type,p.url)" style="cursor: pointer; border-radius: 8px"
+                                src="{{p.url}}" height="80%" width="80%" *ngIf="p.type.includes('image')">
+  
+                              <video style="cursor: pointer" width="80%" height="80%" controls *ngIf="p.type.includes('video')" onclick="$('#myModal1').modal('show')"
+                                (click)="PublicationClick(p.type,p.url)">
+                                <source src="{{p.url}}" type="video/mp4">
+  
+                              </video>
+  
+                            </div>
+  
+                          </div><br>
+                          
                         </div>
-                        <br>
-                      </div>
 
                     </div>
 

@@ -166,19 +166,48 @@
                       <p style="text-align: justify; margin-top: 6px">{{userPublication.message}}</p>
 
                       <div *ngIf="userPublication.filePublication.length > 0">
-                        <div *ngFor="let p of userPublication.filePublication">
-                          <div style="margin: 5px">
+
+                        <div class="row">
+
+                          <div *ngFor="let p of userPublication.filePublication" class="col-sm-6" style="margin: 0px; padding: 0px; margin-right: -50px; margin-bottom: -4%">
+
                             <img onclick="$('#myModal1').modal('show')" (click)="PublicationClick(p.type,p.url)" style="cursor: pointer; border-radius: 8px"
                               src="{{p.url}}" height="80%" width="80%" *ngIf="p.type.includes('image')">
+
                             <video style="cursor: pointer" width="80%" height="80%" controls *ngIf="p.type.includes('video')" onclick="$('#myModal1').modal('show')"
                               (click)="PublicationClick(p.type,p.url)">
                               <source src="{{p.url}}" type="video/mp4">
+
                             </video>
+
                           </div>
 
                         </div>
                         <br>
+
                       </div>
+
+                      <hr>
+
+                      <div class="row" style="margin: 10 px; margin-top: 10px">
+                          <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-lg-2 text-center">
+                            <img class="d-flex align-self-center mr-3" src="{{user.avatar}}" class="rounded-circle" height="30" width="30" style="border: 2px solid #D8D8D8">
+                          </div>
+                          <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10 col-lg-10" style="margin-left: -40px">
+      
+                            <p href="#" class="text-xl-left text-lg-left text-md-left text-center" style="font-size: 12px">
+                              <b>{{user.displayName}}</b>
+                            </p>
+                            <p class=" text-xl-left text-lg-left text-md-left text-center" style="font-size: 11px; margin-top: -15px; color: black">
+                               Hola, ¿Cómo estás?
+                              </p>
+                          </div>
+                      
+                      <hr/>
+
+                      <textarea class="form-control" name="message" ngModel rows="10" placeholder="Escribe aquí tu mensaje..."></textarea>
+
+                    </div>
 
                     </div>
 
