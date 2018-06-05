@@ -2,28 +2,7 @@
 
 const userModel = require('../../models/user')
 const service = require('../../services/services')
-const bcrypt = require('bcrypt-nodejs')
-const config = require('../../config/config')
-
-function EncodePassword(password) {
-  return bcrypt.hashSync(password)
-}
-
-function DecodePassword(password, passwordEncode) {
-  return bcrypt.compareSync(password, passwordEncode)
-}
-
-//#region CheckIsEmail 
-function CheckIsEmail(account) {
-
-  var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
-
-  if (!reg.test(account))
-    return false
-
-  return true
-}
-//#endregion
+const utilities = require('../../utilities/utilities')
 
 //#region SignUp 
 async function SignUp(req, res) {
@@ -33,13 +12,13 @@ async function SignUp(req, res) {
     const u = {
       email: req.body.email,
       displayName: req.body.displayName,
-      password: EncodePassword(req.body.password),
+      password: utilities.EncodePassword(req.body.password),
       providerId: req.body.providerId,
       avatar: req.body.avatar,
       username: req.body.username
     }
 
-    if (config.isEmpty(u)) {
+    if (utilities.isEmpty(u)) {
       return res.status(400).send({
         message: 'Complete los campos requeridos'
       })
@@ -71,7 +50,7 @@ async function SignIn(req, res) {
       password: req.body.password
     }
 
-    if (config.isEmpty(u)) {
+    if (utilities.isEmpty(u)) {
       return res.status(400).send({
         message: 'Complete los campos requeridos'
       })
@@ -79,15 +58,15 @@ async function SignIn(req, res) {
 
     let user = {}
 
-    if (CheckIsEmail(u.account))
+    if (utilities.CheckIsEmail(u.account))
       user = await userModel.findOne({ email: u.account })
     else
       user = await userModel.findOne({ username: u.account })
 
     req.user = user
 
-    if (DecodePassword(u.password, user.password)) {
-
+    if (utilities.DecodePassword(u.password, user.password)) {
+console.log(user)
       user.password = null;
       // The user account is valid and state is verify.
       if (user.state) {

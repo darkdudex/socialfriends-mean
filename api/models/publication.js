@@ -7,7 +7,7 @@ const PublicationSchema = new Schema({
   message: String,
   userId: String,
   filePublication: Array,
-  creationDate: { type: Date, default: Date.now()},
+  creationDate: { type: Date },
 },{ versionKey: false })
 
 module.exports = mongoose.db.model('Publication', PublicationSchema)

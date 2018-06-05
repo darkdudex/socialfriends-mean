@@ -10,7 +10,8 @@ async function AddPublication(req, res) {
     const publication = await publicationModel.insertMany({
       message: req.body.message,
       userId: req.body.userId,
-      filePublication: req.body.filePublication
+      filePublication: req.body.filePublication,
+      creationDate: Date.now()
     })
 
     return res.status(200).send(publication)
