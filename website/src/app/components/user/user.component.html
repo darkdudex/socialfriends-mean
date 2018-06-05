@@ -60,6 +60,11 @@
 
             <br>
           </div>
+
+          <div class="row justify-content-center" *ngIf="finished">
+            <img src="https://www.pongomilogo.es/skin/frontend/default/em0060/images/ksi/topmegamenu/spinner.1429027063.gif" alt="">
+          </div>
+
         </ul>
 
       </div>
@@ -69,9 +74,7 @@
     </div>
   </div>
   <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
-  <div class="row justify-content-center" *ngIf="finished">
-    <img src="https://www.pongomilogo.es/skin/frontend/default/em0060/images/ksi/topmegamenu/spinner.1429027063.gif" alt="">
-  </div>
+
 </div>
 <br>
 <br>

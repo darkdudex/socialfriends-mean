@@ -45,7 +45,6 @@ export class HomeComponent implements OnInit {
 
   Files(event: any) {
     this.filesToUpload = <Array<File>>event.target.files;
-    console.log('archivos seleccionados --> ' + this.filesToUpload.length)
   }
 
   public AddPublication(dataForm) {
@@ -60,6 +59,7 @@ export class HomeComponent implements OnInit {
 
       this.publicationService.AddPublication(publication).subscribe(
         res => {
+          this.listPublications.unshift(res[0])
           dataForm.reset();
         },
         err => {
@@ -75,9 +75,10 @@ export class HomeComponent implements OnInit {
 
           this.publicationService.AddPublication(publication).subscribe(
             res => {
-              console.log(res)
+              this.listPublications.unshift(res[0])
               document.getElementById("CloseButton").click()
               dataForm.reset();
+              this.filesToUpload = [];
             },
             err => {
               console.log(err)
