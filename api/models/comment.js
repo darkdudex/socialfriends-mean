@@ -1,13 +1,17 @@
 'use strict'
 
-const config = require('../config/config')
-const Schema = config.db.Schema
+const mongoose = require('../config/config')
+const Schema = mongoose.db.Schema
 
 const CommentSchema = new Schema({
-  comentario: String,
+  comment: String,
   publicationId: String,
-  userId: String,
-  creationDate: String,
-},{ versionKey: false })
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: [true, 'Required field']
+  },
+  creationDate: Date
+}, { versionKey: false })
 
 module.exports = mongoose.db.model('Comment', CommentSchema)

@@ -1,22 +1,22 @@
 'use strict'
 
-const firebase = require('firebase');
-const googleStorage = require('@google-cloud/storage');
-const Multer = require('multer');
-const shortid = require('shortid');
+const firebase = require('firebase')
+const googleStorage = require('@google-cloud/storage')
+const Multer = require('multer')
+const shortid = require('shortid')
 
-let formData_Key = 'file';
-let tokenId = shortid.generate();
+let formData_Key = 'file'
+let tokenId = shortid.generate()
 
 const multer = Multer({
   storage: Multer.memoryStorage()
-});
+})
 
 const storage = googleStorage({
   keyFilename: `${__dirname}/../../config/googleapi-credentials.json`
-});
+})
 
-const bucket = storage.bucket('gs://db-firebase-5cf99.appspot.com');
+const bucket = storage.bucket('gs://db-firebase-5cf99.appspot.com')
 
 function uploadImageToStorage(files, userId, mainFolder) {
 
@@ -25,16 +25,16 @@ function uploadImageToStorage(files, userId, mainFolder) {
     let arrayFile = []
 
     if (files.length <= 0) {
-      reject('Not file');
+      reject('Not file')
     }
 
     files.map((file, i) => {
 
-      let nameFile = Date.now();
-      let folderPath = `socialfriends-mean/${mainFolder}/${userId}`;
-      let newFileName = `${folderPath}/${nameFile}`;
+      let nameFile = Date.now()
+      let folderPath = `socialfriends-mean/${mainFolder}/${userId}`
+      let newFileName = `${folderPath}/${nameFile}`
 
-      let fileUpload = bucket.file(newFileName);
+      let fileUpload = bucket.file(newFileName)
 
       const blobStream = fileUpload.createWriteStream({
         metadata: {
@@ -43,11 +43,11 @@ function uploadImageToStorage(files, userId, mainFolder) {
             firebaseStorageDownloadTokens: tokenId
           }
         },
-      });
+      })
 
       blobStream.on('error', error => {
-        reject(error);
-      });
+        reject(error)
+      })
 
       blobStream.on('finish', data => {
 
@@ -56,17 +56,17 @@ function uploadImageToStorage(files, userId, mainFolder) {
         arrayFile.push({ url: url, type: file.mimetype, code: nameFile.toString() })
 
         if (arrayFile.length == (files.length))
-          resolve(arrayFile);
+          resolve(arrayFile)
 
-      });
+      })
 
-      blobStream.end(file.buffer);
+      blobStream.end(file.buffer)
 
-    });
+    })
 
   })
 
-  return prom;
+  return prom
 
 }
 
@@ -83,18 +83,18 @@ async function AddFile(req, res) {
     if (data.files.length >= 1) {
 
       const response = await uploadImageToStorage(data.files, data.userId, data.folderName)
-      return res.status(200).send(response);
+      return res.status(200).send(response)
 
     }
 
     return res.status(400).send({
       status: 'File required'
-    });
+    })
 
   } catch (error) {
     return res.status(400).send({
       status: 'an error has ocurred'
-    });
+    })
   }
 
 }
