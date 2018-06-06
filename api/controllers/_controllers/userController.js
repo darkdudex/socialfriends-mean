@@ -66,7 +66,7 @@ async function SignIn(req, res) {
     req.user = user
 
     if (utilities.DecodePassword(u.password, user.password)) {
-console.log(user)
+
       user.password = null;
       // The user account is valid and state is verify.
       if (user.state) {
@@ -110,7 +110,7 @@ async function GetUsers(req, res) {
   try {
     const users = await userModel.find().select(['-password']).limit(limit).skip(page * limit)
     const total = await userModel.find().count()
-    return res.status(200).send({users, total})
+    return res.status(200).send({ users, total })
   } catch (error) {
     return res.status(500).send({
       message: 'Error en el servidor'
