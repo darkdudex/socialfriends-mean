@@ -6,12 +6,26 @@ async function AddFollower(req, res) {
 
   try {
 
-    const response = await followerModel.insertMany({
+    const body = {
       userId: req.body.userId,
       followerId: req.body.followerId
-    })
+    }
 
-    return res.status(200).send(response[0])
+    const find = await followerModel.findOne(body)
+
+    if (find == null) {
+
+      const response = await followerModel.insertMany({
+        userId: req.body.userId,
+        followerId: req.body.followerId
+      })
+
+      return res.status(200).send(response[0])
+    }
+
+    return res.status(500).send({
+      message: `Error`
+    })
 
   } catch (error) {
 
@@ -28,6 +42,8 @@ async function GetFollowerByUserId(req, res) {
   try {
 
     const response = await followerModel.find({ userId: req.params.userId })
+      .populate({ path: 'followerId', select: '-password -state' })
+      
     return res.status(200).send(response)
 
   } catch (error) {
