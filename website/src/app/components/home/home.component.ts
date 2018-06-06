@@ -50,9 +50,9 @@ export class HomeComponent implements OnInit {
   public AddPublication(dataForm) {
 
     const publication = dataForm.value
-
     publication.userId = this.user._id
 
+    /* Si el usuario publica solo mensaje (sin imágen o vídeo) */
     if (this.filesToUpload.length == 0) {
 
       publication.filePublication = []
