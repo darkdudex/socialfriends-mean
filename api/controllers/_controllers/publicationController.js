@@ -52,7 +52,10 @@ async function GetPublicationByUserId(req, res) {
   try {
 
     const userId = req.params.userId
+
     const publications = await publicationModel.find({ userId }).limit(limit).skip(page * limit).sort({ creationDate: 'desc' })
+      .populate({ path: 'comment', populate: { path: 'userId', select: ' avatar displayName _id' }, /*options: { limit: 5, skip: 2 } */ })
+
     const total = await publicationModel.find({ userId }).count()
 
     return res.status(200).send({ publications, total })

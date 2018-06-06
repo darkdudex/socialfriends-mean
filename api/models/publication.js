@@ -7,7 +7,11 @@ const PublicationSchema = new Schema({
   message: String,
   userId: String,
   filePublication: Array,
-  creationDate: Date
+  creationDate: Date,
+  comment: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Comment'
+  }],
 },{ versionKey: false })
 
 module.exports = mongoose.db.model('Publication', PublicationSchema)
