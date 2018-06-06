@@ -1,6 +1,7 @@
 'use strict'
 
 const commentModel = require('../../models/comment')
+const publicationModel = require('../../models/publication')
 
 async function AddComment(req, res) {
 
@@ -14,6 +15,9 @@ async function AddComment(req, res) {
     }
 
     const response = await commentModel.insertMany(body)
+
+    const x = await publicationModel.findOneAndUpdate({ _id: body.publicationId}, { $push: { comment: response[0] } }, { new: true })
+
     res.status(200).send(response[0])
 
   } catch (error) {
@@ -41,8 +45,18 @@ async function GetcommentByPublicationId(req, res) {
 
 }
 
+async function DeleteCommentById() {
+
+}
+
+async function UpdateCommentById() {
+
+}
+
 
 module.exports = {
   AddComment,
-  GetcommentByPublicationId
+  GetcommentByPublicationId,
+  DeleteCommentById,
+  UpdateCommentById
 }
