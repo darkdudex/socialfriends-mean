@@ -38,10 +38,10 @@ api.get('/publication/:userId', controllers.publicationController.GetPublication
 //#endregion
 
 //#region Comment Endpoints 
-api.post('/comment', controllers.publicationController.AddPublication)
-api.put('/comment', controllers.publicationController.UpdatePublication)
-api.delete('/comment', controllers.publicationController.RemovePublication)
-api.get('/comment/:publicationId', controllers.publicationController.GetPublicationByUserId)
+api.post('/comment', controllers.commentController.AddComment)
+// api.put('/comment', controllers.commentController.Updatecomment)
+// api.delete('/comment', controllers.commentController.Removecomment)
+api.get('/comment/:publicationId', controllers.commentController.GetcommentByPublicationId)
 //#endregion
 
 //#region Like Endpoints 
