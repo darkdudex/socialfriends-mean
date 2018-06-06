@@ -101,7 +101,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <a class="navbar-brand d-flex  center mr-3" id="item" style="font-size: 15px; color: #DB3C3C; cursor: pointer;">
-          <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/237/237645.svg" style="width: 22px;">
+          <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/291/291212.svg" style="width: 22px;">
           <b style="margin-left: -10px">Me gustas</b>
         </a>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -109,20 +109,21 @@
         </button>
       </div>
       <div class="modal-body">
-        <!-- <div style="color: gray">En este momento no tienes notificaciones</div> -->
-        <a style="color: #2285E3">
-          <i class="fa fa-info-circle" aria-hidden="true"></i>
-          <b style="font-size: 13px">SocialFriends te da la bienvenida</b>
+        <a data-dismiss="modal" aria-label="Close" [routerLink]="['/profile/5ad759fefa654c199037593c']" class="navbar-brand d-flex align-self-start mr-3"
+          id="item" style="font-size: 15px" href="/user">
+          <img class="rounded-circle" height="40" style="border: 2px solid #D8D8D8" width="40" src="https://scontent.fbaq1-1.fna.fbcdn.net/v/t1.0-9/17861541_105464440010285_2410770716287754895_n.jpg?_nc_cat=0&oh=b3a40940f143a6aeb39e9b009c96307a&oe=5B4FDC5C">
+          <b style="margin-left: 5px; margin-top: 8px; color: black">Maria Rebeca Batty Linero</b>
         </a>
-        <br>
-        <a style="color: #2285E3">
-          <i class="fa fa-info-circle" aria-hidden="true"></i>
-          <b style="font-size: 13px">Las notificaciones están en desarrollo</b>
+        <a data-dismiss="modal" aria-label="Close" [routerLink]="['/profile/5ad640bca86cca23545f8e1e']" class="navbar-brand d-flex align-self-start mr-3"
+          id="item" style="font-size: 15px" href="/user">
+          <img class="rounded-circle" height="40" style="border: 2px solid #D8D8D8" width="40" src="https://avatars2.githubusercontent.com/u/28882108">
+          <b style="margin-left: 5px; margin-top: 8px; color: black">Roberto Andrés Batty Linero</b>
         </a>
-        <br>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+        <a data-dismiss="modal" aria-label="Close" [routerLink]="['/profile/5ae63d5390ce57129c38b841']" class="navbar-brand d-flex align-self-start mr-3"
+          id="item" style="font-size: 15px" href="/user">
+          <img class="rounded-circle" height="40" style="border: 2px solid #D8D8D8" width="40" src="https://pbs.twimg.com/profile_images/928951694557433861/5Agr9ZeJ_400x400.jpg">
+          <b style="margin-left: 5px; margin-top: 8px; color: black">Ricardo Kaka</b>
+        </a>
       </div>
     </div>
   </div>
@@ -190,24 +191,59 @@
                       <hr>
 
                       <div class="row" style="margin: 10 px; margin-top: 10px">
-                          <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-lg-2 text-center">
-                            <img class="d-flex align-self-center mr-3" src="{{user.avatar}}" class="rounded-circle" height="30" width="30" style="border: 2px solid #D8D8D8">
-                          </div>
-                          <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10 col-lg-10" style="margin-left: -40px">
-      
-                            <p href="#" class="text-xl-left text-lg-left text-md-left text-center" style="font-size: 12px">
-                              <b>{{user.displayName}}</b>
-                            </p>
-                            <p class=" text-xl-left text-lg-left text-md-left text-center" style="font-size: 11px; margin-top: -15px; color: black">
-                               Hola, ¿Cómo estás?
-                              </p>
-                          </div>
-                      
-                      <hr/>
+                        <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-lg-2 text-center">
+                          <img class="d-flex align-self-center mr-3" src="{{user.avatar}}" class="rounded-circle" height="30" width="30" style="border: 2px solid #D8D8D8">
+                        </div>
+                        <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10 col-lg-10" style="margin-left: -40px">
 
-                      <textarea class="form-control" name="message" ngModel rows="10" placeholder="Escribe aquí tu mensaje..."></textarea>
+                          <p href="#" class="text-xl-left text-lg-left text-md-left text-center" style="font-size: 12px">
+                            <b>{{user.displayName}}</b>
+                          </p>
+                          <p class=" text-xl-left text-lg-left text-md-left text-center" style="font-size: 11px; margin-top: -15px; color: black">
+                            Hola, ¿Cómo estás?
+                          </p>
+                        </div>
 
-                    </div>
+                        <hr/>
+
+                        <textarea class="form-control" name="message" ngModel rows="10" placeholder="Escribe aquí tu mensaje..."></textarea>
+
+
+                        <div>
+                          <br>
+
+                          <div class="row">
+
+                            <div class="col-12">
+
+                              <div onclick="$('#modaLike').modal('show')" class="media" style="cursor: pointer">
+                                <b class="mt-0" style="color:#DB3C3C">3 Me gusta</b>&nbsp;
+                                <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/237/237645.svg" style="width: 22px;">
+                              </div>
+
+                            </div>
+
+                            <!-- <div class="col5">
+
+                              <div style="cursor: pointer">
+                                <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/456/456115.svg" style="width: 25px" align="right" (click)="getLike(lp.id,user.uid)">
+                              </div>
+                              <div style="cursor: pointer">
+                                <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/456/456257.svg" style="width: 25px" align="right" (click)="btnLike(lp.id,user.uid,lp.user)">
+                              </div>
+                              <div style="cursor: pointer">
+                                <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/390/390902.svg" style="width: 25px" align="right" (click)="deletePublication(lp.id,user.uid)">
+                              </div>
+
+                            </div> -->
+
+                          </div>
+                          <br>
+
+
+                        </div>
+
+                      </div>
 
                     </div>
 
