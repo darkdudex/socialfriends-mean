@@ -7,6 +7,7 @@ import { PublicationService } from '../../services/publication.service';
 import { FileService } from '../../services/file.service';
 import { CommentService } from '../../services/comment.service';
 import { FollowerService } from '../../services/follower.service';
+import { HomeComponentLabel } from './home.label';
 
 import * as $ from 'jquery';
 
@@ -24,6 +25,8 @@ export class HomeComponent implements OnInit {
   public finished: boolean = true;
   public filesToUpload: Array<File> = [];
   public typeFiles = ['image', 'video'];
+
+  public label = HomeComponentLabel.Spanish
 
   public message: String;
 
@@ -77,7 +80,7 @@ export class HomeComponent implements OnInit {
           dataForm.reset();
         },
         err => {
-          console.log(err)
+          console.log(err.error)
         })
 
     } else {
@@ -113,8 +116,8 @@ export class HomeComponent implements OnInit {
     this.publicationService.GetPublicationByUserId(this.user._id, this.page).subscribe(
       res => {
 
-        console.log(res) 
-        
+        console.log(res)
+
         if (res.publications.length != 6)
           this.finished = false
 
@@ -133,19 +136,35 @@ export class HomeComponent implements OnInit {
       })
   }
 
-  public AddComment(id) {
+  public AddComment(event,id, pos) {
+
+    event.preventDefault() 
     const body = {
       comment: this.message,
       publicationId: id,
       userId: this.user._id,
     }
-    this.commentService.AddComment(body).subscribe(
-      res => {
-        this.message = null
-      },
-      err => {
-        console.log(err)
-      })
+
+    if (event.keyCode === 13) {
+
+      this.commentService.AddComment(body).subscribe(
+        res => {
+
+          let response = res
+          delete response.userId
+          response.userId = {
+            avatar: this.user.avatar,
+            displayName: this.user.displayName
+          }
+
+          this.listPublications[pos].comment.unshift(response)
+          this.message = null
+        },
+        err => {
+          console.log(err)
+        })
+    }
+    
   }
 
 

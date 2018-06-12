@@ -1,18 +1,26 @@
 'use strict'
 
 const publicationModel = require('../../models/publication')
+const utilities = require('../../utilities/utilities')
 
 //#region AddPublication 
 async function AddPublication(req, res) {
 
   try {
 
-    const publication = await publicationModel.insertMany({
+    const p = {
       message: req.body.message,
       userId: req.body.userId,
       filePublication: req.body.filePublication,
       creationDate: Date.now()
+    }
+
+    if (utilities.isEmpty(p))
+    return res.status(400).send({
+      message: 'Complete los campos requeridos'
     })
+
+    const publication = await publicationModel.insertMany(p)
 
     return res.status(200).send(publication)
 

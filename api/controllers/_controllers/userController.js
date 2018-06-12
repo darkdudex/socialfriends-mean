@@ -18,11 +18,10 @@ async function SignUp(req, res) {
       username: req.body.username
     }
 
-    if (utilities.isEmpty(u)) {
+    if (utilities.isEmpty(u))
       return res.status(400).send({
         message: 'Complete los campos requeridos'
       })
-    }
 
     const user = await userModel.insertMany(u)
 
@@ -50,11 +49,11 @@ async function SignIn(req, res) {
       password: req.body.password
     }
 
-    if (utilities.isEmpty(u)) {
+    if (utilities.isEmpty(u))
       return res.status(400).send({
         message: 'Complete los campos requeridos'
       })
-    }
+
 
     let user = {}
 

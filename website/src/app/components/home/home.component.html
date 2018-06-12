@@ -134,7 +134,7 @@
     <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
       <div class="card">
         <div class="card-header">
-          Mis Publicaciones
+          {{label.publications}}
         </div>
         <br>
         <div class="container">
@@ -147,7 +147,6 @@
 
               <div *ngFor="let userPublication of listPublications; let i = index">
                 <div class="card card-user" style="margin: 10px">
-
                   <div class="row" style="margin: 10 px; margin-top: 10px">
                     <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-lg-2 text-center">
                       <img class="d-flex align-self-center mr-3" src="{{user.avatar}}" class="rounded-circle" height="60" width="60" style="border: 2px solid #D8D8D8">
@@ -189,44 +188,65 @@
 
                       <p style="text-align: justify; margin-top: 6px">{{userPublication.message}}</p>
 
-                      <hr>
+                      <a *ngIf="userPublication?.comment?.length > 0" data-toggle="collapse" href="#collapse_{{userPublication._id}}" aria-expanded="false"
+                        aria-controls="collapseExample" style="color: #2285E3">
+                        <i class="fa fa-comments" aria-hidden="true"></i>
+                        <b style="font-size: 13px">Ver comentarios</b>
+                      </a>
+                      <br>
 
+                      <div class="collapse" id="collapse_{{userPublication._id}}">
+                        <br>
+                        <div *ngFor="let p of userPublication.comment" class="row" style="margin: 10 px; margin-top: -5px">
 
-                      <div *ngFor="let p of userPublication.comment" class="row" style="margin: 10 px; margin-top: -5px">
+                          <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-lg-2 text-center">
+                            <img class="d-flex align-self-center mr-3" src="{{p.userId.avatar}}" class="rounded-circle" height="30" width="30" style="border: 2px solid #D8D8D8">
+                          </div>
 
-                        <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-lg-2 text-center">
-                          <img class="d-flex align-self-center mr-3" src="{{p.userId.avatar}}" class="rounded-circle" height="30" width="30" style="border: 2px solid #D8D8D8">
+                          <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10 col-lg-10" style="margin-left: -40px">
+
+                            <p href="#" class="text-xl-left text-lg-left text-md-left text-center" style="font-size: 12px">
+                              <b>{{p.userId.displayName}}</b>
+                            </p>
+                            <p class=" text-xl-left text-lg-left text-md-left text-center" style="font-size: 11px; margin-top: -15px; color: black">
+                              {{p.comment}}
+                            </p>
+                          </div>
+
+                          <hr/>
+
                         </div>
-
-                        <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10 col-lg-10" style="margin-left: -40px">
-
-                          <p href="#" class="text-xl-left text-lg-left text-md-left text-center" style="font-size: 12px">
-                            <b>{{p.userId.displayName}}</b>
-                          </p>
-                          <p class=" text-xl-left text-lg-left text-md-left text-center" style="font-size: 11px; margin-top: -15px; color: black">
-                            {{p.comment}}
-                          </p>
-                        </div>
-
-                        <hr/>
-
                       </div>
-
-
-
 
                       <div class="row">
 
-                        <textarea class="form-control" [(ngModel)]="message" #textarea="ngModel" id="textarea" rows="5" style="width: 80%" placeholder="Escribe aquí tu mensaje..."></textarea>
-                        <button (click)="AddComment(userPublication._id)">Envíar</button>
+                        <textarea (keyup)="AddComment($event,userPublication._id,i)" class="form-control" [(ngModel)]="message" #textarea="ngModel"
+                          id="textarea" rows="5" style="width: 80%; font-size: 80%" placeholder="Escribe aquí tu mensaje..."></textarea>
 
                         <div class="col-12">
+                          <br>
+                          <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group" role="group" aria-label="First group">
 
-                          <div onclick="$('#modaLike').modal('show')" class="media" style="cursor: pointer">
-                            <b class="mt-0" style="color:#DB3C3C">3 Me gusta</b>&nbsp;
-                            <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/237/237645.svg" style="width: 22px;">
+                              <div onclick="$('#modaLike').modal('show')" class="media" style="cursor: pointer">
+                                <b class="mt-0" style="color:#DB3C3C">3 Me gusta</b>&nbsp;
+                                <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/237/237645.svg" style="width: 22px;">
+                              </div>
+
+                            </div>
+                            <div class="input-group">
+
+                              <div onclick="$('#modaLike').modal('show')" class="media" style="cursor: pointer">
+                                <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/390/390902.svg" style="width: 25px" align="right" (click)="deletePublication(lp.id,user.uid)">
+                              </div>
+
+                              <div onclick="$('#modaLike').modal('show')" class="media" style="cursor: pointer">
+                                <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/456/456257.svg" style="width: 25px" align="right" (click)="btnLike(lp.id,user.uid,lp.user)">
+                              </div>
+
+                            </div>
                           </div>
-
+                          <br>
                         </div>
 
                         <!-- <div class="col5">
