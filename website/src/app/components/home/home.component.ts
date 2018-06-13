@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { NavComponent } from '../nav/nav.component';
+import { ModalUtilityComponent } from '../modal-utilitiy/modalutility.component';
 
 import { UserService } from '../../services/user.service';
 import { PublicationService } from '../../services/publication.service';
@@ -10,6 +12,8 @@ import { FollowerService } from '../../services/follower.service';
 import { HomeComponentLabel } from './home.label';
 
 import * as $ from 'jquery';
+import { LikeService } from '../../services/like.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-home',
@@ -30,16 +34,30 @@ export class HomeComponent implements OnInit {
 
   public message: String;
 
+  public clickDynamicArrayLoad : Array<any> = []
+
+  t(array){
+    console.log(array)
+    this.clickDynamicArrayLoad = array
+  }
+
+  p(likeArray,userId){
+    const x = likeArray.filter(item => item.userId._id == this.user._id)
+    return x.length > 0 ? true : false
+  }
+
   constructor(
     private userService: UserService,
     private publicationService: PublicationService,
     private commentService: CommentService,
     private followerService: FollowerService,
     private fileService: FileService,
+    private likeService: LikeService,
     private route: Router
   ) {
     this.user = JSON.parse(localStorage.getItem('userInfo'));
     this.GetPublicationByUserId()
+    console.log(this.GetLikeByPublicationId('5b202cb853ed2413889b131e'))
   }
 
   ngOnInit() {
@@ -136,9 +154,8 @@ export class HomeComponent implements OnInit {
       })
   }
 
-  public AddComment(event,id, pos) {
+  public AddComment(event, id, pos) {
 
-    event.preventDefault() 
     const body = {
       comment: this.message,
       publicationId: id,
@@ -164,8 +181,72 @@ export class HomeComponent implements OnInit {
           console.log(err)
         })
     }
-    
+
   }
 
+
+  public AddLike(data) {
+    this.likeService.AddLike(data).subscribe(
+      res => {
+        console.log(res)
+      },
+      err => {
+        console.log(err)
+      })
+  }
+
+  public RemoveLike(data) {
+    this.likeService.RemoveLike(data).subscribe(
+      res => {
+        console.log(res)
+      },
+      err => {
+        console.log(err)
+      })
+  }
+
+  public Like_And_Unlike(pubId) {
+
+    let x = document.getElementById(`like_${pubId}`)
+
+    const body = {
+      publicationId: pubId,
+      userId: this.user._id,
+    }
+
+    let src = {
+      unlike: 'https://image.flaticon.com/icons/svg/456/456257.svg',
+      like: 'https://image.flaticon.com/icons/svg/456/456115.svg'
+    }
+
+    if (x.innerHTML.includes(src.unlike)) {
+      x.querySelector('img').src = src.like
+      this.AddLike(body)
+    } else {
+      x.querySelector('img').src = src.unlike
+      this.RemoveLike(body)
+    }
+
+  }
+
+  public GetLikeByPublicationId(pubId): string {
+
+    let likes;
+
+    this.likeService.GetLikeByPublicationId(pubId).subscribe(
+      res => {
+        
+        likes = "5"
+      }, 
+      err => {
+        
+      }
+    )
+    return likes
+  }
+
+  test(userPublication){
+    console.log(userPublication)
+  }
 
 }

@@ -32,6 +32,8 @@ import * as moment from 'moment';
 moment.locale('es');
 
 import { FilterUserPipe } from './pipes/filterUser.pipe'
+import { LikeService } from './services/like.service';
+import { ModalUtilityComponent } from './components/modal-utilitiy/modalutility.component';
 
 
 @NgModule({
@@ -44,6 +46,7 @@ import { FilterUserPipe } from './pipes/filterUser.pipe'
     RegisterComponent,
     ForgetPasswordComponent,
     UserProfileComponent,
+    ModalUtilityComponent,
     FilterUserPipe
   ],
   imports: [
@@ -60,7 +63,8 @@ import { FilterUserPipe } from './pipes/filterUser.pipe'
     PublicationService,
     FollowerService,
     FileService,
-    CommentService
+    CommentService,
+    LikeService
   ],
   bootstrap: [AppComponent]
 })

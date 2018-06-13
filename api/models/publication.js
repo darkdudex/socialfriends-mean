@@ -12,6 +12,10 @@ const PublicationSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Comment'
   }],
+  like: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Like'
+  }],
 },{ versionKey: false })
 
 module.exports = mongoose.db.model('Publication', PublicationSchema)

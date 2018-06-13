@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { FollowerService } from '../../services/follower.service';
 
@@ -10,10 +10,13 @@ import { FollowerService } from '../../services/follower.service';
 export class UserComponent implements OnInit {
 
   public listUsers: Array<any> = []
-  public user = {}
+  public user:any = {}
   public page = 1;
   public finished: boolean = true;
-  public UserFind:string
+  public UserFind: string
+
+  //HTMLElement 
+  public elem: HTMLElement
 
   constructor(private userService: UserService, private followerService: FollowerService) {
     this.user = JSON.parse(localStorage.getItem('userInfo'));
@@ -50,7 +53,7 @@ export class UserComponent implements OnInit {
       })
   }
 
-  public AddFollower(userId, followerId) {
+  public Follow(userId, followerId) {
     const data = { userId, followerId }
     this.followerService.AddFollower(data).subscribe(
       res => {
@@ -60,5 +63,35 @@ export class UserComponent implements OnInit {
         console.log(err)
       })
   }
+
+  public UnFollower(userId, followerId) {
+    const data = { userId, followerId }
+    this.followerService.RemoveFollower(data).subscribe(
+      res => {
+        console.log(res)
+      },
+      err => {
+        console.log(err)
+      })
+  }
+
+
+  public Follow_And_UnFollow(followerId) {
+
+    let x = document.getElementById(followerId)
+
+    if (x.innerHTML.includes('fa fa-plus-circle')) {
+      x.className = 'btn btn-danger btn-sm'
+      x.innerHTML = '<i class="fa fa-minus-circle" aria-hidden="true"></i> Dejar de seguir'
+      this.Follow(this.user._id, followerId)
+    } else {
+      x.className = 'btn btn-primary btn-sm'
+      x.innerHTML = '<i class="fa fa-plus-circle" aria-hidden="true"></i> Seguir'
+      this.UnFollower(this.user._id, followerId)
+    }
+
+  }
+
+
 
 }

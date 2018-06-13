@@ -14,12 +14,7 @@ async function AddFollower(req, res) {
     const find = await followerModel.findOne(body)
 
     if (find == null) {
-
-      const response = await followerModel.insertMany({
-        userId: req.body.userId,
-        followerId: req.body.followerId
-      })
-
+      const response = await followerModel.insertMany(body)
       return res.status(200).send(response[0])
     }
 

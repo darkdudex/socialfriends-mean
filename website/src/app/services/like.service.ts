@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { config } from '../../config';
 
 @Injectable()
-export class FollowerService {
+export class LikeService {
 
   public url: string = config.url;
 
@@ -13,22 +13,19 @@ export class FollowerService {
 
   }
 
-  public AddFollower(publication): Observable<any> {
+  public AddLike(data): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post(`${this.url}/follow`, publication, { headers: headers });
+    return this.http.post(`${this.url}/like`, data, { headers: headers });
   }
 
-  public RemoveFollower(publication): Observable<any> {
+  public RemoveLike(data): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post(`${this.url}/unfollow`, publication, { headers: headers });
+    return this.http.post(`${this.url}/unlike`, data, { headers: headers });
   }
 
-  public GetFollowerByUserId(userId, page): Observable<any> {
-    return this.http.get(`${this.url}/follower/${userId}?page=${page}`);
+  public GetLikeByPublicationId(publicationId, /* page */ ): Observable<any> {
+    return this.http.get(`${this.url}/like/${publicationId}`); //?page=${page}
   }
 
-  public FileUpleoad() {
-
-  }
 
 }

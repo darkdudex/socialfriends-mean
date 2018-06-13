@@ -45,15 +45,18 @@ api.get('/comment/:publicationId', controllers.commentController.GetcommentByPub
 //#endregion
 
 //#region Like Endpoints 
+// TODO: Esto es una prueba, debo cambiar los endpoints de like.
 api.post('/like', controllers.likeController.AddLike)
-api.delete('/like', controllers.likeController.RemoveLike)
+api.post('/unlike', controllers.likeController.RemoveLike)
 api.get('/like/:publicationId', controllers.likeController.GetLikeByPublicationId)
 //#endregion
 
 //#region Follower Endpoints 
-api.post('/follower', controllers.followerController.AddFollower)
+// TODO: Esto es una prueba, debo cambiar los endpoints de followers.
+api.post('/follow', controllers.followerController.AddFollower)
+api.post('/unfollow', controllers.followerController.RemoveFollower)
 api.get('/follower/:userId', controllers.followerController.GetFollowerByUserId)
-api.delete('/follower', controllers.followerController.RemoveFollower)
+
 //#endregion
 
 module.exports = api
