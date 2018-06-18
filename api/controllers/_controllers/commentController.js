@@ -15,8 +15,15 @@ async function AddComment(req, res) {
     }
 
     const response = await commentModel.insertMany(body)
+    const commentsNum = await publicationModel.findOne({ _id: body.publicationId })
 
-    const x = await publicationModel.findOneAndUpdate({ _id: body.publicationId}, { $push: { comment: response[0] } }, { new: true })
+    const x = await publicationModel.findOneAndUpdate(
+      { _id: body.publicationId },
+      {
+        $push: { comment: response[0] },
+        $set: { totalComment: commentsNum.comment.length }
+      }
+      , { new: true })
 
     res.status(200).send(response[0])
 
@@ -31,11 +38,12 @@ async function GetcommentByPublicationId(req, res) {
   try {
 
     const publicationId = req.params.publicationId
+    const page = req.query.page 
 
-    console.log(publicationId)
+    console.log(page)
 
     const response = await commentModel.find({ publicationId })
-      .populate({ path: 'userId', select: ' avatar displayName _id' })
+      .populate({ path: 'userId', select: ' avatar displayName _id' }).limit(5).skip(page * 5)
 
     res.status(200).send(response)
 

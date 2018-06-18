@@ -16,6 +16,7 @@ const PublicationSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Like'
   }],
+  totalComment: { type: Number, default: 0 }
 },{ versionKey: false })
 
 module.exports = mongoose.db.model('Publication', PublicationSchema)
