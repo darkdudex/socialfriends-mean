@@ -14,6 +14,8 @@ import { HomeComponentLabel } from './home.label';
 import * as $ from 'jquery';
 import { LikeService } from '../../services/like.service';
 import { Observable } from 'rxjs/Observable';
+import { Ng2IzitoastService } from 'ng2-izitoast';
+
 
 @Component({
   selector: 'app-home',
@@ -34,14 +36,13 @@ export class HomeComponent implements OnInit {
 
   public message: String;
 
-  public clickDynamicArrayLoad : Array<any> = []
+  public clickDynamicArrayLoad: Array<any> = []
 
-  t(array){
-    console.log(array)
+  t(array) {
     this.clickDynamicArrayLoad = array
   }
 
-  p(likeArray,userId){
+  p(likeArray, userId) {
     const x = likeArray.filter(item => item.userId._id == this.user._id)
     return x.length > 0 ? true : false
   }
@@ -53,14 +54,65 @@ export class HomeComponent implements OnInit {
     private followerService: FollowerService,
     private fileService: FileService,
     private likeService: LikeService,
-    private route: Router
+    private route: Router,
+    public iziToast: Ng2IzitoastService
   ) {
     this.user = JSON.parse(localStorage.getItem('userInfo'));
     this.GetPublicationByUserId()
-    console.log(this.GetLikeByPublicationId('5b202cb853ed2413889b131e'))
+
   }
 
   ngOnInit() {
+  }
+
+  public Notification() {
+
+    this.iziToast.show({
+      id: 'haduken',
+      theme: 'dark',
+      icon: 'icon-contacts',
+      title: 'ariana wood',
+      message: 'Te ha seguido.',
+      position: 'bottomRight',
+      transitionIn: 'flipInX',
+      transitionOut: 'flipOutX',
+      progressBarColor: 'rgb(0, 255, 184)',
+      image: 'https://randomuser.me/api/portraits/women/81.jpg',
+      imageWidth: 70,
+      layout: 2,
+      backgroundColor: '#0275D8',
+      onClosing: function () {
+        console.info('onClosing');
+      },
+      onClosed: function (instance, toast, closedBy) {
+        console.info('Closed | closedBy: ' + closedBy);
+      },
+      iconColor: 'rgb(0, 255, 184)'
+    });
+
+    this.iziToast.show({
+      id: 'haduken',
+      theme: 'dark',
+      icon: 'icon-contacts',
+      title: '@purpledog431',
+      message: '<b>Te ha dado un like',
+      position: 'bottomRight',
+      transitionIn: 'flipInX',
+      transitionOut: 'flipOutX',
+      progressBarColor: 'rgb(0, 255, 184)',
+      image: 'https://randomuser.me/api/portraits/women/81.jpg',
+      imageWidth: 70,
+      layout: 2,
+      backgroundColor: '#D9534F',
+      onClosing: function () {
+        console.info('onClosing');
+      },
+      onClosed: function (instance, toast, closedBy) {
+        console.info('Closed | closedBy: ' + closedBy);
+      },
+      iconColor: 'rgb(0, 255, 184)'
+    });
+
   }
 
   PublicationClick(type, src) {
@@ -84,6 +136,8 @@ export class HomeComponent implements OnInit {
 
   public AddPublication(dataForm) {
 
+    document.getElementById('loader').classList.add('is-active')
+
     const publication = dataForm.value
     publication.userId = this.user._id
 
@@ -96,6 +150,7 @@ export class HomeComponent implements OnInit {
         res => {
           this.listPublications.unshift(res[0])
           dataForm.reset();
+          document.getElementById('loader').classList.remove('is-active')
         },
         err => {
           console.log(err.error)
@@ -114,6 +169,7 @@ export class HomeComponent implements OnInit {
               document.getElementById("CloseButton").click()
               dataForm.reset();
               this.filesToUpload = [];
+              document.getElementById('loader').classList.remove('is-active')
             },
             err => {
               console.log(err)
@@ -235,17 +291,17 @@ export class HomeComponent implements OnInit {
 
     this.likeService.GetLikeByPublicationId(pubId).subscribe(
       res => {
-        
+
         likes = "5"
-      }, 
+      },
       err => {
-        
+
       }
     )
     return likes
   }
 
-  test(userPublication){
+  test(userPublication) {
     console.log(userPublication)
   }
 

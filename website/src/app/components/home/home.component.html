@@ -1,8 +1,15 @@
+<!-- Loader active -->
+<div id="loader" class="loader loader-default"></div>
+
 <nav-root></nav-root>
+
+<button [swal]="['Oops!', 'This is not implemented yet :/', 'success']">
+  Do it!
+</button>
 
 <!-- Modal (Siguiendo) -->
 <div class="modal fade" id="siguiendo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <modal-itylity [image]="'https://image.flaticon.com/icons/svg/747/747835.svg'" [title]="'Siguiendo'" [titleColor]="'#02A2F7'"></modal-itylity>
+  <modal-utility [image]="'https://image.flaticon.com/icons/svg/747/747835.svg'" [title]="'Siguiendo'" [titleColor]="'#02A2F7'"></modal-utility>
 </div>
 
 <!--  -->
@@ -100,8 +107,8 @@
 
 <!-- Modal info likes  -->
 <div class="modal fade" id="modaLike" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <modal-itylity [image]="'https://image.flaticon.com/icons/svg/291/291212.svg'" [title]="'Me gusta'" [titleColor]="'#DB3C3C'"
-    [array]="clickDynamicArrayLoad"></modal-itylity>
+  <modal-utility [image]="'https://image.flaticon.com/icons/svg/291/291212.svg'" [title]="'Me gusta'" [titleColor]="'#DB3C3C'"
+    [array]="clickDynamicArrayLoad"></modal-utility>
 </div>
 
 <div class="container">
@@ -109,7 +116,7 @@
     <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
       <div class="card">
         <div class="card-header">
-          {{label.publications}}
+          {{label.publications}} <button (click)="Notification()">test</button>
         </div>
         <br>
         <div class="container">
@@ -136,8 +143,6 @@
                         <!-- <i title="public" class="fa fa-globe" aria-hidden="true"></i>
                         <i class="fa fa-lock" aria-hidden="true"></i> -->
                       </p>
-
-
 
 
                       <div *ngIf="userPublication.filePublication.length > 0">
@@ -191,7 +196,8 @@
                           <hr/>
 
                         </div>
-                      </div>
+                        <button *ngIf="userPublication.totalComment > 5" type="button" class="btn btn-primary  btn-sm" style="font-size: 10px">Ver más</button>
+                      </div><br>
 
                       <div class="row">
 

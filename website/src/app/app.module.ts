@@ -31,6 +31,9 @@ import { MomentModule } from 'angular2-moment';
 import * as moment from 'moment';
 moment.locale('es');
 
+import { Ng2IziToastModule } from 'ng2-izitoast';
+import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
+
 import { FilterUserPipe } from './pipes/filterUser.pipe'
 import { LikeService } from './services/like.service';
 import { ModalUtilityComponent } from './components/modal-utilitiy/modalutility.component';
@@ -55,7 +58,14 @@ import { ModalUtilityComponent } from './components/modal-utilitiy/modalutility.
     FormsModule,
     HttpClientModule,
     MomentModule,
-    appRouting
+    appRouting,
+    Ng2IziToastModule,
+    SweetAlert2Module.forRoot({
+      buttonsStyling: false,
+      customClass: 'modal-content',
+      confirmButtonClass: 'btn btn-primary',
+      cancelButtonClass: 'btn'
+  })
   ],
   providers: [
     UserService,
