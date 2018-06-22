@@ -1,6 +1,9 @@
 # socialfriends-mean
 Clone of a social network [WebSite: Angular - AppMobile: Ionic 3 - Api: Nodejs/Express]
 
+### NOTA: Aún no está listo, el código fuente necesita cambios ya que este proyecto lo realizo en mis tiempos libres.
+#### (Las fotos corresponden a una versión anterior)
+
 * Bootstrap version (Angular) : v4.0.0-alpha.6
 
 ## Project under construction
