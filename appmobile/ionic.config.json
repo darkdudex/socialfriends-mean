@@ -1,8 +1,0 @@
-{
-  "name": "socialfriends",
-  "app_id": "3b41d365",
-  "type": "ionic-angular",
-  "integrations": {
-    "cordova": {}
-  }
-}
