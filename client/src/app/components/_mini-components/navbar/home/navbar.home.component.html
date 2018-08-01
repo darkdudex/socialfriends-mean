@@ -1,0 +1,93 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary" style="z-index: 1">
+
+  <a class="navbar-brand ">
+
+    <item [routerLink]="['/login']" [font]="'Pacifico'" [color]="'#FFFFFF'" [value]="'SocialFriends'" [img]="'assets/img/svg/456129.svg'">
+    </item>
+
+  </a>
+
+  <button (click)="ShowItemsNav()" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navb  arColor01"
+    aria-expanded="true" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="navbar-collapse collapse" id="navbar">
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item">
+
+        <item [routerLink]="['/home']" [value]="'Inicio'" [color]="'#FFFFFF'" [img]="'https://image.flaticon.com/icons/svg/309/309574.svg'">
+        </item>
+
+      </li>
+
+      <li class="nav-item">
+
+        <item [routerLink]="['/userlist']" [value]="'Buscar personas'" [color]="'#FFFFFF'" [img]="'https://image.flaticon.com/icons/svg/163/163829.svg'">
+        </item>
+
+      </li>
+
+      <li class="nav-item">
+
+        <item [routerLink]="['/group']" [value]="'Buscar grupos'" [color]="'#FFFFFF'" [img]="'https://image.flaticon.com/icons/svg/559/559736.svg'">
+        </item>
+
+      </li>
+
+      <li class="nav-item">
+
+        <item [routerLink]="['/notification']" [value]="'Notificaciones'" [color]="'#FFFFFF'" [img]="'https://image.flaticon.com/icons/svg/309/309601.svg'" [notification]="'10'">
+        </item>
+        
+
+      </li>
+
+      <li class="nav-item">
+
+        <item [routerLink]="['/chat']" [value]="'Chat'" [color]="'#FFFFFF'" [img]="'https://image.flaticon.com/icons/svg/456/456113.svg'">
+        </item>
+
+      </li>
+
+    </ul>
+
+    <ul style="cursor: pointer;" class="navbar-nav flex-row ml-md-auto d-none d-md-flex" (click)="ShowDropdown()">
+      <li class="nav-item dropdown show">
+
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          <b id="user">{{user.displayName}}</b>&nbsp;
+          <img [src]="user.avatar" class="rounded-circle" style="width: 35px">
+        </a>
+
+        <div id="dropdown-info-user" style="margin-top: 15px;" class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
+          <a class="dropdown-item d-flex align-self-start mr-3">
+            <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/456/456111.svg" style="width: 22px;">
+            <b style="margin-left: -10px">{{user.email}}</b>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item d-flex align-self-start mr-3" [routerLink]="['/profile/',user._id]">
+            <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/138/138692.svg" style="width: 22px;">
+            <label style="margin-left: -10px">Perfil</label>
+          </a>
+          <a class="dropdown-item d-flex align-self-start mr-3" onclick="document.getElementById('profile').click()" *ngIf="user.providerId == 'email.com'">
+            <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/196/196525.svg" style="width: 22px;">
+            <label style="margin-left: -10px">Cambiar imágen de perfil</label>
+          </a>
+          <a class="dropdown-item d-flex align-self-start mr-3" [routerLink]="['/setting']">
+            <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/456/456167.svg" style="width: 22px;">
+            <label style="margin-left: -10px">Configuración</label>
+          </a>
+          <a class="dropdown-item d-flex align-self-start mr-3" (click)="SignOut()">
+            <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/248/248927.svg" style="width: 22px;">
+            <label style="margin-left: -10px">Cerrar Sesión</label>
+          </a>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</nav>
+<br><br><br><br>

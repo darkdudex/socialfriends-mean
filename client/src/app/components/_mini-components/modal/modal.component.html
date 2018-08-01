@@ -1,0 +1,28 @@
+<div class="modal-container" [ngStyle]="display"></div>
+<div id="exampleModalCenter" class="modal fade show" [ngStyle]="display" style="padding-right: 17px;">
+
+  <div class="modal-dialog modal-dialog-centered">
+
+
+    <div class="modal-content">
+
+      <button type="button" style="background-color: transparent; border: 1px solid transparent; outline: none">
+        <span style="position: fixed; margin-left: 46%; margin-top: -10px">
+          <img src="assets/img/png/cancel.png" height="25" width="25">
+        </span>
+      </button>
+
+      <item [routerLink]="['/group']" [value]="'Siguiendo'" [color]="'#02A2F7'" [img]="'https://image.flaticon.com/icons/svg/747/747835.svg'">
+      </item>
+
+      <div class="modal-body modal-body-style">
+
+        <a data-dismiss="modal" aria-label="Close" class="navbar-brand d-flex align-self-start mr-3" id="item" style="font-size: 15px">
+          <img class="rounded-circle" height="40" style="border: 2px solid #D8D8D8" width="40" src="https://marriedwiki.com/uploads/bio/sofia-vergara.jpg">
+          <b style="margin-left: 5px; margin-top: 8px;">Sofia Vergara</b>
+        </a>
+    
+      </div>
+    </div>
+  </div>
+</div>

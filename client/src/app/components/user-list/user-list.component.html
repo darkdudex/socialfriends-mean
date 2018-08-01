@@ -1,0 +1,85 @@
+<navbar-home></navbar-home>
+
+<div class="container" id="divUser">
+
+  <div class="row">
+
+    <div class="col-sm-12">
+
+      <ul class="list-unstyled" style="margin: 20px">
+
+
+        <input type="text" class="form-control" [(ngModel)]="UserFind" placeholder="Buscar persona por su nombre">
+        <br>
+
+
+        <div *ngIf="listUsers?.length == 0" style="color: gray">
+          <br>
+          <b>Aún no hay usuarios registrados.</b>
+        </div>
+
+        <div *ngFor="let p of listUsers">
+
+          <div *ngIf="user._id != p._id" class="card card-user">
+            <div class="row" style="margin: 10px">
+              <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-lg-2 text-center">
+                <img class="d-flex align-self-center mr-3" src="{{p.avatar}}" class="rounded-circle" style="width: 100px; border: 2px solid #D8D8D8">
+              </div>
+              <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 col-lg-8">
+                <h5 class="text-xl-left text-lg-left text-md-center text-center">
+                  <b>{{p.displayName}}</b>
+
+                </h5>
+
+                <div class="text-xl-left text-lg-left text-md-center text-center">
+                  <i style="color:#5E63FA" *ngIf="p.providerId == 'facebook.com'" class="fa fa-facebook-official" aria-hidden="true"></i>
+                  <i style="color:#F15952" *ngIf="p.providerId == 'google.com'" class="fa fa-google-plus" aria-hidden="true"></i>
+                  <i style="color:#6AF0F6" *ngIf="p.providerId == 'twitter.com'" class="fa fa-twitter" aria-hidden="true"></i>
+                  <i style="color:#FFBF00" *ngIf="p.providerId == 'email.com'" class="fa fa-envelope" aria-hidden="true"></i>
+                  <label class="mt-0 mb-1" style="font-size: 13px">{{p.email}}</label>
+                </div>
+                <div class="text-xl-left text-lg-left text-md-center text-center">
+                  <a [routerLink]="['/profile/',p._id]">
+                    <b>
+                      <i class="fa fa-male" aria-hidden="true"></i> Ver perfil</b>
+                  </a>
+                  <br>
+
+                </div>
+              </div>
+
+
+
+              <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-lg-2 text-center ">
+
+                <button style="width: 145px" id="{{p._id}}" [ngClass]="{'btn-danger': validate(p._id), 'btn-primary': !validate(p._id) }" type="submit" class="btn btn-sm"
+                  (click)="Follow_And_UnFollow(p._id)">
+                  <b>
+                    <fa-icon [icon]="['fas', 'user']" size="lg"></fa-icon>
+                    {{validate(p._id) ? 'Dejar de seguir' : 'Seguir'}}
+                  </b>
+                </button>
+
+              </div>
+            </div>
+          </div>
+
+          <br>
+        </div>
+
+        <div class="row justify-content-center" *ngIf="finished">
+          <img src="assets/img/loader.gif" height="35" width="35">
+        </div>
+
+      </ul>
+
+      <br>
+
+
+    </div>
+  </div>
+  <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
+
+</div>
+<br>
+<br>

@@ -1,0 +1,260 @@
+<navbar-home></navbar-home>
+
+<modal [visible]="true"></modal>
+
+<div class="container" style="z-index: -1 !important;">
+  <div class="row">
+
+    <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+
+      <br>
+
+      <div *ngIf="listPublications?.length == 0">
+
+        <item [routerLink]="['/group']" [value]="'Aún no tienes publicaciones. ¡Vamos que esperas!'" [color]="'#F4C534'" [img]="'https://image.flaticon.com/icons/svg/743/743332.svg'">
+        </item>
+
+      </div>
+
+      <div class="container">
+
+        <div>
+          <div *ngIf="listPublications?.length > 0" class="">
+
+            <div *ngFor="let userPublication of listPublications; let i = index">
+              <div class="card card-user" style="margin: 10px; margin-top: 5px; margin-bottom: 40px">
+                <div class="row" style="margin: 10 px; margin-top: 10px">
+
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-lg-12 text-center">
+
+                    <img class="profile-img" src="{{user.avatar}}" class="rounded-circle" height="60" width="60" style="border: 2px solid #D8D8D8; margin-top: -40px">
+
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-lg-12">
+
+                    <h5 href="#" class="text-xl-center text-lg-center text-md-center text-center">
+                      <b>{{user.displayName}}</b>
+                    </h5>
+
+                    <p class="text-muted text-xl-center text-lg-center text-md-center text-center" style="font-size: 11px; margin-top: -5px">
+                      {{userPublication.creationDate | amTimeAgo}}
+                    </p>
+
+                    <div class="row" *ngIf="userPublication.filePublication.length > 0">
+
+                      <div class="col-12">
+
+                        <div class="qa" style="text-align: center">
+
+                          <div data-grid="images" data-target-height="150">
+                            <!-- <div style="margin-bottom: 10px; margin-right: 10px; display: inline-block; vertical-align: bottom;">
+
+                            </div> -->
+
+                            <div *ngFor="let p of userPublication.filePublication" style="margin-bottom: 10px; margin-right: 10px; display: inline-block; vertical-align: bottom; cursor: pointer;">
+
+                              <img (click)="PublicationClick(p.type,p.url)" [src]="p.url" style="width: 218px; height: 218px;border: 1px solid #D8D8D8;"
+                                *ngIf="p.type.includes('image')">
+
+                              <video [src]="p.url" style="width: 218px; height: 218px;border: 1px solid #D8D8D8;" controls *ngIf="p.type.includes('video')"
+                                (click)="PublicationClick(p.type,p.url)">
+                                <source [src]="p.url" type="video/mp4">
+                              </video>
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+
+
+                    </div>
+
+
+                    <div style="text-align: justify; -moz-text-align-last: center; text-align-last: center; margin-top: 6px; margin: 20px; font-size: 90%"
+                      [innerHTML]="userPublication.message"></div>
+
+                    <a *ngIf="userPublication?.comment?.length > 0" data-toggle="collapse" href="#collapse_{{userPublication._id}}" aria-expanded="false"
+                      aria-controls="collapseExample" style="color: #2285E3">
+                      <i class="fa fa-comments" aria-hidden="true"></i>
+                      <b style="font-size: 13px; margin-left: 20px">Ver comentarios</b>
+                    </a>
+                    <br>
+
+
+                    <br>
+                    <div *ngFor="let p of userPublication.comment" class="row" style="margin: 10 px; margin-top: -5px">
+
+                      <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-lg-2 text-left">
+                        <img class="d-flex align-self-center mr-3" src="{{p.userId.avatar}}" class="rounded-circle" height="30" width="30" style="border: 2px solid #D8D8D8">
+                      </div>
+
+                      <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10 col-lg-10" style="margin-left: -40px">
+
+                        <p href="#" class="text-xl-left text-lg-left text-md-left text-left" style="font-size: 12px">
+                          <b>{{p.userId.displayName}}</b>
+                        </p>
+                        <p class="text-xl-left text-lg-left text-md-left text-left" style="font-size: 11px; margin-top: -15px; color: black">
+                          {{p.comment}}
+                        </p>
+                      </div>
+
+                      <hr/>
+
+                    </div>
+                    <button *ngIf="userPublication.totalComment > 5" type="button" class="btn btn-primary  btn-sm" style="font-size: 10px">Ver más</button>
+
+                    <br>
+
+                    <div class="row" style="margin-top: -70px">
+
+                      <div class="col-12">
+
+                        <div style="text-align: center">
+
+                          <textarea style="font-size: 80%; width: 90%; display: block; margin-left: auto; margin-right: auto;" (keyup)="AddComment($event,userPublication._id,i)"
+                            class="form-control" [(ngModel)]="message" #textarea="ngModel" id="textarea" rows="5" placeholder="Escribe aquí tu mensaje..."></textarea>
+                        </div>
+
+
+                      </div>
+
+
+                      <div class="col-12">
+                        <br>
+                        <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                          <div class="btn-group" role="group" aria-label="First group">
+
+                            <div *ngIf="userPublication?.like?.length > 0" onclick="$('#modaLike').modal('show')" (click)="t(userPublication.like)" class="media"
+                              style="cursor: pointer; margin-left: 20px">
+                              <b class="mt-0" style="color:#389FEB">{{userPublication?.like?.length}} Me gusta</b>&nbsp;
+                              <!-- <img class="d-flex align-self-start mr-3" src="assets/img/icons/456115.svg" style="width: 22px;"> -->
+
+                            </div>
+
+                          </div>
+
+                          <div class="input-group">
+
+                            <div onclick="$('#delete_pub').modal('show')" class="media" style="cursor: pointer">
+                              <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/390/390902.svg" style="width: 25px" align="right">
+                            </div>
+
+                            <div id="like_{{userPublication._id}}" class="media" style="cursor: pointer">
+                              <img class="d-flex mr-3" src="{{p(listPublications[i].like,user._id) ? 'assets/img/svg/456115.svg' : 'assets/img/svg/456257.svg'}}"
+                                style="width: 25px" align="right" (click)="Like_And_Unlike(userPublication._id)">
+                            </div>
+
+                          </div>
+                        </div>
+                        <br>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="row justify-content-center" *ngIf="finished">
+              <img src="https://www.pongomilogo.es/skin/frontend/default/em0060/images/ksi/topmegamenu/spinner.1429027063.gif" alt="">
+            </div>
+
+            <br>
+          </div>
+        </div>
+      </div>
+      <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
+
+      <br>
+
+      <div class="card">
+        <div class="card-header">
+          Publicaciones de las personas que sigo
+        </div>
+        <br>
+
+        <!-- este es el nuevo -->
+        <div class="container">
+          <div *ngIf="listPublicationFollowers?.length == 0" style="color: gray">Aún no sigues a nadie, o el usuario al que sigues no tiene publicaciones.
+            <br>
+            <br>
+          </div>
+          <div>
+            <div class="card">
+              <div class="row" style="margin: 10px"></div>
+            </div>
+            <br>
+          </div>
+        </div>
+
+      </div>
+      <br>
+
+    </div>
+    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+      <div class="card">
+        <div class="card-block">
+          <div style="text-align: center; margin-top: 10px">
+            <img class="d-flex align-self-center mr-3" src="{{user.avatar}}" class="rounded-circle" style="width: 100px; border: 2px solid #D8D8D8">
+            <br>
+            <b>{{user.displayName}}</b>
+            <br>
+            <span class="badge badge-pill badge-success">Conectado</span>
+            <div class="row" style="font-size: 70%; margin-top: 5px; margin-bottom: 7px; text-align: center">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-4" style="cursor: pointer;">
+                <b>Siguiendo
+                  <br>{{followerTotal}}</b>
+
+              </div>
+              <div class="col-xl-4 col-lg-4 col-md-4 col-4" style="cursor: pointer;">
+                <b> Seguidores
+                  <br>{{followingTotal}}</b>
+
+              </div>
+              <div class="col-xl-4 col-lg-4 col-md-4 col-4">
+                <b> Publicaciones
+                  <br>{{publicationTotal}}</b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+
+      <div class="card">
+        <div class="card-header">
+          Crear Publicación
+        </div>
+        <br>
+        <form id="publicationForm" #publicationForm="ngForm" (ngSubmit)="AddPublication(publicationForm)">
+          <ul class="list-unstyled" style="margin: 5px">
+            <div class="form-group">
+              <label for="exampleTextarea">Mensaje</label>
+              <textarea class="form-control" name="message" ngModel rows="10" placeholder="Escribe aquí tu mensaje..."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputFile">Foto</label>
+              <input type="file" class="form-control-file" (change)="Files($event)" id="pic" style="display: none" multiple>
+              <a class="navbar-brand d-flex align-self-start mr-3" onclick="document.getElementById('pic').click()" id="item" style="font-size: 15px; margin-top: -10px; color:#0174DF; cursor: pointer">
+                <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/502/502629.svg" style="width: 22px;">
+                <b style="margin-left: -10px">Seleccionar imágen o vídeo</b>
+              </a>
+            </div>
+
+            <button class="btn btn-lg btn-success btn-block" type="submit">
+              <i id="icon" class="fa fa-share-square-o" aria-hidden="true"></i>Publicar</button>
+          </ul>
+        </form>
+        <br>
+
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<br>

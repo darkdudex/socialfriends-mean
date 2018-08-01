@@ -1,0 +1,40 @@
+@import '../../../../sass/_mixins';
+
+.center {
+  @include center;
+}
+
+.modal-container{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.modal-container::after{
+  content: '';
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.75);
+  z-index: 1
+}
+
+.modal-body-style{
+  overflow-y: scroll; 
+  height: 70vh;
+}
+
+.modal-body-style::-webkit-scrollbar{
+  width: 7px;
+}
+
+.modal-body-style::-webkit-scrollbar-thumb{
+  background: #F05228;
+  border-radius: 5px;
+}

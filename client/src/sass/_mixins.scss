@@ -1,0 +1,17 @@
+@mixin center {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+@mixin m-top($index){
+  margin-top: $index !important;
+}
+

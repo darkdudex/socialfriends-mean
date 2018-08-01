@@ -1,0 +1,84 @@
+<navbar-home></navbar-home>
+
+<div class="container" id="divUser">
+
+  <div data-aos="zoom-in" class="py-4 text-center">
+    <img class="d-block mx-auto mb-4" src="https://image.flaticon.com/icons/svg/559/559736.svg" alt="" width="72" height="72">
+    <h4>
+      <b>Grupos</b>
+    </h4>
+
+    <p class="lead">En esta sección podrás encontrar toda clase de grupos en los cuales puedas compartir tus conocimientos, conocer nuevas
+      personas de tus tipo, charlas, entre otras. ¡Diviertete!</p>
+    <button class="btn btn-danger btn-sm">
+      <b>
+        <fa-icon [icon]="['fas', 'users']" size="lg"></fa-icon> Crear nuevo grupo
+      </b>
+    </button>
+  </div>
+
+  <div class="row">
+
+    <div class="col-sm-12">
+
+      <ul class="list-unstyled" style="margin: 10px">
+
+
+        <input type="text" class="form-control" [(ngModel)]="UserFind" placeholder="Buscar grupo por su nombre">
+
+        <!-- <div style="color: gray">
+          <br><b>Aún no hay grupos registrados.</b>
+        </div> -->
+
+        <div>
+
+          <div *ngFor="let group of groupList" class="card card-user" style="margin-top: 20px">
+            <div class="row" style="margin: 10px;">
+              <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-lg-2 text-center">
+                <img class="d-flex align-self-center mr-3" [src]="group.avatar" class="rounded-circle" style="width: 100px; border: 2px solid #D8D8D8">
+              </div>
+              <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10 col-lg-10">
+                <h5 class="text-xl-left text-lg-left text-md-left text-center">
+                  <b>{{group.name}}</b>
+                </h5>
+
+                <div class="text-xl-left text-lg-left text-md-left text-center">
+                  <p>
+                    {{group.description}}
+                  </p>
+                  <b>Integrantes: {{group.users?.length}} Personas</b>
+                  <br>
+                  <a>
+                    <b>
+                      <i class="fa fa-male" aria-hidden="true"></i> Ver perfil</b>
+                  </a>
+                  <br>
+
+
+                  <button type="submit" class="btn btn-primary btn-sm" (click)="Follow_And_UnFollow(p._id)">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i> Seguir</button>
+
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+
+          <br>
+        </div>
+
+        <div class="row justify-content-center" *ngIf="finished">
+          <img src="assets/img/loader.gif" height="35" width="35">
+        </div>
+
+      </ul>
+
+      <br>
+
+
+    </div>
+  </div>
+
+</div>
+<br>
+<br>

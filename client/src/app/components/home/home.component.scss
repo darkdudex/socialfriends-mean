@@ -1,0 +1,17 @@
+@import '../../../sass/_mixins';
+
+.center {
+  @include center;
+}
+
+.m-top-15{
+  @include m-top(15px)
+}
+
+.profile-img{
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: -45px;
+}
+

@@ -1,0 +1,270 @@
+<navbar-home></navbar-home>
+
+<!-- <button [swal]="['Oops!', 'This is not implemented yet :/', 'success']">
+  Do it!
+</button>
+<button (click)="Notification()">test</button> -->
+
+<div class="container">
+  <div class="row">
+
+    <div class="col-12">
+      <div class="card">
+        <div class="card-block">
+          <div>
+            <div [ngStyle]="{ 'height': '25vh', 'background-image': 'url(http://saludynaturaleza.com.ar/uploads/superbanner/big_banner1.jpg?timestamp=1531526400033)'}">
+              <br>
+              <div>
+                <img class="d-flex align-self-center mr-3" src="{{user.avatar}}" class="rounded-circle" style="width: 150px; height: 150px; border: 2px solid #D8D8D8; position: absolute; left: 0; margin-left: 1%; margin-top: 3%">
+
+                <div class="row" style="position: absolute !important; left: 0; margin-left: 160px; margin-top: 140px">
+                  <div class="col-6">
+
+                    <h5>
+                      <b>@{{user.username}}</b>
+                      <br>
+                      <h6>
+                        {{user.displayName}}
+                      </h6>
+                      <span class="badge badge-pill badge-success">Conectado</span>
+                    </h5>
+
+                  </div>
+                  <div class="col-6">
+                    <div class="row" style="text-align: center; ">
+                      <hr>
+                      <div style="cursor: pointer;">
+                        <b>Siguiendo
+                          <br>0</b>
+
+                      </div>
+                      <div style="cursor: pointer;">
+                        <b> Seguidores
+                          <br>0</b>
+
+                      </div>
+                      <div>
+                        <b> Publicaciones
+                          <br>{{listPublications?.length}}</b>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <br>
+              <br>
+            </div>
+            <br>
+          </div>
+        </div>
+      </div>
+      <br>
+    </div>
+
+    <div class="col-12">
+
+      <br>
+      <div class="container">
+        <div *ngIf="listPublications?.length == 0" style="color: gray">
+          <br>Aún no tienes publicaciones
+        </div>
+
+        <div>
+          <br>
+          <br>
+          <div *ngIf="listPublications?.length > 0" class="">
+
+            <div *ngFor="let userPublication of listPublications; let i = index">
+              <div class="card card-user" style="margin: 10px; margin-top: 5px; margin-bottom: 40px">
+                <div class="row" style="margin: 10 px; margin-top: 10px">
+
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-lg-12 text-center">
+
+                    <img class="profile-img" src="{{user.avatar}}" class="rounded-circle" height="60" width="60" style="border: 2px solid #D8D8D8; margin-top: -40px">
+
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-lg-12">
+
+                    <h5 href="#" class="text-xl-center text-lg-center text-md-center text-center">
+                      <b>{{user.displayName}}</b>
+                    </h5>
+                    <p class="text-muted text-xl-center text-lg-center text-md-center text-center" style="font-size: 11px; margin-top: -5px">
+                      {{userPublication.creationDate | amTimeAgo}}
+                    </p>
+
+                    <div class="row" *ngIf="userPublication.filePublication.length > 0">
+
+                      <div class="col-12">
+
+                        <div class="qa" style="text-align: center">
+
+                          <div data-grid="images" data-target-height="150">
+                            <div style="margin-bottom: 10px; margin-right: 10px; display: inline-block; vertical-align: bottom;">
+
+                            </div>
+
+                            <div *ngFor="let p of userPublication.filePublication" style="margin-bottom: 10px; margin-right: 10px; display: inline-block; vertical-align: bottom; cursor: pointer;">
+
+                              <img (click)="PublicationClick(p.type,p.url)" [src]="p.url" style="width: 117px; height: 118px;border: 1px solid #D8D8D8;"
+                                *ngIf="p.type.includes('image')">
+
+                              <video data-width="640" data-height="640" data-action="zoom" [src]="p.url" style="width: 117px; height: 118px;border: 1px solid #D8D8D8"
+                                controls *ngIf="p.type.includes('video')" (click)="PublicationClick(p.type,p.url)">
+                                <source [src]="p.url" type="video/mp4">
+                              </video>
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+
+
+                    </div>
+
+                    <p style="text-align: justify; -moz-text-align-last: center; text-align-last: center; margin-top: 6px; margin: 20px; font-size: 90%">{{userPublication.message}}</p>
+
+                    <a *ngIf="userPublication?.comment?.length > 0" data-toggle="collapse" href="#collapse_{{userPublication._id}}" aria-expanded="false"
+                      aria-controls="collapseExample" style="color: #2285E3">
+                      <i class="fa fa-comments" aria-hidden="true"></i>
+                      <b style="font-size: 13px; margin-left: 20px">Ver comentarios</b>
+                    </a>
+                    <br>
+
+
+                    <br>
+                    <div *ngFor="let p of userPublication.comment" class="row" style="margin: 10 px; margin-top: -5px">
+
+                      <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-lg-2 text-left">
+                        <img class="d-flex align-self-center mr-3" src="{{p.userId.avatar}}" class="rounded-circle" height="30" width="30" style="border: 2px solid #D8D8D8">
+                      </div>
+
+                      <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10 col-lg-10" style="margin-left: -40px">
+
+                        <p href="#" class="text-xl-left text-lg-left text-md-left text-left" style="font-size: 12px">
+                          <b>{{p.userId.displayName}}</b>
+                        </p>
+                        <p class="text-xl-left text-lg-left text-md-left text-left" style="font-size: 11px; margin-top: -15px; color: black">
+                          {{p.comment}}
+                        </p>
+                      </div>
+
+                      <hr/>
+
+                    </div>
+                    <button *ngIf="userPublication.totalComment > 5" type="button" class="btn btn-primary  btn-sm" style="font-size: 10px">Ver más</button>
+
+                    <br>
+
+                    <div class="row" style="margin-top: -70px">
+
+                      <div class="col-12">
+
+                        <div style="text-align: center">
+
+                          <textarea style="font-size: 80%; width: 90%; display: block; margin-left: auto; margin-right: auto;" (keyup)="AddComment($event,userPublication._id,i)"
+                            class="form-control" [(ngModel)]="message" #textarea="ngModel" id="textarea" rows="5" placeholder="Escribe aquí tu mensaje..."></textarea>
+                        </div>
+
+
+                      </div>
+
+
+                      <div class="col-12">
+                        <br>
+                        <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                          <div class="btn-group" role="group" aria-label="First group">
+
+                            <div *ngIf="userPublication?.like?.length > 0" onclick="$('#modaLike').modal('show')" (click)="t(userPublication.like)" class="media"
+                              style="cursor: pointer">
+                              <b class="mt-0" style="color:#DB3C3C">{{userPublication?.like?.length}} Me gusta</b>&nbsp;
+                              <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/237/237645.svg" style="width: 22px;">
+
+                            </div>
+
+                          </div>
+
+                          <div class="input-group">
+
+                            <div onclick="$('#delete_pub').modal('show')" class="media" style="cursor: pointer">
+                              <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/390/390902.svg" style="width: 25px" align="right">
+                            </div>
+
+                            <div id="like_{{userPublication._id}}" class="media" style="cursor: pointer">
+                              <img class="d-flex mr-3" src="{{p(listPublications[i].like,user._id) ? 'https://image.flaticon.com/icons/svg/456/456115.svg' : 'https://image.flaticon.com/icons/svg/456/456257.svg'}}"
+                                style="width: 25px" align="right" (click)="Like_And_Unlike(userPublication._id)">
+                            </div>
+
+                          </div>
+                        </div>
+                        <br>
+                      </div>
+
+                      <!-- <div class="col5">
+
+                            <div style="cursor: pointer">
+                              <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/456/456115.svg" style="width: 25px" align="right" (click)="getLike(lp.id,user.uid)">
+                            </div>
+                            <div style="cursor: pointer">
+                              <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/456/456257.svg" style="width: 25px" align="right" (click)="btnLike(lp.id,user.uid,lp.user)">
+                            </div>
+                            <div style="cursor: pointer">
+                              <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/390/390902.svg" style="width: 25px" align="right" (click)="deletePublication(lp.id,user.uid)">
+                            </div>
+
+                          </div> -->
+
+                    </div>
+
+
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="row justify-content-center" *ngIf="finished">
+              <img src="https://www.pongomilogo.es/skin/frontend/default/em0060/images/ksi/topmegamenu/spinner.1429027063.gif" alt="">
+            </div>
+
+            <br>
+          </div>
+        </div>
+      </div>
+      <!-- <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div> -->
+
+      <br>
+
+      <div class="card">
+        <div class="card-header">
+          Publicaciones de las personas que sigo
+        </div>
+        <br>
+
+        <!-- este es el nuevo -->
+        <div class="container">
+          <div *ngIf="listPublicationFollowers?.length == 0" style="color: gray">Aún no sigues a nadie, o el usuario al que sigues no tiene publicaciones.
+            <br>
+            <br>
+          </div>
+          <div>
+            <div class="card">
+              <div class="row" style="margin: 10px"></div>
+            </div>
+            <br>
+          </div>
+        </div>
+
+      </div>
+      <br>
+
+    </div>
+
+  </div>
+</div>
+<br>
+<br>

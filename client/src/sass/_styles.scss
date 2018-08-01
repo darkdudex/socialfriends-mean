@@ -1,0 +1,39 @@
+@import 'fonts/verlag';
+
+*,
+ input,
+ h3,
+ button {
+     font-family: 'Montserrat', sans-serif;
+ }
+
+body{
+  background-color: #F4F8FA;
+  color: #4D4D4D;
+}
+
+body::-webkit-scrollbar{
+  width: 5px;
+}
+
+body::-webkit-scrollbar-thumb{
+  background: #007BFF;
+  border-radius: 5px;
+}
+
+.card {
+  border: 1px solid #D8D8D8 !important;
+  border-radius: 0 !important;
+}
+
+@media only screen and (max-width: 400px){
+
+  *,
+  input,
+  h3,
+  button {
+    font-family: 'Verlag A', 'Verlag B', "Verlag";
+  }
+  
+
+}

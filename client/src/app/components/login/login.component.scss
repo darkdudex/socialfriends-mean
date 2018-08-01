@@ -1,0 +1,17 @@
+@import '../../../sass/_mixins';
+
+$image: 'http://www.restaurantekamasutra.com/wp-content/uploads/2013/06/IMG_4441-2.jpg';
+
+.center {
+  @include center;
+}
+
+.wallpaper {
+  background: -webkit-gradient(linear, left top, right bottom, from(rgba(255, 255, 255, 0.8)), to(rgba(219, 226, 227, 0.8))), url($image);
+  background: -webkit-linear-gradient(top left, rgba(255, 255, 255, 0.8), rgba(219, 226, 227, 0.8)), url($image);
+  background: -o-linear-gradient(top left, rgba(255, 255, 255, 0.8), rgba(219, 226, 227, 0.8)), url($image);
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.8), rgba(219, 226, 227, 0.8)), url($image);
+  -o-object-fit: cover;
+  object-fit: cover;
+  background-attachment: fixed;
+  background-position: center 0; }

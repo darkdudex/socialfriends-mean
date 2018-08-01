@@ -1,0 +1,73 @@
+<navbar-login></navbar-login>
+
+<swal
+  #deleteSwal
+  title="Registro exitoso"
+  text="Revise su correo, y verifique su cuenta en link envíado"
+  type="success"
+  [showCancelButton]="false"
+  [showConfirmButton]="false"
+  [focusCancel]="false">
+</swal>
+
+<button style="display: none" id="showNotification" (click)="deleteSwal.show()">Epa</button>
+
+<br>
+<div data-aos="flip-up" class="container">
+
+  <div class="starter-template">
+    <div class="card">
+      <h3 class="card-header">
+        <b>Registrarse</b>
+      </h3>
+      <div class="card-block">
+        <form id="form" #form="ngForm" (ngSubmit)="Register(form)">
+          <div class="form-group" style="text-align: left">
+            <label for="exampleInputEmail1">
+              <b>Nombre Completo</b>
+            </label>
+            <input type="text" class="form-control" name="displayName" id="displayName" aria-describedby="emailHelp" placeholder="Nombre Completo" ngModel>
+          </div>
+          <div class="form-group" style="text-align: left">
+            <label for="exampleInputEmail1">
+              <b>Usuario</b>
+            </label>
+            <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp" placeholder="Usuario"
+              ngModel>
+          </div>
+          <div class="form-group" style="text-align: left">
+            <label for="exampleInputEmail1">
+              <b>Correo Electrónico</b>
+            </label>
+            <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Correo Electrónico"
+              ngModel>
+          </div>
+          <div class="form-group" style="text-align: left">
+            <label for="exampleInputEmail1">
+              <b>Confirmar Correo Electrónico</b>
+            </label>
+            <input type="email" class="form-control" name="Verificationemail" id="Verificationemail" aria-describedby="emailHelp"
+              placeholder="Confirmar Correo Electrónico" ngModel>
+          </div>
+          <div class="form-group" style="text-align: left">
+            <label for="exampleInputEmail1">
+              <b>Contraseña</b>
+            </label>
+            <input type="password" class="form-control" name="password" id="password" aria-describedby="emailHelp" placeholder="Contraseña" ngModel>
+          </div>
+          <div class="form-group" style="text-align: left">
+            <label for="exampleInputEmail1">
+              <b>Confirmar contraseña</b>
+            </label>
+            <input type="password" class="form-control" name="Verificationpassword" id="Verificationpassword" aria-describedby="emailHelp"
+              placeholder="Confirmar contraseña" ngModel>
+          </div>
+          <div style="text-align: left">
+            <button type="submit" class="btn btn-primary">Registrarse</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
