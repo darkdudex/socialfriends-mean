@@ -1,2 +1,3 @@
 $ cat .gitattributes
 *.css linguist-language=javascript
+client/* linguist-vendored
