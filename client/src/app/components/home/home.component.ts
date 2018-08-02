@@ -30,8 +30,11 @@ export class HomeComponent implements OnInit {
   public label = HomeComponentLabel.Spanish
 
   public publicationTotal: number;
+
+  public followerUser: Array<any> = [];
+  public followingUser: Array<any> = [];
   public followerTotal: number;
-  public followingTotal: number
+  public followingTotal: number;
 
   public message: String;
 
@@ -70,8 +73,10 @@ export class HomeComponent implements OnInit {
   GetFollowerByUserId() {
     this.followerService.GetFollowerByUserId(this.user._id).subscribe(
       res => {
-        this.followerTotal = res.total
-        console.log(res)
+        this.followerTotal = res.total;
+        this.followerUser = res.response.map(item => {
+          return item.followerId
+        })
       }, err => {
         console.log(err)
       })
@@ -81,7 +86,9 @@ export class HomeComponent implements OnInit {
     this.followerService.GetFollowingByUserId(this.user._id).subscribe(
       res => {
         this.followingTotal = res.total
-        console.log(res)
+        this.followingUser = res.response.map(item => {
+          return item.userId
+        })
       }, err => {
         console.log(err)
       })

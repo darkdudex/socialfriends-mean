@@ -37,7 +37,6 @@ import { LoginReducer } from './ngrx/reducers/login.reducers';
 import { environment } from '../environments/environment';
 import { LoginEffects } from './ngrx/effects/login.effects';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
-import { ModalComponent } from './components/_mini-components/modal/modal.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { GroupComponent } from './components/group/group.component';
 import { WebSocketService } from './services/websocket.service';
@@ -51,6 +50,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
+import { ModalFollowsComponent } from './components/_mini-components/modal-follows/modal-follows.component';
  
 library.add(fas, far);
 
@@ -72,7 +72,7 @@ const store = {
     AppComponent,
     NavbarLoginComponent,
     NavbarHomeComponent,
-    ModalComponent,
+    ModalFollowsComponent,
     ItemComponent,
     LoginComponent,
     ForgetPasswordComponent,

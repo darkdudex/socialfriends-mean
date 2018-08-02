@@ -1,12 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'modal',
-  templateUrl: 'modal.component.html',
-  styleUrls: ['modal.component.scss']
+  selector: 'modal-follows',
+  templateUrl: 'modal-follows.component.html',
+  styleUrls: ['modal-follows.component.scss']
 })
 
-export class ModalComponent implements OnInit {
+export class ModalFollowsComponent implements OnInit {
+
+  @Input() title:string;
+  @Input() userlist: Array<any>;
 
   @Input() visible: boolean;
   display: string

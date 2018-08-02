@@ -12,14 +12,14 @@
         </span>
       </button>
 
-      <item [routerLink]="['/group']" [value]="'Siguiendo'" [color]="'#02A2F7'" [img]="'https://image.flaticon.com/icons/svg/747/747835.svg'">
+      <item [routerLink]="['/group']" [value]="title" [color]="'#02A2F7'" [img]="'https://image.flaticon.com/icons/svg/747/747835.svg'">
       </item>
 
       <div class="modal-body modal-body-style">
 
-        <a data-dismiss="modal" aria-label="Close" class="navbar-brand d-flex align-self-start mr-3" id="item" style="font-size: 15px">
-          <img class="rounded-circle" height="40" style="border: 2px solid #D8D8D8" width="40" src="https://marriedwiki.com/uploads/bio/sofia-vergara.jpg">
-          <b style="margin-left: 5px; margin-top: 8px;">Sofia Vergara</b>
+        <a *ngFor="let user of userlist" data-dismiss="modal" aria-label="Close" class="navbar-brand d-flex align-self-start mr-3" id="item" style="font-size: 15px" [routerLink]="['/profile/',user._id]">
+          <img class="rounded-circle" height="40" style="border: 2px solid #D8D8D8" width="40" [src]="user.avatar">
+          <b style="margin-left: 5px; margin-top: 8px;">{{user.displayName}}</b>
         </a>
     
       </div>
