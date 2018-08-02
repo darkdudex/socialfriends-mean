@@ -1,0 +1,608 @@
+{
+	"info": {
+		"_postman_id": "4f017bef-1955-4e68-8715-ddfe87b91381",
+		"name": "socialfriends-mean",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"_postman_id": "1d53d92f-dd9b-456c-9afa-6ec73444a1c9",
+			"name": "users",
+			"item": [
+				{
+					"_postman_id": "b9df76dc-5de6-412e-9bb2-89523e1a3f7d",
+					"name": "[1] SignIn",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d05885a8-00bf-46e7-9a52-a5cb5029c142",
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody)",
+									"",
+									"if (data.token == null ){",
+									"    postman.setEnvironmentVariable(\"Token\", \"\")",
+									"} else {",
+									"    postman.setEnvironmentVariable(\"Token\", data.token)",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"account\": \"jmbl1685\",\n  \"password\": \"12345\"\n}"
+						},
+						"url": {
+							"raw": "{{Url_local}}/signin",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "78927a8a-0b01-4963-a215-00816107414a",
+					"name": "[2] SignUp",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n      \"email\": \"jbatty@tecnocomfenalco.com\",\r\n      \"displayName\": \"Juan Manuel Batty Linero\",\r\n      \"password\": \"12345\",\r\n      \"providerId\": \"email.com\",\r\n      \"avatar\": \"https://avatars2.githubusercontent.com/u/22874642\",\r\n      \"username\": \"jbatty\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{Url_local}}/signup",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "4bdf07bf-fc78-4202-a2b1-2dd90aced756",
+					"name": "[3] GetAllUsers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{Url_local}}/user",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "e872d36f-bed9-4de7-8cdd-869555fc88c1",
+					"name": "[4] GetUsersById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{Url_local}}/user/5adab85de429080978d09bf5",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"user",
+								"5adab85de429080978d09bf5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"_postman_id": "edcfd457-29dd-4282-adc3-1b9f206921a3",
+			"name": "publications",
+			"item": [
+				{
+					"_postman_id": "fab3dcd6-515a-44f2-af87-31072ff629b8",
+					"name": "[1] Add Publication",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"Excelente paisaje\",\n  \"userId\": \"5ad64088a86cca23545f8e1d\",\n  \"filePublication\": [\n  {\n    \"url\":\"https://www.euroresidentes.com/entretenimiento/frases-citas-imagenes/wp-content/uploads/sites/7/2013/07/frases-naturaleza-euroresidentes.jpg\",\n    \"type\": \"image/jpg\"\n  },\n  {\n    \"url\":\"http://www.laprensa.hn/csp/mediapool/sites/dt.common.streams.StreamServer.cls?STREAMOID=nzsDM4sUaeLcADk5xq$Du8$daE2N3K4ZzOUsqbU5sYtzznS6KxmsQvzkYaR8YyEJWCsjLu883Ygn4B49Lvm9bPe2QeMKQdVeZmXF$9l$4uCZ8QDXhaHEp3rvzXRJFdy0KqPHLoMevcTLo3h8xh70Y6N_U_CryOsw6FTOdKL_jpQ-&CONTENTTYPE=image/jpeg\",\n    \"type\": \"image/jpg\"\n  },\n    {\n    \"url\":\"https://www.ososwiki.com/Imagenes/oso-en-la-naturaleza.jpg\",\n    \"type\": \"image/jpg\"\n  }\n   ]\n}"
+						},
+						"url": {
+							"raw": "{{Url_local}}/publication",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"publication"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "14083685-cd8c-4c4d-9be1-e480defa0c88",
+					"name": "[2] GetPublicationByUserId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{Url_local}}/publication/5adab85de429080978d09bf5",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"publication",
+								"5adab85de429080978d09bf5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"_postman_id": "49008cd1-8aad-4b85-91b4-e45cbe717c94",
+			"name": "likes",
+			"item": [
+				{
+					"_postman_id": "ab4c913c-e9e1-48fb-bdbf-031c5dcf8672",
+					"name": "[1] Add Like",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"publicationId\":\"5adb688f0aa923209489d264\",\n  \"userId\":\"5ad64088a86cca23545f8e1d\"\n}"
+						},
+						"url": {
+							"raw": "{{Url_local}}/like",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "6a1b1704-7ad3-400e-8b2e-cd24a8769ccc",
+					"name": "[2] Remove Like",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"publicationId\":\"5adb688f0aa923209489d264\",\n  \"userId\":\"5ad64088a86cca23545f8e1d\"\n}"
+						},
+						"url": {
+							"raw": "{{Url_local}}/unlike",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"unlike"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "8caf9dbb-bae0-47a3-b4c5-c5938b573e6f",
+					"name": "[3] GetLikesByPublicationId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Url_local}}/like/5adb688f0aa923209489d264",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"like",
+								"5adb688f0aa923209489d264"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"_postman_id": "af29954b-142f-4894-b839-c2c55139e82f",
+			"name": "comments",
+			"item": [
+				{
+					"_postman_id": "734f61b3-7b41-4f01-85f0-d3c0f72929bb",
+					"name": "[1] AddComment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"comment\":\"Excelente.\",\n  \"publicationId\": \"5b5f3aaf13b9cf134ce5a25e\",\n  \"userId\": \"5ae612be946903246053e30c\"\n}"
+						},
+						"url": {
+							"raw": "{{Url_local}}/comment",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "b1e2ba41-3bad-447d-b078-ff8ceed813ed",
+					"name": "[2] GetcommentByPublicationId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"comment\":\"Mi tercer comentario.\",\n  \"publicationId\": \"5b16a03acaae910048b6aada\",\n  \"userId\": \"5ad64088a86cca23545f8e1d\"\n}"
+						},
+						"url": {
+							"raw": "{{Url_local}}/comment/5b16a03acaae910048b6aada",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"comment",
+								"5b16a03acaae910048b6aada"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"_postman_id": "b7420d3c-37f0-4964-8aba-595d431fd15c",
+			"name": "file",
+			"item": [
+				{
+					"_postman_id": "a7bc8f56-d2e7-47a6-b93d-0792e27cf8af",
+					"name": "[1] FileUpload",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file"
+								},
+								{
+									"key": "userId",
+									"value": "5ad64088a86cca23545f8e1d",
+									"type": "text"
+								},
+								{
+									"key": "folderName",
+									"value": "publications",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{Url_local}}/fileupload",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"fileupload"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"_postman_id": "d76040f7-7203-4bdb-9d77-e3b4ba1064cf",
+			"name": "follower",
+			"item": [
+				{
+					"_postman_id": "08f51887-929c-4b0a-b670-74d9e9357287",
+					"name": "[1] Add Follower",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"followerId\":\"5adbd1671c35d006d410d2ed\",\n  \"userId\":\"5ad64088a86cca23545f8e1d\"\n}"
+						},
+						"url": {
+							"raw": "{{Url_local}}/follow",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"follow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "e00da63b-e30b-4a1e-ad06-7890ecac2b2e",
+					"name": "[2] GetFollowerByUserId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{Url_local}}/follower/5ad64088a86cca23545f8e1d",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"follower",
+								"5ad64088a86cca23545f8e1d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "41b4d9b0-b3ef-4f49-90ec-658fec4332d6",
+					"name": "[3] GetFollowingByUserId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{Url_local}}/following/5ad64088a86cca23545f8e1d",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"following",
+								"5ad64088a86cca23545f8e1d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "d42d4e3c-387d-419d-8685-a4f34b1ddbd9",
+					"name": "[4] Delete Follower",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"followerId\":\"5adbd1671c35d006d410d2ed\",\n  \"userId\":\"5ad64088a86cca23545f8e1d\"\n}"
+						},
+						"url": {
+							"raw": "{{Url_local}}/unfollow",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"unfollow"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"_postman_id": "dcf1dcd0-3626-41c5-ac5a-e0de5496f587",
+			"name": "group",
+			"item": [
+				{
+					"_postman_id": "0a45c000-4e58-42a1-9db6-249a95f3cc9c",
+					"name": "[1] AddGroup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Grupo de prueba\",\n\t\"avatar\": \"https://pbs.twimg.com/profile_images/378800000629767461/5c5bac0da24cad68077969a2b5147845_400x400.png\",\n\t\"description\": \"Grupo de desarrolladores Angular.js\",\n\t\"admin\": \"5ad64088a86cca23545f8e1d\"\n}"
+						},
+						"url": {
+							"raw": "{{Url_local}}/group",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "fd8d7be3-730d-4c6c-9fbf-12e3aa6fe36a",
+					"name": "[2] GetGroups",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Url_local}}/group?page=1",
+							"host": [
+								"{{Url_local}}"
+							],
+							"path": [
+								"group"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
