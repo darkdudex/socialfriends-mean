@@ -1,6 +1,11 @@
 <navbar-home></navbar-home>
 
-<modal-follows [title]="'Siguiendo'" [visible]="true" [userlist]="followerUser"></modal-follows>
+<modal-follows [visible]="true" [title]="'Siguiendo'" [userlist]="followerUser" [ngStyle]="{ 'display': (stateModal?.type == 'follower') ? 'block' : 'none' }">
+</modal-follows>
+
+<modal-follows [visible]="true" [title]="'Seguidores'" [userlist]="followingUser" [ngStyle]="{ 'display': (stateModal?.type == 'following') ? 'block' : 'none' }">
+</modal-follows>
+
 
 <div class="container" style="z-index: -1 !important;">
   <div class="row">
@@ -10,10 +15,8 @@
       <br>
 
       <div *ngIf="listPublications?.length == 0">
-
         <item [routerLink]="['/group']" [value]="'Aún no tienes publicaciones. ¡Vamos que esperas!'" [color]="'#F4C534'" [img]="'https://image.flaticon.com/icons/svg/743/743332.svg'">
         </item>
-
       </div>
 
       <div class="container">
@@ -206,12 +209,12 @@
             <br>
             <span class="badge badge-pill badge-success">Conectado</span>
             <div class="row" style="font-size: 70%; margin-top: 5px; margin-bottom: 7px; text-align: center">
-              <div class="col-xl-4 col-lg-4 col-md-4 col-4" style="cursor: pointer;">
+              <div (click)="FollowsModal('follower')" class="col-xl-4 col-lg-4 col-md-4 col-4" style="cursor: pointer;">
                 <b>Siguiendo
                   <br>{{followerTotal}}</b>
 
               </div>
-              <div class="col-xl-4 col-lg-4 col-md-4 col-4" style="cursor: pointer;">
+              <div (click)="FollowsModal('following')" class="col-xl-4 col-lg-4 col-md-4 col-4" style="cursor: pointer;">
                 <b> Seguidores
                   <br>{{followingTotal}}</b>
 

@@ -11,6 +11,8 @@ import { FollowerService } from '../../services/follower.service';
 import { FileService } from '../../services/file.service';
 import { LikeService } from '../../services/like.service';
 import { WebSocketService } from '../../services/websocket.service';
+import { Store } from '@ngrx/store';
+import { ModalShow, ModalHide } from '../../ngrx/actions/modal.actions';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +25,7 @@ export class HomeComponent implements OnInit {
   public listComments: Array<any> = []
   public user: any = {}
   public page = 1;
+  public page2 = 1;
   public finished: boolean = true;
   public filesToUpload: Array<File> = [];
   public typeFiles = ['image', 'video'];
@@ -38,6 +41,8 @@ export class HomeComponent implements OnInit {
 
   public message: String;
 
+  public stateModal: any
+
   public clickDynamicArrayLoad: Array<any> = []
 
   t(array) {
@@ -49,6 +54,20 @@ export class HomeComponent implements OnInit {
     return x.length > 0 ? true : false
   }
 
+  FollowsModal(value){
+    
+    switch(value){
+      case 'follower':{
+        this.store.dispatch(new ModalShow('follower'));
+        break;
+      }
+      case 'following':{
+        this.store.dispatch(new ModalShow('following'));
+        break;
+      }
+    }
+  }
+
   constructor(
     private userService: UserService,
     private publicationService: PublicationService,
@@ -58,7 +77,8 @@ export class HomeComponent implements OnInit {
     private likeService: LikeService,
     private route: Router,
     public iziToast: Ng2IzitoastService,
-    private socketService: WebSocketService
+    private socketService: WebSocketService,
+    private store: Store<any>
   ) {
     this.user = JSON.parse(localStorage.getItem('user'));
     this.GetPublicationByUserId();
@@ -67,7 +87,14 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.store.select('modal').subscribe(res => {
+      
+      if(res != null)
+        this.stateModal = res
 
+    }, err => {
+      console.log(err)
+    })
   }
 
   GetFollowerByUserId() {
@@ -156,6 +183,11 @@ export class HomeComponent implements OnInit {
   onScroll() {
     this.page++;
     this.GetPublicationByUserId();
+  }
+
+  onScroll2() {
+    this.page2++;
+    this.GetFollowerByUserId();
   }
 
   Files(event: any) {

@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   ) {
     this.InitSocketConnection();
     this.user = JSON.parse(localStorage.getItem('user'));
-    this.RedirectInit(this.user)
+    // this.RedirectInit(this.user)
   }
 
   RedirectInit(user) {

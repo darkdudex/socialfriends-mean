@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { ModalShow, ModalHide } from '../../../ngrx/actions/modal.actions';
 
 @Component({
   selector: 'modal-follows',
@@ -14,7 +16,9 @@ export class ModalFollowsComponent implements OnInit {
   @Input() visible: boolean;
   display: string
 
-  constructor() { }
+  constructor(
+    private store: Store<any>
+  ) { }
 
   ngOnInit() {
     this.visible ? this.display = this.Display('block') : this.display = this.Display('none');
@@ -24,6 +28,10 @@ export class ModalFollowsComponent implements OnInit {
     return {
       'display' : value
     }
+  }
+
+  ModalHide(){
+    this.store.dispatch(new ModalHide());
   }
 
 }

@@ -51,6 +51,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { ModalFollowsComponent } from './components/_mini-components/modal-follows/modal-follows.component';
+import { ModalReducer } from './ngrx/reducers/modal.reducers';
  
 library.add(fas, far);
 
@@ -64,7 +65,8 @@ export const firebaseConfig = {
 };
 
 const store = {
-  login: LoginReducer
+  login: LoginReducer,
+  modal: ModalReducer
 }
 
 @NgModule({

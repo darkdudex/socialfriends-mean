@@ -4,7 +4,6 @@ export enum ActionsType {
 
   LOGIN_USER = '[login] LOGIN_USER',
   REGISTER_USER = '[login] REGISTER_USER'
-
 }
 
 export class LoginUser implements Action {
