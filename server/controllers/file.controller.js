@@ -1,11 +1,17 @@
 'use strict'
 
+/* 
+  OBS: 
+    Tengo que mejorar los métodos de subida de archivos (redundancia).
+*/
+
 import googleStorage from '@google-cloud/storage'
 import Multer from 'multer'
 import shortid from 'shortid'
 import fs from 'fs'
 import { resolve } from 'path'
 import cloudinary from 'cloudinary'
+import utilities from '../utilities/utilities'
 
 let formData_Key = 'file'
 let tokenId = shortid.generate()
@@ -18,17 +24,10 @@ const storage = googleStorage({
   keyFilename: `${__dirname}/../config/public_credentials/firebase_storage.json`
 })
 
-cloudinary.config({
-  "cloud_name": "YOUR_CLOUD_NAME",
-  "api_key": "YOUR_API_KEY",
-  "api_secret": "YOUR_API_SECRET"
-})
+cloudinary.config(`${__dirname}/../config/public_credentials/cloudinary_storage.json`)
 
 const bucket = storage.bucket('gs://db-firebase-5cf99.appspot.com')
 
-const getFileExtension = (filename) => {
-  return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
-}
 
 const UploadStorageCloudinary = (files, userId, mainFolder) => {
 
@@ -80,7 +79,7 @@ const UploadStorageServer = (files, userId, mainFolder) => {
     files.map((file, i) => {
 
       let nameFile = Date.now()
-      let ext = getFileExtension(file.originalname)
+      let ext = utilities.GetFileExtension(file.originalname)
 
       let newFileName = `${folderPath}/${nameFile}.${ext}`
 
@@ -177,7 +176,7 @@ export default {
 
       if (data.files.length >= 1) {
 
-        const response = await UploadStorageFirebase(data.files, data.userId, data.folderName)
+        const response = await UploadStorageServer(data.files, data.userId, data.folderName)
         return res.status(200).send(response)
 
       }

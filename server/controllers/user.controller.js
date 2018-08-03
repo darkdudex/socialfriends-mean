@@ -1,20 +1,14 @@
 'use strict'
 
 import userModel from '../models/model.user/user.model'
-import service from '../auth/jwt'
-import utilities from '../utilities/utilities'
-
-const EncryptPassword = (req) => {
-  const _EncryptPassword = utilities.EncodePassword(req.body.password)
-  req.body.password = _EncryptPassword
-}
 
 export default {
 
   GetUsers: async (req, res) => {
 
-    let page = req.query.page
     const limit = 6
+
+    let page = req.query.page
 
     if (page >= 1)
       page = page - 1
@@ -25,6 +19,7 @@ export default {
 
       const users = await userModel.find().select(['-password']).limit(limit).skip(page * limit)
       const total = await userModel.find().count()
+
       return res.status(200).send({ users, total })
 
     } catch (error) {

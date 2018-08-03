@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import * as socketIo from 'socket.io-client';
+import { config } from '../app.config';
 
-const SERVER_URL = 'http://192.168.1.66:3000';
+const SERVER_URL = config.url.replace('/api','');
 
 @Injectable()
 export class WebSocketService {

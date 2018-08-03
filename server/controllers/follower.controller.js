@@ -1,5 +1,10 @@
 'use strict'
 
+/* 
+  OBS: 
+    Tengo que añadir paginación a algunas peticiones.
+*/
+
 import followerModel from '../models/model.follower/follower.model'
 
 export default {
@@ -57,19 +62,10 @@ export default {
 
   GetFollowerByUserId: async (req, res) => {
 
-    let page = req.query.page
-    const limit = 10
-
-    if (page >= 1)
-      page = page - 1
-    else
-      page = 0
-
     try {
 
       const response = await followerModel.find({ userId: req.params.userId })
         .populate({ path: 'followerId', select: '-password -state' })
-        .limit(limit).skip(page * limit)
 
       const total = await followerModel.find({ userId: req.params.userId }).count()
       return res.status(200).send({ response, total })
@@ -85,19 +81,10 @@ export default {
 
   GetFollowingByUserId: async (req, res) => {
 
-    let page = req.query.page
-    const limit = 10
-
-    if (page >= 1)
-      page = page - 1
-    else
-      page = 0
-
     try {
 
       const response = await followerModel.find({ followerId: req.params.userId })
         .populate({ path: 'userId', select: '-password -state' })
-        .limit(limit).skip(page * limit)
 
       const total = await followerModel.find({ followerId: req.params.userId }).count()
       return res.status(200).send({ response, total })

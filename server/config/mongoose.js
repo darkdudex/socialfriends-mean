@@ -1,7 +1,7 @@
 'use strict'
 
 import mongoose from 'mongoose'
-import winston from './log'
+import winston from './logs'
 
 const urlMongoDBService = {
   dev: 'mongodb://localhost:27017/socialfriends-mean',
@@ -9,7 +9,7 @@ const urlMongoDBService = {
 }
 
 mongoose.Promise = global.Promise
-mongoose.connect(urlMongoDBService.production)
+mongoose.connect(urlMongoDBService.production, { useNewUrlParser: true })
   .catch(err => winston.error('[ERROR MONGODB]', err))
 
 export default mongoose

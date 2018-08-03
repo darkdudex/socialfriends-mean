@@ -29,6 +29,9 @@ export default {
 
     return true
   },
+  GetFileExtension: (filename) => {
+    return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
+  },
   FindUserMessagePublication(value) {
 
     let res = null;

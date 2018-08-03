@@ -2,7 +2,7 @@
 
 import app from './app'
 import config from './config/config'
-import winston from './config/log'
+import winston from './config/logs'
 import chalk from 'chalk'
 
 import http from 'http';

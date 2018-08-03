@@ -30,7 +30,7 @@
 
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-lg-12 text-center">
 
-                    <img class="profile-img" src="{{user.avatar}}" class="rounded-circle" height="60" width="60" style="border: 2px solid #D8D8D8; margin-top: -40px">
+                    <img class="profile-img" [src]="user.avatar" class="rounded-circle" height="60" width="60" style="border: 2px solid #D8D8D8; margin-top: -40px">
 
                   </div>
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-lg-12">
@@ -50,16 +50,13 @@
                         <div class="qa" style="text-align: center">
 
                           <div data-grid="images" data-target-height="150">
-                            <!-- <div style="margin-bottom: 10px; margin-right: 10px; display: inline-block; vertical-align: bottom;">
-
-                            </div> -->
 
                             <div *ngFor="let p of userPublication.filePublication" style="margin-bottom: 10px; margin-right: 10px; display: inline-block; vertical-align: bottom; cursor: pointer;">
 
-                              <img (click)="PublicationClick(p.type,p.url)" [src]="p.url" style="width: 218px; height: 218px;border: 1px solid #D8D8D8;"
+                              <img (click)="PublicationClick(p.type,p.url)" src="{{p.url}}" style="width: 90%; height: 100%; border: 1px solid #D8D8D8;"
                                 *ngIf="p.type.includes('image')">
 
-                              <video [src]="p.url" style="width: 218px; height: 218px;border: 1px solid #D8D8D8;" controls *ngIf="p.type.includes('video')"
+                              <video src="{{p.url}}" style="width: 90%; height: 100%; border: 1px solid #D8D8D8;" controls *ngIf="p.type.includes('video')"
                                 (click)="PublicationClick(p.type,p.url)">
                                 <source [src]="p.url" type="video/mp4">
                               </video>
@@ -71,11 +68,10 @@
 
                       </div>
 
-
                     </div>
 
 
-                    <div style="text-align: justify; -moz-text-align-last: center; text-align-last: center; margin-top: 6px; margin: 20px; font-size: 90%"
+                    <div style="text-align: justify; -moz-text-align-last: center; text-align-last: center; font-size: 90%; margin-bottom: 10px"
                       [innerHTML]="userPublication.message"></div>
 
                     <a *ngIf="userPublication?.comment?.length > 0" data-toggle="collapse" href="#collapse_{{userPublication._id}}" aria-expanded="false"
@@ -205,7 +201,7 @@
           <div style="text-align: center; margin-top: 10px">
             <img class="d-flex align-self-center mr-3" src="{{user.avatar}}" class="rounded-circle" style="width: 100px; border: 2px solid #D8D8D8">
             <br>
-            <b>{{user.displayName}}</b>
+            <b>@{{user.username}}</b>
             <br>
             <span class="badge badge-pill badge-success">Conectado</span>
             <div class="row" style="font-size: 70%; margin-top: 5px; margin-bottom: 7px; text-align: center">
@@ -229,7 +225,7 @@
       </div>
       <br>
 
-      <div class="card">
+      <div class="card" style="background-color: #F4F8FA; margin: 10px">
         <div class="card-header">
           Crear Publicación
         </div>
@@ -250,7 +246,10 @@
             </div>
 
             <button class="btn btn-lg btn-success btn-block" type="submit">
-              <i id="icon" class="fa fa-share-square-o" aria-hidden="true"></i>Publicar</button>
+              <b>
+                <fa-icon [icon]="['fas', 'share-square']" size="lg"></fa-icon> Publicar
+              </b>
+            </button>
           </ul>
         </form>
         <br>
