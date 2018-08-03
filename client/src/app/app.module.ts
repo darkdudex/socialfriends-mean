@@ -52,6 +52,8 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { ModalFollowsComponent } from './components/_mini-components/modal-follows/modal-follows.component';
 import { ModalReducer } from './ngrx/reducers/modal.reducers';
+import { FilterUserPipeModule } from './pipes/filteruser.pipe';
+import { NotificationService } from './services/notification.service';
  
 library.add(fas, far);
 
@@ -85,7 +87,8 @@ const store = {
     GroupComponent,
     RegisterComponent,
     SettingComponent,
-    NotificationComponent
+    NotificationComponent,
+    FilterUserPipeModule
   ],
   imports: [
     BrowserModule,
@@ -118,6 +121,7 @@ const store = {
     FollowerService,
     FileService,
     LikeService,
+    NotificationService,
     WebSocketService
   ],
   bootstrap: [

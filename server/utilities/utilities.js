@@ -14,10 +14,16 @@ const GetItemsToRegularExpression = (regex, value) => {
   return matches;
 }
 
+
+
 export default {
 
-  EncodePassword: (password) => {
+  EncodePassword:(password) => {
     return bcrypt.hashSync(password)
+  },
+  EncryptPassword: (req) => {
+    const _EncryptPassword = bcrypt.hashSync(req.body.password)
+    req.body.password = _EncryptPassword
   },
   DecodePassword: (password, passwordEncode) => {
     return bcrypt.compareSync(password, passwordEncode)

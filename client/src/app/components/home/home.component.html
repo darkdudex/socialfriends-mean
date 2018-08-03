@@ -10,6 +10,67 @@
 <div class="container" style="z-index: -1 !important;">
   <div class="row">
 
+    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+      <div class="card">
+        <div class="card-block">
+          <div style="text-align: center; margin-top: 10px">
+            <img class="d-flex align-self-center mr-3" src="{{user.avatar}}" class="rounded-circle" style="width: 100px; border: 2px solid #D8D8D8">
+            <br>
+            <b>@{{user.username}}</b>
+            <br>
+            <span class="badge badge-pill badge-success">Conectado</span>
+            <div class="row" style="font-size: 70%; margin-top: 5px; margin-bottom: 7px; text-align: center">
+              <div (click)="FollowsModal('follower')" class="col-xl-4 col-lg-4 col-md-4 col-4" style="cursor: pointer;">
+                <b>Siguiendo
+                  <br>{{followerTotal}}</b>
+
+              </div>
+              <div (click)="FollowsModal('following')" class="col-xl-4 col-lg-4 col-md-4 col-4" style="cursor: pointer;">
+                <b> Seguidores
+                  <br>{{followingTotal}}</b>
+
+              </div>
+              <div class="col-xl-4 col-lg-4 col-md-4 col-4">
+                <b> Publicaciones
+                  <br>{{publicationTotal}}</b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+
+      <div class="card" style="background-color: #F4F8FA; margin: 10px">
+        <div class="card-header">
+          Crear Publicación
+        </div>
+        <br>
+        <form id="publicationForm" #publicationForm="ngForm" (ngSubmit)="AddPublication(publicationForm)">
+          <ul class="list-unstyled" style="margin: 5px">
+            <div class="form-group">
+              <label for="exampleTextarea">Mensaje</label>
+              <textarea class="form-control" name="message" ngModel rows="10" placeholder="Escribe aquí tu mensaje..."></textarea>
+            </div>
+            <div class="form-group" style="margin-top: 30px">
+              <input type="file" class="form-control-file" (change)="Files($event)" id="pic" style="display: none" multiple>
+              <a class="navbar-brand d-flex align-self-start mr-3" onclick="document.getElementById('pic').click()" id="item" style="font-size: 15px; margin-top: -10px; color:#0174DF; cursor: pointer">
+                <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/502/502629.svg" style="width: 22px;">
+                <b style="margin-left: -10px">Seleccionar imágen o vídeo</b>
+              </a>
+            </div>
+
+            <button class="btn btn-lg btn-success btn-block" type="submit">
+              <b>
+                <fa-icon [icon]="['fas', 'share-square']" size="lg"></fa-icon> Publicar
+              </b>
+            </button>
+          </ul>
+        </form>
+        <br>
+
+      </div>
+    </div>
+
     <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
 
       <br>
@@ -22,9 +83,10 @@
       <div class="container">
 
         <div>
-          <div *ngIf="listPublications?.length > 0" class="">
+          <div *ngIf="listPublications.length > 0" class="">
 
             <div *ngFor="let userPublication of listPublications; let i = index">
+
               <div class="card card-user" style="margin: 10px; margin-top: 5px; margin-bottom: 40px">
                 <div class="row" style="margin: 10 px; margin-top: 10px">
 
@@ -36,9 +98,8 @@
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-lg-12">
 
                     <h5 href="#" class="text-xl-center text-lg-center text-md-center text-center">
-                      <b>{{user.displayName}}</b>
+                      <b>{{user.displayName}} - {{userPublication?.length}}</b>
                     </h5>
-
                     <p class="text-muted text-xl-center text-lg-center text-md-center text-center" style="font-size: 11px; margin-top: -5px">
                       {{userPublication.creationDate | amTimeAgo}}
                     </p>
@@ -53,7 +114,7 @@
 
                             <div *ngFor="let p of userPublication.filePublication" style="margin-bottom: 10px; margin-right: 10px; display: inline-block; vertical-align: bottom; cursor: pointer;">
 
-                              <img (click)="PublicationClick(p.type,p.url)" src="{{p.url}}" style="width: 90%; height: 100%; border: 1px solid #D8D8D8;"
+                              <img (click)="PublicationClick(p.type,p.url)" src="{{p.url}}" style="width: 90%; height: 50%; border: 1px solid #D8D8D8;"
                                 *ngIf="p.type.includes('image')">
 
                               <video src="{{p.url}}" style="width: 90%; height: 100%; border: 1px solid #D8D8D8;" controls *ngIf="p.type.includes('video')"
@@ -75,35 +136,45 @@
                       [innerHTML]="userPublication.message"></div>
 
                     <a *ngIf="userPublication?.comment?.length > 0" data-toggle="collapse" href="#collapse_{{userPublication._id}}" aria-expanded="false"
-                      aria-controls="collapseExample" style="color: #2285E3">
-                      <i class="fa fa-comments" aria-hidden="true"></i>
-                      <b style="font-size: 13px; margin-left: 20px">Ver comentarios</b>
-                    </a>
+                        aria-controls="collapseExample" style="color: #2285E3">
+                        <i class="fa fa-comments" aria-hidden="true"></i>
+                        <b style="font-size: 13px; margin-left: 20px">Ver comentarios</b>
+                      </a>
+                      <br>
+
                     <br>
 
+                    <div>
 
-                    <br>
-                    <div *ngFor="let p of userPublication.comment" class="row" style="margin: 10 px; margin-top: -5px">
+                        <div class="rw">
+         
+                            <ul class="bow afa">
+                              <li style="list-style: none;"  *ngFor="let p of userPublication.comment" class="rv afh">
+                                <img class="d-flex align-self-center mr-3" src="{{p.userId.avatar}}" class="rounded-circle" style="width: 40px; border: 2px solid #D8D8D8">
+                                <div class="rw" style="font-size: 80%; text-align: justify">
+                                  <strong>{{p.userId.displayName}}: </strong>
+                                  {{p.comment}} - {{p.creationDate | amTimeAgo}}
+                                </div>
+                                
+                              </li>                             
+                            </ul>
+                          </div>
 
-                      <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-lg-2 text-left">
-                        <img class="d-flex align-self-center mr-3" src="{{p.userId.avatar}}" class="rounded-circle" height="30" width="30" style="border: 2px solid #D8D8D8">
-                      </div>
-
-                      <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10 col-lg-10" style="margin-left: -40px">
-
-                        <p href="#" class="text-xl-left text-lg-left text-md-left text-left" style="font-size: 12px">
-                          <b>{{p.userId.displayName}}</b>
-                        </p>
-                        <p class="text-xl-left text-lg-left text-md-left text-left" style="font-size: 11px; margin-top: -15px; color: black">
-                          {{p.comment}}
-                        </p>
-                      </div>
-
-                      <hr/>
+                      <!-- <div *ngFor="let p of userPublication.comment" class="media mt-3">
+                        <img alt="" src="https://robust.bootlab.io/img/avatars/3.jpg" width="48" height="48" class="rounded-circle mr-3">
+                        <div class="media-body">
+                          <h6 class="mt-0">{{p.userId.displayName}}</h6>
+                          <div style="text-align: justify; -moz-text-align-last: center; text-align-last: center; font-size: 90%; margin-bottom: 10px">{{p.comment}}</div>
+                        </div>
+                      </div> -->
 
                     </div>
+
+
                     <button *ngIf="userPublication.totalComment > 5" type="button" class="btn btn-primary  btn-sm" style="font-size: 10px">Ver más</button>
 
+                    <br>
+                    <br>
                     <br>
 
                     <div class="row" style="margin-top: -70px">
@@ -195,67 +266,7 @@
       <br>
 
     </div>
-    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-      <div class="card">
-        <div class="card-block">
-          <div style="text-align: center; margin-top: 10px">
-            <img class="d-flex align-self-center mr-3" src="{{user.avatar}}" class="rounded-circle" style="width: 100px; border: 2px solid #D8D8D8">
-            <br>
-            <b>@{{user.username}}</b>
-            <br>
-            <span class="badge badge-pill badge-success">Conectado</span>
-            <div class="row" style="font-size: 70%; margin-top: 5px; margin-bottom: 7px; text-align: center">
-              <div (click)="FollowsModal('follower')" class="col-xl-4 col-lg-4 col-md-4 col-4" style="cursor: pointer;">
-                <b>Siguiendo
-                  <br>{{followerTotal}}</b>
 
-              </div>
-              <div (click)="FollowsModal('following')" class="col-xl-4 col-lg-4 col-md-4 col-4" style="cursor: pointer;">
-                <b> Seguidores
-                  <br>{{followingTotal}}</b>
-
-              </div>
-              <div class="col-xl-4 col-lg-4 col-md-4 col-4">
-                <b> Publicaciones
-                  <br>{{publicationTotal}}</b>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <br>
-
-      <div class="card" style="background-color: #F4F8FA; margin: 10px">
-        <div class="card-header">
-          Crear Publicación
-        </div>
-        <br>
-        <form id="publicationForm" #publicationForm="ngForm" (ngSubmit)="AddPublication(publicationForm)">
-          <ul class="list-unstyled" style="margin: 5px">
-            <div class="form-group">
-              <label for="exampleTextarea">Mensaje</label>
-              <textarea class="form-control" name="message" ngModel rows="10" placeholder="Escribe aquí tu mensaje..."></textarea>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputFile">Foto</label>
-              <input type="file" class="form-control-file" (change)="Files($event)" id="pic" style="display: none" multiple>
-              <a class="navbar-brand d-flex align-self-start mr-3" onclick="document.getElementById('pic').click()" id="item" style="font-size: 15px; margin-top: -10px; color:#0174DF; cursor: pointer">
-                <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/502/502629.svg" style="width: 22px;">
-                <b style="margin-left: -10px">Seleccionar imágen o vídeo</b>
-              </a>
-            </div>
-
-            <button class="btn btn-lg btn-success btn-block" type="submit">
-              <b>
-                <fa-icon [icon]="['fas', 'share-square']" size="lg"></fa-icon> Publicar
-              </b>
-            </button>
-          </ul>
-        </form>
-        <br>
-
-      </div>
-    </div>
   </div>
 </div>
 <br>

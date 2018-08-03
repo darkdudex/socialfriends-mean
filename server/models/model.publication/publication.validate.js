@@ -8,8 +8,8 @@ const { body, params, query, headers } = {
     userId: Joi.string().required(),
     filePublication: Joi.array().required(),
     creationDate: Joi.date(),
-    comment: Joi.string(),
-    like: Joi.string(),
+    comment: Joi.array(),
+    like: Joi.array(),
     totalComment: Joi.number(),
   }),
   params: Joi.object({

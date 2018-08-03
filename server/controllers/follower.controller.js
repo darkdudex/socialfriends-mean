@@ -13,15 +13,10 @@ export default {
 
     try {
 
-      const body = {
-        userId: req.body.userId,
-        followerId: req.body.followerId
-      }
+      const find = await followerModel.findOne(req.body)
 
-      const find = await followerModel.findOne(body)
-
-      if (find == null) {
-        const response = await followerModel.insertMany(body)
+      if (find === null) {
+        const response = await followerModel.insertMany(req.body)
         return res.status(200).send(response[0])
       }
 
@@ -43,11 +38,7 @@ export default {
 
     try {
 
-      const response = await followerModel.findOneAndRemove({
-        userId: req.body.userId,
-        followerId: req.body.followerId
-      })
-
+      const response = await followerModel.findOneAndRemove(req.body)
       return res.status(200).send(response)
 
     } catch (error) {

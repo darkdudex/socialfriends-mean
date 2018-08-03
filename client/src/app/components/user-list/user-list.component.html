@@ -9,7 +9,16 @@
       <ul class="list-unstyled" style="margin: 20px">
 
 
-        <input type="text" class="form-control" [(ngModel)]="UserFind" placeholder="Buscar persona por su nombre">
+        <div class="input-group">
+          <input style="border-right: 1px solid white" type="text" class="form-control" [(ngModel)]="UserFind" (input)="UserFindByDisplayName($event)" placeholder="Buscar persona por su nombre">
+          <div class="input-group-prepend">
+            <span style="border-top-right-radius: 5px; border-bottom-right-radius: 5px;" class="input-group-text" id="inputGroupPrepend">
+              <fa-icon [icon]="['fas', 'search']" size="lg"></fa-icon>
+            </span>
+          </div>
+        </div>
+
+
         <br>
 
 
@@ -52,8 +61,8 @@
 
               <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-lg-2 text-center ">
 
-                <button style="width: 145px" id="{{p._id}}" [ngClass]="{'btn-danger': validate(p._id), 'btn-primary': !validate(p._id) }" type="submit" class="btn btn-sm"
-                  (click)="Follow_And_UnFollow(p._id)">
+                <button style="width: 145px" id="{{p._id}}" [ngClass]="{'btn-danger': validate(p._id), 'btn-primary': !validate(p._id) }"
+                  type="submit" class="btn btn-sm" (click)="Follow_And_UnFollow(p._id)">
                   <b>
                     <fa-icon [icon]="['fas', 'user']" size="lg"></fa-icon>
                     {{validate(p._id) ? 'Dejar de seguir' : 'Seguir'}}

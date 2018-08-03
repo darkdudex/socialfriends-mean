@@ -3,11 +3,7 @@
 import userModel from '../models/model.user/user.model'
 import service from '../auth/jwt'
 import utilities from '../utilities/utilities'
-
-const EncryptPassword = (req) => {
-  const _EncryptPassword = utilities.EncodePassword(req.body.password)
-  req.body.password = _EncryptPassword
-}
+import sendemail from '../utilities/send_email'
 
 export default {
 
@@ -15,9 +11,12 @@ export default {
 
     try {
 
-      EncryptPassword(req)
+      utilities.EncryptPassword(req)
       const user = await userModel.insertMany(req.body)
 
+      if (user.length > 0)
+        sendemail.SendEmail(user[0])
+      
       return res.status(200).send({
         message: 'Verifica tu cuenta en el link que te enviamos por correo electrónico'
       })

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { FollowerService } from '../../services/follower.service';
 import { WebSocketService } from '../../services/websocket.service';
 
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'user-list',
@@ -26,16 +27,21 @@ export class UserListComponent implements OnInit {
   constructor(
     private userService: UserService,
     private followerService: FollowerService,
+    private notificationService: NotificationService,
     private socketService: WebSocketService
   ) {
-
     this.user = JSON.parse(localStorage.getItem('user'));
-
   }
 
   ngOnInit() {
     this.GetUser();
     this.GetFollowerByUserId(this.user._id)
+  }
+
+  UserFindByDisplayName(event: any) {
+    this.page = 1
+    this.listUsers = []
+    this.GetUser()
   }
 
   onScroll() {
@@ -44,7 +50,7 @@ export class UserListComponent implements OnInit {
   }
 
   public GetUser() {
-    this.userService.GetUser(this.page).subscribe(
+    this.userService.GetUser(this.page, this.UserFind).subscribe(
       res => {
 
         if (res.users.length != 6)
@@ -65,15 +71,25 @@ export class UserListComponent implements OnInit {
       })
   }
 
-  public Follow(userId, followerId) {
+  public async Follow(userId, followerId) {
     const data = { userId, followerId }
+    const x = await this.g(followerId)  
+    console.log(x)
     this.followerService.AddFollower(data).subscribe(
-      res => {
-        this.socketService.AddFollower(res, this.user)
+      res => {     
+        this.socketService.AddFollower(res, this.user)       
       },
       err => {
         console.log(err)
       })
+  }
+
+  public g(followerId){
+    return this.notificationService.AddNotification({
+      description: `@${this.user.username} ha comenzado a seguirte`,
+      userFromNotification: this.user._id,
+      userToNotification: followerId
+    })
   }
 
   public UnFollower(userId, followerId) {

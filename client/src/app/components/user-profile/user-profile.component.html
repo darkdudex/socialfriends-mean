@@ -9,56 +9,50 @@
   <div class="row">
 
     <div class="col-12">
-      <div class="card">
-        <div class="card-block">
-          <div>
-            <div [ngStyle]="{ 'height': '25vh', 'background-image': 'url(http://saludynaturaleza.com.ar/uploads/superbanner/big_banner1.jpg?timestamp=1531526400033)'}">
-              <br>
-              <div>
-                <img class="d-flex align-self-center mr-3" src="{{user.avatar}}" class="rounded-circle" style="width: 150px; height: 150px; border: 2px solid #D8D8D8; position: absolute; left: 0; margin-left: 1%; margin-top: 3%">
 
-                <div class="row" style="position: absolute !important; left: 0; margin-left: 160px; margin-top: 140px">
-                  <div class="col-6">
+      <div class="card-body profile-user-box" style="background-color: #FFFFFF; border: 1px solid #D8D8D8">
 
-                    <h5>
-                      <b>@{{user.username}}</b>
-                      <br>
-                      <h6>
-                        {{user.displayName}}
-                      </h6>
-                      <span class="badge badge-pill badge-success">Conectado</span>
-                    </h5>
+        <div class="row">
+          <div class="col-sm-6">
+            <span class="float-left m-2 mr-4">
+              <img [src]="user.avatar" style="height: 100px;" alt="" class="rounded-circle img-thumbnail">
+            </span>
+            <div class="media-body">
 
-                  </div>
-                  <div class="col-6">
-                    <div class="row" style="text-align: center; ">
-                      <hr>
-                      <div style="cursor: pointer;">
-                        <b>Siguiendo
-                          <br>0</b>
+              <h4 class="mt-1 mb-1">
+                <b>{{user.displayName}}</b>
+              </h4>
+              <p class="font-13">@{{user.username}}</p>
 
-                      </div>
-                      <div style="cursor: pointer;">
-                        <b> Seguidores
-                          <br>0</b>
-
-                      </div>
-                      <div>
-                        <b> Publicaciones
-                          <br>{{listPublications?.length}}</b>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-              <br>
-              <br>
+              <ul class="mb-0 list-inline">
+                <li class="list-inline-item mr-3">
+                  <h5 class="mb-1">10</h5>
+                  <p class="mb-0 font-13">Siguiendo</p>
+                </li>
+                <li class="list-inline-item">
+                  <h5 class="mb-1">2</h5>
+                  <p class="mb-0 font-13">Seguidores</p>
+                </li>
+              </ul>
             </div>
-            <br>
+            <!-- end media-body-->
           </div>
+          <!-- end col-->
+
+          <div class="col-sm-6">
+            <div class="text-right">
+              <button type="button" class="btn btn-info ">
+                <fa-icon [icon]="['fas', 'pencil-alt']" size="lg"></fa-icon>
+                <b> Editar perfil</b>
+              </button>
+            </div>
+          </div>
+          <!-- end col-->
         </div>
+        <!-- end row -->
+
       </div>
+
       <br>
     </div>
 

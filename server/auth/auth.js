@@ -19,7 +19,9 @@ export default {
       req.user = token_decode
 
     } catch (err) {
+      
       return res.status(200).send(err)
+      
     }
     next()
   }

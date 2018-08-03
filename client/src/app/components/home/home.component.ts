@@ -54,15 +54,17 @@ export class HomeComponent implements OnInit {
     return x.length > 0 ? true : false
   }
 
-  FollowsModal(value){
-    
-    switch(value){
-      case 'follower':{
-        this.store.dispatch(new ModalShow('follower'));
+  FollowsModal(value) {
+
+    switch (value) {
+      case 'follower': {
+        if (this.followerTotal > 0)
+          this.store.dispatch(new ModalShow('follower'));
         break;
       }
-      case 'following':{
-        this.store.dispatch(new ModalShow('following'));
+      case 'following': {
+        if (this.followingTotal > 0)
+          this.store.dispatch(new ModalShow('following'));
         break;
       }
     }
@@ -88,8 +90,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.store.select('modal').subscribe(res => {
-      
-      if(res != null)
+
+      if (res != null)
         this.stateModal = res
 
     }, err => {
@@ -250,6 +252,7 @@ export class HomeComponent implements OnInit {
     this.publicationService.GetPublicationByUserId(this.user._id, this.page).subscribe(
       res => {
 
+        console.log(res)
         this.publicationTotal = res.total
 
         if (res.publications.length != 6)
@@ -257,7 +260,6 @@ export class HomeComponent implements OnInit {
 
         if (this.listPublications.length == 0) {
           this.listPublications = res.publications;
-
         } else {
           res.publications.forEach(item => {
             this.listPublications.push(item);

@@ -6,5 +6,5 @@ const url = {
 }
 
 export var config = {
-  url: url.heroku
+  url: url.laptop
 }

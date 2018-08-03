@@ -1,7 +1,6 @@
 'use strict'
 
 import publicationModel from '../models/model.publication/publication.model'
-import utilities from '../utilities/utilities'
 
 export default {
 
@@ -9,15 +8,8 @@ export default {
 
     try {
 
-      const p = {
-        message: utilities.FindUserMessagePublication(req.body.message),
-        userId: req.body.userId,
-        filePublication: req.body.filePublication,
-        creationDate: Date.now()
-      }
-
-      const publication = await publicationModel.insertMany(p)
-
+      req.body.creationDate = Date.now()
+      const publication = await publicationModel.insertMany(req.body)
       return res.status(200).send(publication)
 
     } catch (error) {
@@ -56,20 +48,22 @@ export default {
       const userId = req.params.userId
 
       const publications = await publicationModel.find({ userId }).limit(limit).skip(page * limit).sort({ creationDate: 'desc' })
-        .populate({ path: 'comment', options: { limit: 5, skip: 1, sort: { creationDate: 'desc' }, populate: { path: 'userId', select: ' avatar displayName _id' } } })
-        .populate({ path: 'like', populate: { path: 'userId', select: ' avatar displayName _id' }, })
+        // .populate({
+        //   path: 'comment', options: { limit: 5, skip: 1, sort: { creationDate: 'desc' },
+        .populate({ path: 'comment', options: { sort: { creationDate: 'desc' }, populate: { path: 'userId', select: ' avatar displayName _id' } } })
+            .populate({ path: 'like', populate: { path: 'userId', select: ' avatar displayName _id' }, })
 
       const total = await publicationModel.find({ userId }).count()
 
       return res.status(200).send({ publications, total })
 
-    } catch (error) {
+        } catch (error) {
 
-      return res.status(500).send({
-        message: 'Error en el servidor'
-      })
+          return res.status(500).send({
+            message: 'Error en el servidor'
+          })
 
+        }
     }
-  }
 
 }

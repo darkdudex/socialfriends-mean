@@ -24,8 +24,8 @@ export class UserService {
     return this.http.get(`${this.url}/token?username=${username}`, { headers: this.headers });
   }
 
-  public GetUser(page): Observable<any> {
-    return this.http.get<User>(`${this.url}/user?page=${page}`, { headers: this.headers });
+  public GetUser(page, displayname): Observable<any> {
+    return this.http.get<User>(`${this.url}/user?page=${page}&displayname=${displayname}`, { headers: this.headers });
   }
 
   public GetUserById(userId): Observable<any> {

@@ -38,7 +38,7 @@
 
       <li class="nav-item">
 
-        <item [routerLink]="['/notification']" [value]="'Notificaciones'" [color]="'#FFFFFF'" [img]="'https://image.flaticon.com/icons/svg/309/309601.svg'" [notification]="'10'">
+        <item [routerLink]="['/notification']" [value]="'Notificaciones'" [color]="'#FFFFFF'" [img]="'https://image.flaticon.com/icons/svg/309/309601.svg'" [notification]="'3'">
         </item>
         
 
@@ -72,10 +72,6 @@
             <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/138/138692.svg" style="width: 22px;">
             <label style="margin-left: -10px">Perfil</label>
           </a>
-          <a class="dropdown-item d-flex align-self-start mr-3" onclick="document.getElementById('profile').click()" *ngIf="user.providerId == 'email.com'">
-            <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/196/196525.svg" style="width: 22px;">
-            <label style="margin-left: -10px">Cambiar imágen de perfil</label>
-          </a>
           <a class="dropdown-item d-flex align-self-start mr-3" [routerLink]="['/setting']">
             <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/456/456167.svg" style="width: 22px;">
             <label style="margin-left: -10px">Configuración</label>
@@ -90,4 +86,4 @@
 
   </div>
 </nav>
-<br><br><br><br>
+<div style="margin-bottom: 100px"></div>
