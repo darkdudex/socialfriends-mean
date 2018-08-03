@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'notification',
@@ -8,8 +9,24 @@ import { Component, OnInit } from '@angular/core';
 
 export class NotificationComponent implements OnInit {
 
-  constructor() { }
+  notificationList: Array<any> = [];
+  user: any = {}
 
-  ngOnInit() { }
-  
+  constructor(
+    private notificationService: NotificationService
+  ) {
+    this.user = JSON.parse(localStorage.getItem('user'));
+  }
+
+  ngOnInit() {
+
+    this.notificationService.GetNotificationByUserId(this.user._id).subscribe(res => {
+      this.notificationList = res.notifications
+      console.log(this.notificationList)
+    },
+      err => {
+        console.log(err)
+      })
+  }
+
 }

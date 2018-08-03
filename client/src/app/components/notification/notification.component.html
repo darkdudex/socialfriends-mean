@@ -8,37 +8,25 @@
     <h6 class="border-bottom border-gray pb-2 mb-0">
       <b>Notificaciones</b>
     </h6>
-    <div class="media text-muted pt-3">
+    <div *ngIf="notificationList?.length == 0" class="media text-muted pt-3">
       <img data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1" alt="32x32" class="mr-2 rounded" src="https://image.flaticon.com/icons/svg/309/309601.svg"
         data-holder-rendered="true" style="width: 32px; height: 32px;">
       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <div class="d-flex justify-content-between align-items-center w-100">
-          <strong class="text-gray-dark">@kaka te ha comenzado a seguir.</strong>
-          <a href="#">Eliminar</a>
+          <strong class="text-gray-dark">Aún no tienes notificaciones.</strong>
         </div>
-        <span class="d-block">Hace 2 días.</span>
+        <span class="d-block">Hace un momento.</span>
       </div>
     </div>
-    <div class="media text-muted pt-3">
+    <div *ngFor="let notification of notificationList" class="media text-muted pt-3">
       <img data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1" alt="32x32" class="mr-2 rounded" src="https://image.flaticon.com/icons/svg/309/309601.svg"
         data-holder-rendered="true" style="width: 32px; height: 32px;">
       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <div class="d-flex justify-content-between align-items-center w-100">
-          <strong class="text-gray-dark">@jmbl1685 te ha comenzado a seguir</strong>
+          <strong class="text-gray-dark">{{notification.description}}</strong>
           <a href="#">Eliminar</a>
         </div>
-        <span class="d-block">Hace 3 días.</span>
-      </div>
-    </div>
-    <div class="media text-muted pt-3">
-      <img data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1" alt="32x32" class="mr-2 rounded" src="https://image.flaticon.com/icons/svg/309/309601.svg"
-        data-holder-rendered="true" style="width: 32px; height: 32px;">
-      <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <div class="d-flex justify-content-between align-items-center w-100">
-          <strong class="text-gray-dark">@jmbl1685 le ha dado me gusta a una publicación</strong>
-          <a href="#">Eliminar</a>
-        </div>
-        <span class="d-block">Hace 4 días.</span>
+        <span class="d-block">{{notification.creationDate | amTimeAgo}}</span>
       </div>
     </div>
     <small class="d-block text-right mt-3">
