@@ -1,5 +1,198 @@
 <navbar-home></navbar-home>
+<div class=" bg-light">
 
-<div style="text-align: center">
-  <br><h1>ChatComponent</h1>
+  <div class="container">
+    <div class="row card flex-row">
+      <div class="col-auto px-0">
+        <form class="card-header d-none d-lg-block">
+          <input class="form-control my-1" type="search" placeholder="Search or start a new chat">
+        </form>
+        <div class="list-group list-group-flush">
+          <a href="#" class="list-group-item bg-info">
+            <div class="media">
+              <img alt="Image" src="https://avatars2.githubusercontent.com/u/22874642" class="img-fluid rounded-circle m-0" width="48"
+                height="48">
+              <div class="media-body d-none d-lg-block ml-2 text-white">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0">Lionel Messi</h6>
+                  <div>
+                    <small class="text-white">12 minutes ago</small>
+                  </div>
+                </div>
+                <span class="text-white text-small col-11 p-0 text-truncate d-block">That sounds great, thank you! 😄</span>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="list-group-item">
+            <div class="media">
+              <img alt="Image" src="https://avatars2.githubusercontent.com/u/22874642" class="img-fluid rounded-circle m-0" width="48"
+                height="48">
+              <div class="media-body d-none d-lg-block ml-2">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0">Elaine Johnson</h6>
+                  <div>
+                    <small class="text-muted">1 hour ago</small>
+                  </div>
+                </div>
+                <span class="text-muted text-small col-11 p-0 text-truncate d-block">I’m afraid we don’t have that option.</span>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="list-group-item">
+            <div class="media">
+              <img alt="Image" src="https://avatars2.githubusercontent.com/u/22874642" class="img-fluid rounded-circle m-0" width="48"
+                height="48">
+              <div class="media-body d-none d-lg-block ml-2">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0">Amber Witt</h6>
+                  <div>
+                    <small class="text-muted">2 hours ago</small>
+                  </div>
+                </div>
+                <span class="text-muted text-small col-11 p-0 text-truncate d-block">Great! If I place an order now! 🚀</span>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="list-group-item">
+            <div class="media">
+              <img alt="Image" src="https://avatars2.githubusercontent.com/u/22874642" class="img-fluid rounded-circle m-0" width="48"
+                height="48">
+              <div class="media-body d-none d-lg-block ml-2">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0">Edmund Brown</h6>
+                  <div>
+                    <small class="text-muted">6 hours ago</small>
+                  </div>
+                </div>
+                <span class="text-muted text-small col-11 p-0 text-truncate d-block">Are you looking for something in particular?</span>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="list-group-item">
+            <div class="media">
+              <img alt="Image" src="https://avatars2.githubusercontent.com/u/22874642" class="img-fluid rounded-circle m-0" width="48"
+                height="48">
+              <div class="media-body d-none d-lg-block ml-2">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0">Noel Davison</h6>
+                  <div>
+                    <small class="text-muted">6 hours ago</small>
+                  </div>
+                </div>
+                <span class="text-muted text-small col-11 p-0 text-truncate d-block">But I don’t want a wired option, I want them</span>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="list-group-item">
+            <div class="media">
+              <img alt="Image" src="https://avatars2.githubusercontent.com/u/22874642" class="img-fluid rounded-circle m-0" width="48"
+                height="48">
+              <div class="media-body d-none d-lg-block ml-2">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0">Paula Koval</h6>
+                  <div>
+                    <small class="text-muted">6 hours ago</small>
+                  </div>
+                </div>
+                <span class="text-muted text-small col-11 p-0 text-truncate d-block">Around 5h, but it depends on the volume.</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col px-0">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <div class="media align-items-center">
+            <img alt="Image" src="https://avatars2.githubusercontent.com/u/22874642" class="img-fluid rounded-circle m-0" width="46"
+              height="46">
+            <div class="media-body ml-2">
+              <h6 class="mb-0 d-block">
+                Juan Manuel Batty Linero
+              </h6>
+              <span class="text-muted text-small">last seen today at 4:35pm</span>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button type="button" class="btn btn-link d-none d-sm-inline-block">
+              <i class="fas fa-paperclip"></i>
+            </button>
+            <button type="button" class="btn btn-link d-none d-sm-inline-block">
+              <i class="fas fa-search"></i>
+            </button>
+            <button type="button" class="btn btn-link" data-toggle="dropdown">
+              <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="Button">
+              <a class="dropdown-item" href="#">Contact info</a>
+              <a class="dropdown-item" href="#">Select messages</a>
+              <a class="dropdown-item" href="#">Mute</a>
+              <a class="dropdown-item" href="#">Clear messages</a>
+              <a class="dropdown-item" href="#">Delete chat</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body card-body-scroll chat-window">
+
+          <div class="row justify-content-start my-2">
+            <div class="col-auto">
+              <div class="card bg-light">
+                <div class="card-body p-2">
+                  <p class="mb-0">
+                    Sure, I’d like that.
+                  </p>
+                  <div>
+                    <small>1:12pm</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-end text-right my-2">
+            <div class="col-auto">
+              <div class="card bg-info text-white">
+                <div class="card-body p-2">
+                  <p class="mb-0">
+                    We need an advance payment guarantee of 20%. You’ll
+                    <br>pay the remaining 80% when you get the product.
+                  </p>
+                  <div>
+                    <i class="icon-check text-small"></i>
+                    <small>1:12pm</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-start my-2">
+            <div class="col-auto">
+              <div class="card bg-light">
+                <div class="card-body p-2">
+                  <p class="mb-0">
+                    That sounds great, thank you! 😄
+                  </p>
+                  <div>
+                    <small>1:14pm</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer bg-light">
+          <form class="d-flex align-items-center">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <button class="btn btn-secondary" type="button">
+                    <fa-icon [icon]="['fas', 'paperclip']" size="lg"></fa-icon>
+                </button>
+              </div>
+              <input class="form-control" type="text" placeholder="Type a message" name="message">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
