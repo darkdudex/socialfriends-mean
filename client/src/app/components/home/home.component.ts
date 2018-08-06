@@ -13,6 +13,7 @@ import { LikeService } from '../../services/like.service';
 import { WebSocketService } from '../../services/websocket.service';
 import { Store } from '@ngrx/store';
 import { ModalShow, ModalHide } from '../../ngrx/actions/modal.actions';
+import { NgProgress } from '@ngx-progressbar/core';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,7 @@ export class HomeComponent implements OnInit {
   public page = 1;
   public page2 = 1;
   public finished: boolean = true;
-  public filesToUpload: Array<File> = [];
+  public filesToUpload: Array<any> = [];
   public typeFiles = ['image', 'video'];
 
   public label = HomeComponentLabel.Spanish
@@ -80,12 +81,14 @@ export class HomeComponent implements OnInit {
     private route: Router,
     public iziToast: Ng2IzitoastService,
     private socketService: WebSocketService,
-    private store: Store<any>
+    private store: Store<any>,
+    public progress: NgProgress
   ) {
     this.user = JSON.parse(localStorage.getItem('user'));
-    this.GetPublicationByUserId();
     this.GetFollowerByUserId();
     this.GetFollowingByUserId();
+    this.GetPublicationByUserId();
+    this.GetPublicationByFollowerUserId();
   }
 
   ngOnInit() {
@@ -98,6 +101,24 @@ export class HomeComponent implements OnInit {
       console.log(err)
     })
   }
+
+  options = {
+    min: 8,
+    max: 100,
+    ease: 'linear',
+    speed: 200,
+    trickleSpeed: 300,
+    meteor: true,
+    spinner: true,
+    spinnerPosition: 'left',
+    direction: 'ltr+',
+    color: '#DC3545',
+    thick: true,
+  };
+
+  startedClass = false;
+  completedClass = false;
+  preventAbuse = false;
 
   GetFollowerByUserId() {
     this.followerService.GetFollowerByUserId(this.user._id).subscribe(
@@ -172,19 +193,10 @@ export class HomeComponent implements OnInit {
 
   }
 
-  PublicationClick(type, src) {
-
-    // if (type.includes('image'))
-    //   $("#filep").html(`<img id="imgp" src="${src}" height="100%" width="100%">`)
-
-    // if (type.includes('video'))
-    //   $("#filep").html(`<video width="100%" height="100%" controls> <source id="imgp" src="${src}" type="video/mp4"> </video>`)
-
-  }
-
   onScroll() {
     this.page++;
     this.GetPublicationByUserId();
+    this.GetPublicationByFollowerUserId();
   }
 
   onScroll2() {
@@ -193,32 +205,42 @@ export class HomeComponent implements OnInit {
   }
 
   Files(event: any) {
-    this.filesToUpload = <Array<File>>event.target.files;
+    this.filesToUpload = Array.from(event.target.files);
   }
 
   public AddPublication(dataForm) {
 
-    // document.getElementById('loader').classList.add('is-active')
+    let publication = dataForm.value
 
-    const publication = dataForm.value
     publication.userId = this.user._id
 
     /* Si el usuario publica solo mensaje (sin imágen o vídeo) */
     if (this.filesToUpload.length == 0) {
 
-      publication.filePublication = []
+      if (publication.message != null) {
 
-      this.publicationService.AddPublication(publication).subscribe(
-        res => {
-          this.listPublications.unshift(res[0])
-          dataForm.reset();
-          //document.getElementById('loader').classList.remove('is-active')
-        },
-        err => {
-          console.log(err.error)
-        })
+        publication.filePublication = []
+
+        this.publicationService.AddPublication(publication).subscribe(
+          res => {
+
+            res[0].userId = [{
+              avatar: this.user.avatar,
+              _id: this.user._id,
+              displayName: this.user.displayName
+            }]
+
+            this.listPublications.unshift(res[0])
+            dataForm.reset();
+          },
+          err => {
+            console.log(err.error)
+          })
+      }
 
     } else {
+
+      this.progress.start()
 
       this.fileService.AddFile(this.filesToUpload, this.user._id, 'publications').subscribe(
         res => {
@@ -228,10 +250,9 @@ export class HomeComponent implements OnInit {
           this.publicationService.AddPublication(publication).subscribe(
             res => {
               this.listPublications.unshift(res[0])
-              //document.getElementById("CloseButton").click()
               dataForm.reset();
               this.filesToUpload = [];
-              //document.getElementById('loader').classList.remove('is-active')
+              this.progress.complete()
             },
             err => {
               console.log(err)
@@ -252,7 +273,6 @@ export class HomeComponent implements OnInit {
     this.publicationService.GetPublicationByUserId(this.user._id, this.page).subscribe(
       res => {
 
-        console.log(res)
         this.publicationTotal = res.total
 
         if (res.publications.length != 6)
@@ -264,13 +284,31 @@ export class HomeComponent implements OnInit {
           res.publications.forEach(item => {
             this.listPublications.push(item);
           })
-        }
+          }
 
       },
       err => {
         console.log(err)
       })
   }
+
+  public GetPublicationByFollowerUserId() {
+
+    this.publicationService.GetPublicationFollowersByUserId(this.user._id, this.page).subscribe(
+      res => {
+
+        console.log(res)
+        res.publications.forEach(publication => {
+          this.listPublications.push(publication)
+        })
+
+        console.log(this.listPublications)
+      },
+      err => {
+        console.log(err)
+      })
+  }
+
 
   public AddComment(event, id, pos) {
 
@@ -363,8 +401,29 @@ export class HomeComponent implements OnInit {
     return likes
   }
 
-  test(userPublication) {
-    console.log(userPublication)
+  public GetPublicationByUserIdTEST2() {
+
+    this.publicationService.GetPublicationByUserId(this.user._id, this.page).subscribe(
+      res => {
+
+        console.log(res)
+        this.publicationTotal = res.total
+
+        if (res.publications.length != 6)
+          this.finished = false
+
+        if (this.listPublications.length == 0) {
+          this.listPublications = res.publications;
+        } else {
+          res.publications.forEach(item => {
+            this.listPublications.push(item);
+          })
+        }
+
+      },
+      err => {
+        console.log(err)
+      })
   }
 
 }

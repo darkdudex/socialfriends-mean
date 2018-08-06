@@ -54,7 +54,8 @@ import { ModalFollowsComponent } from './components/_mini-components/modal-follo
 import { ModalReducer } from './ngrx/reducers/modal.reducers';
 import { FilterUserPipeModule } from './pipes/filteruser.pipe';
 import { NotificationService } from './services/notification.service';
- 
+import { NgProgressModule } from '@ngx-progressbar/core';
+
 library.add(fas, far);
 
 export const firebaseConfig = {
@@ -105,12 +106,13 @@ const store = {
     Ng2IziToastModule,
     MomentModule,
     InfiniteScrollModule,
+    NgProgressModule.forRoot(),
     SweetAlert2Module.forRoot({
       buttonsStyling: false,
       customClass: 'modal-content',
       confirmButtonClass: 'btn btn-primary',
       cancelButtonClass: 'btn'
-  })
+    })
   ],
   providers: [
     GroupService,

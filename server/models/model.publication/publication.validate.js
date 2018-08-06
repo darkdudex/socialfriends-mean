@@ -4,7 +4,7 @@ import { Joi, celebrate } from 'celebrate'
 
 const { body, params, query, headers } = {
   body: Joi.object().keys({
-    message: Joi.string().required(),
+    message: Joi.string().allow(''),
     userId: Joi.string().required(),
     filePublication: Joi.array().required(),
     creationDate: Joi.date(),

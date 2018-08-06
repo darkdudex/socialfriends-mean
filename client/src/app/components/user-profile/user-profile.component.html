@@ -1,87 +1,70 @@
 <navbar-home></navbar-home>
 
-<!-- <button [swal]="['Oops!', 'This is not implemented yet :/', 'success']">
-  Do it!
-</button>
-<button (click)="Notification()">test</button> -->
+<modal-follows [visible]="true" [title]="'Siguiendo'" [userlist]="followerUser" [ngStyle]="{ 'display': (stateModal?.type == 'follower') ? 'block' : 'none' }">
+</modal-follows>
 
-<div class="container">
+<modal-follows [visible]="true" [title]="'Seguidores'" [userlist]="followingUser" [ngStyle]="{ 'display': (stateModal?.type == 'following') ? 'block' : 'none' }">
+</modal-follows>
+
+<div class="container" style="z-index: -1 !important;">
   <div class="row">
 
-    <div class="col-12">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 
-      <div class="card-body profile-user-box" style="background-color: #FFFFFF; border: 1px solid #D8D8D8">
+      <div class="card">
+        <div class="card-block">
+          <div style="text-align: center; margin-top: 10px">
+            <img class="d-flex align-self-center mr-3" src="{{user.avatar}}" class="rounded-circle" style="width: 100px; border: 2px solid #D8D8D8">
+            <br>
+            <b>@{{user.username}}</b>
+            <br>
+            <span class="badge badge-pill badge-success">Conectado</span>
+            <div class="row" style="font-size: 70%; margin-top: 5px; margin-bottom: 7px; text-align: center">
+              <div (click)="FollowsModal('follower')" class="col-xl-4 col-lg-4 col-md-4 col-4" style="cursor: pointer;">
+                <b>Siguiendo
+                  <br>{{followerTotal}}</b>
 
-        <div class="row">
-          <div class="col-sm-6">
-            <span class="float-left m-2 mr-4">
-              <img [src]="user.avatar" style="height: 100px;" alt="" class="rounded-circle img-thumbnail">
-            </span>
-            <div class="media-body">
+              </div>
+              <div (click)="FollowsModal('following')" class="col-xl-4 col-lg-4 col-md-4 col-4" style="cursor: pointer;">
+                <b> Seguidores
+                  <br>{{followingTotal}}</b>
 
-              <h4 class="mt-1 mb-1">
-                <b>{{user.displayName}}</b>
-              </h4>
-              <p class="font-13">@{{user.username}}</p>
-
-              <ul class="mb-0 list-inline">
-                <li class="list-inline-item mr-3">
-                  <h5 class="mb-1">10</h5>
-                  <p class="mb-0 font-13">Siguiendo</p>
-                </li>
-                <li class="list-inline-item">
-                  <h5 class="mb-1">2</h5>
-                  <p class="mb-0 font-13">Seguidores</p>
-                </li>
-              </ul>
-            </div>
-            <!-- end media-body-->
-          </div>
-          <!-- end col-->
-
-          <div class="col-sm-6">
-            <div class="text-right">
-              <button type="button" class="btn btn-info ">
-                <fa-icon [icon]="['fas', 'pencil-alt']" size="lg"></fa-icon>
-                <b> Editar perfil</b>
-              </button>
+              </div>
+              <div class="col-xl-4 col-lg-4 col-md-4 col-4">
+                <b> Publicaciones
+                  <br>{{publicationTotal}}</b>
+              </div>
             </div>
           </div>
-          <!-- end col-->
         </div>
-        <!-- end row -->
-
       </div>
 
-      <br>
-    </div>
+      <br><br>
 
-    <div class="col-12">
+      <div *ngIf="listPublications?.length == 0">
+        <item [routerLink]="['/group']" [value]="user.displayName + ' aún no tiene publicaciones.'" [color]="'#F4C534'" [img]="'https://image.flaticon.com/icons/svg/743/743332.svg'">
+        </item>
+      </div>
 
-      <br>
       <div class="container">
-        <div *ngIf="listPublications?.length == 0" style="color: gray">
-          <br>Aún no tienes publicaciones
-        </div>
 
         <div>
-          <br>
-          <br>
-          <div *ngIf="listPublications?.length > 0" class="">
+          <div *ngIf="listPublications.length > 0" class="">
 
             <div *ngFor="let userPublication of listPublications; let i = index">
+
               <div class="card card-user" style="margin: 10px; margin-top: 5px; margin-bottom: 40px">
                 <div class="row" style="margin: 10 px; margin-top: 10px">
 
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-lg-12 text-center">
 
-                    <img class="profile-img" src="{{user.avatar}}" class="rounded-circle" height="60" width="60" style="border: 2px solid #D8D8D8; margin-top: -40px">
+                    <img class="profile-img" [src]="user.avatar" class="rounded-circle" height="60" width="60" style="border: 2px solid #D8D8D8; margin-top: -40px">
 
                   </div>
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-lg-12">
 
                     <h5 href="#" class="text-xl-center text-lg-center text-md-center text-center">
-                      <b>{{user.displayName}}</b>
+                      <b>{{user.displayName}} {{userPublication?.length}}</b>
                     </h5>
                     <p class="text-muted text-xl-center text-lg-center text-md-center text-center" style="font-size: 11px; margin-top: -5px">
                       {{userPublication.creationDate | amTimeAgo}}
@@ -94,17 +77,14 @@
                         <div class="qa" style="text-align: center">
 
                           <div data-grid="images" data-target-height="150">
-                            <div style="margin-bottom: 10px; margin-right: 10px; display: inline-block; vertical-align: bottom;">
-
-                            </div>
 
                             <div *ngFor="let p of userPublication.filePublication" style="margin-bottom: 10px; margin-right: 10px; display: inline-block; vertical-align: bottom; cursor: pointer;">
 
-                              <img (click)="PublicationClick(p.type,p.url)" [src]="p.url" style="width: 117px; height: 118px;border: 1px solid #D8D8D8;"
+                              <img (click)="PublicationClick(p.type,p.url)" src="{{p.url}}" style="width: 90%; height: 50%; border: 1px solid #D8D8D8;"
                                 *ngIf="p.type.includes('image')">
 
-                              <video data-width="640" data-height="640" data-action="zoom" [src]="p.url" style="width: 117px; height: 118px;border: 1px solid #D8D8D8"
-                                controls *ngIf="p.type.includes('video')" (click)="PublicationClick(p.type,p.url)">
+                              <video src="{{p.url}}" style="width: 90%; height: 100%; border: 1px solid #D8D8D8;" controls *ngIf="p.type.includes('video')"
+                                (click)="PublicationClick(p.type,p.url)">
                                 <source [src]="p.url" type="video/mp4">
                               </video>
 
@@ -115,41 +95,52 @@
 
                       </div>
 
-
                     </div>
 
-                    <p style="text-align: justify; -moz-text-align-last: center; text-align-last: center; margin-top: 6px; margin: 20px; font-size: 90%">{{userPublication.message}}</p>
+
+                    <div style="text-align: justify; -moz-text-align-last: center; text-align-last: center; font-size: 90%; margin-bottom: 10px"
+                      [innerHTML]="userPublication.message"></div>
 
                     <a *ngIf="userPublication?.comment?.length > 0" data-toggle="collapse" href="#collapse_{{userPublication._id}}" aria-expanded="false"
-                      aria-controls="collapseExample" style="color: #2285E3">
-                      <i class="fa fa-comments" aria-hidden="true"></i>
-                      <b style="font-size: 13px; margin-left: 20px">Ver comentarios</b>
-                    </a>
+                        aria-controls="collapseExample" style="color: #2285E3">
+                        <i class="fa fa-comments" aria-hidden="true"></i>
+                        <b style="font-size: 13px; margin-left: 20px">Ver comentarios</b>
+                      </a>
+                      <br>
+
                     <br>
 
+                    <div>
 
-                    <br>
-                    <div *ngFor="let p of userPublication.comment" class="row" style="margin: 10 px; margin-top: -5px">
+                        <div class="rw">
+         
+                            <ul class="bow afa">
+                              <li style="list-style: none;"  *ngFor="let p of userPublication.comment" class="rv afh">
+                                <img class="d-flex align-self-center mr-3" src="{{p.userId.avatar}}" class="rounded-circle" style="width: 40px; border: 2px solid #D8D8D8">
+                                <div class="rw" style="font-size: 80%; text-align: justify">
+                                  <strong>{{p.userId.displayName}}: </strong>
+                                  {{p.comment}} - {{p.creationDate | amTimeAgo}}
+                                </div>
+                                
+                              </li>                             
+                            </ul>
+                          </div>
 
-                      <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-lg-2 text-left">
-                        <img class="d-flex align-self-center mr-3" src="{{p.userId.avatar}}" class="rounded-circle" height="30" width="30" style="border: 2px solid #D8D8D8">
-                      </div>
-
-                      <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10 col-lg-10" style="margin-left: -40px">
-
-                        <p href="#" class="text-xl-left text-lg-left text-md-left text-left" style="font-size: 12px">
-                          <b>{{p.userId.displayName}}</b>
-                        </p>
-                        <p class="text-xl-left text-lg-left text-md-left text-left" style="font-size: 11px; margin-top: -15px; color: black">
-                          {{p.comment}}
-                        </p>
-                      </div>
-
-                      <hr/>
+                      <!-- <div *ngFor="let p of userPublication.comment" class="media mt-3">
+                        <img alt="" src="https://robust.bootlab.io/img/avatars/3.jpg" width="48" height="48" class="rounded-circle mr-3">
+                        <div class="media-body">
+                          <h6 class="mt-0">{{p.userId.displayName}}</h6>
+                          <div style="text-align: justify; -moz-text-align-last: center; text-align-last: center; font-size: 90%; margin-bottom: 10px">{{p.comment}}</div>
+                        </div>
+                      </div> -->
 
                     </div>
+
+
                     <button *ngIf="userPublication.totalComment > 5" type="button" class="btn btn-primary  btn-sm" style="font-size: 10px">Ver más</button>
 
+                    <br>
+                    <br>
                     <br>
 
                     <div class="row" style="margin-top: -70px">
@@ -172,9 +163,9 @@
                           <div class="btn-group" role="group" aria-label="First group">
 
                             <div *ngIf="userPublication?.like?.length > 0" onclick="$('#modaLike').modal('show')" (click)="t(userPublication.like)" class="media"
-                              style="cursor: pointer">
-                              <b class="mt-0" style="color:#DB3C3C">{{userPublication?.like?.length}} Me gusta</b>&nbsp;
-                              <img class="d-flex align-self-start mr-3" src="https://image.flaticon.com/icons/svg/237/237645.svg" style="width: 22px;">
+                              style="cursor: pointer; margin-left: 20px">
+                              <b class="mt-0" style="color:#389FEB">{{userPublication?.like?.length}} Me gusta</b>&nbsp;
+                              <!-- <img class="d-flex align-self-start mr-3" src="assets/img/icons/456115.svg" style="width: 22px;"> -->
 
                             </div>
 
@@ -187,7 +178,7 @@
                             </div>
 
                             <div id="like_{{userPublication._id}}" class="media" style="cursor: pointer">
-                              <img class="d-flex mr-3" src="{{p(listPublications[i].like,user._id) ? 'https://image.flaticon.com/icons/svg/456/456115.svg' : 'https://image.flaticon.com/icons/svg/456/456257.svg'}}"
+                              <img class="d-flex mr-3" src="{{p(listPublications[i].like,user._id) ? 'assets/img/svg/456115.svg' : 'assets/img/svg/456257.svg'}}"
                                 style="width: 25px" align="right" (click)="Like_And_Unlike(userPublication._id)">
                             </div>
 
@@ -196,23 +187,7 @@
                         <br>
                       </div>
 
-                      <!-- <div class="col5">
-
-                            <div style="cursor: pointer">
-                              <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/456/456115.svg" style="width: 25px" align="right" (click)="getLike(lp.id,user.uid)">
-                            </div>
-                            <div style="cursor: pointer">
-                              <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/456/456257.svg" style="width: 25px" align="right" (click)="btnLike(lp.id,user.uid,lp.user)">
-                            </div>
-                            <div style="cursor: pointer">
-                              <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/390/390902.svg" style="width: 25px" align="right" (click)="deletePublication(lp.id,user.uid)">
-                            </div>
-
-                          </div> -->
-
                     </div>
-
-
 
                   </div>
                 </div>
@@ -229,31 +204,8 @@
           </div>
         </div>
       </div>
-      <!-- <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div> -->
+      <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
 
-      <br>
-
-      <div class="card">
-        <div class="card-header">
-          Publicaciones de las personas que sigo
-        </div>
-        <br>
-
-        <!-- este es el nuevo -->
-        <div class="container">
-          <div *ngIf="listPublicationFollowers?.length == 0" style="color: gray">Aún no sigues a nadie, o el usuario al que sigues no tiene publicaciones.
-            <br>
-            <br>
-          </div>
-          <div>
-            <div class="card">
-              <div class="row" style="margin: 10px"></div>
-            </div>
-            <br>
-          </div>
-        </div>
-
-      </div>
       <br>
 
     </div>

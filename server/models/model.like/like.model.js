@@ -5,7 +5,10 @@ import config from '../../config/config'
 const { Schema } = config.mongoose
 
 const LikeSchema = new Schema({
-  publicationId: String,
+  publicationId: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Publication'
+  }],
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',

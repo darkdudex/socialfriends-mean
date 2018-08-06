@@ -23,4 +23,8 @@ export class PublicationService {
     return this.http.get(`${this.url}/publication/${userId}?page=${page}`, { headers: this.headers });
   }
 
+  public GetPublicationFollowersByUserId(userId, page): Observable<any> {
+    return this.http.get(`${this.url}/publication/followers/${userId}?page=${page}`, { headers: this.headers });
+  }
+
 }

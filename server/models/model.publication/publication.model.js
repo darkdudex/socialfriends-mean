@@ -6,7 +6,10 @@ const { Schema } = config.mongoose
 
 const PublicationSchema = new Schema({
   message: String,
-  userId: String,
+  userId: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   filePublication: Array,
   creationDate: Date,
   comment: [{
@@ -18,6 +21,6 @@ const PublicationSchema = new Schema({
     ref: 'Like'
   }],
   totalComment: { type: Number, default: 0 }
-},{ versionKey: false })
+}, { versionKey: false })
 
 export default config.mongoose.model('Publication', PublicationSchema)

@@ -6,7 +6,10 @@ const { Schema } = config.mongoose
 
 const CommentSchema = new Schema({
   comment: String,
-  publicationId: String,
+  publicationId: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Publication'
+  }],
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',

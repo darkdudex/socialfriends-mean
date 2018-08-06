@@ -1,11 +1,15 @@
 <navbar-home></navbar-home>
 
+<ng-progress #progressBar [meteor]="options.meteor" [color]="options.color" [min]="options.min" [speed]="options.speed" [spinner]="options.spinner" [max]="options.max"
+[spinnerPosition]="options.spinnerPosition" [direction]="options.direction" [thick]="options.thick" [trickleSpeed]="options.trickleSpeed"
+[ease]="options.ease" style="height: 300px !important; ">
+</ng-progress>
+
 <modal-follows [visible]="true" [title]="'Siguiendo'" [userlist]="followerUser" [ngStyle]="{ 'display': (stateModal?.type == 'follower') ? 'block' : 'none' }">
 </modal-follows>
 
 <modal-follows [visible]="true" [title]="'Seguidores'" [userlist]="followingUser" [ngStyle]="{ 'display': (stateModal?.type == 'following') ? 'block' : 'none' }">
 </modal-follows>
-
 
 <div class="container" style="z-index: -1 !important;">
   <div class="row">
@@ -92,13 +96,13 @@
 
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-lg-12 text-center">
 
-                    <img class="profile-img" [src]="user.avatar" class="rounded-circle" height="60" width="60" style="border: 2px solid #D8D8D8; margin-top: -40px">
+                    <img class="profile-img" [src]="userPublication.userId[0].avatar" class="rounded-circle" height="60" width="60" style="border: 2px solid #D8D8D8; margin-top: -40px">
 
                   </div>
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-lg-12">
 
                     <h5 href="#" class="text-xl-center text-lg-center text-md-center text-center">
-                      <b>{{user.displayName}} - {{userPublication?.length}}</b>
+                      <b>{{userPublication.userId[0].displayName}} {{userPublication?.length}}</b>
                     </h5>
                     <p class="text-muted text-xl-center text-lg-center text-md-center text-center" style="font-size: 11px; margin-top: -5px">
                       {{userPublication.creationDate | amTimeAgo}}
@@ -240,29 +244,6 @@
       </div>
       <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
 
-      <br>
-
-      <div class="card">
-        <div class="card-header">
-          Publicaciones de las personas que sigo
-        </div>
-        <br>
-
-        <!-- este es el nuevo -->
-        <div class="container">
-          <div *ngIf="listPublicationFollowers?.length == 0" style="color: gray">Aún no sigues a nadie, o el usuario al que sigues no tiene publicaciones.
-            <br>
-            <br>
-          </div>
-          <div>
-            <div class="card">
-              <div class="row" style="margin: 10px"></div>
-            </div>
-            <br>
-          </div>
-        </div>
-
-      </div>
       <br>
 
     </div>
