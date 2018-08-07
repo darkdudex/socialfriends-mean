@@ -1,15 +1,15 @@
 'use strict'
 
 import chai from 'chai'
-import server from '../app'
 import chaiHttp from 'chai-http'
-
+import server from '../app'
 const should = chai.should()
 const assert = chai.assert
-
 chai.use(chaiHttp)
 
 describe('Login Controller Test', () => {
+
+  after(done => process.exit(0))
 
   it('[SignUp]', (done) => {
 
@@ -24,9 +24,15 @@ describe('Login Controller Test', () => {
         username: 'jbatty'
       })
       .end((err, res) => {
-        res.should.have.status(200) 
-        res.should.be.json
-        done()
+
+        try {
+          res.should.have.status(200)
+          res.should.be.json
+          done()
+        } catch (err) {
+          done(err)
+        }
+
       })
 
   })
@@ -40,9 +46,15 @@ describe('Login Controller Test', () => {
         password: '12345'
       })
       .end((err, res) => {
-        res.should.have.status(200)
-        res.should.be.json
-        done()
+
+        try {
+          res.should.have.status(200)
+          res.should.be.json
+          done()
+        } catch (err) {
+          done(err)
+        }
+
       })
 
   })

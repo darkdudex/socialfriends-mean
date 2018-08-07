@@ -5,16 +5,17 @@ import { LoginUser } from '../../ngrx/actions/login.actions';
 import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { SocialLoginService } from '../../services/social.login.service';
 
 enum CodeResponse {
   CHECK_EMAIL = 30,
-  NOT_FOUND =   25
+  NOT_FOUND = 25
 }
 
 interface LoginResponse {
-   status: number;
-   code: CodeResponse;
-   message: string;
+  status: number;
+  code: CodeResponse;
+  message: string;
 }
 
 @Component({
@@ -32,16 +33,17 @@ export class LoginComponent implements OnInit {
   constructor(
     private store: Store<any>,
     private loginService: LoginService,
-    private route: Router
+    private route: Router,
+    private socialLogin: SocialLoginService
   ) {
-    
+
   }
 
   ngOnInit() {
 
     const language = localStorage.getItem('language')
 
-    switch(language){
+    switch (language) {
       case 'spanish':
         this.label = LoginComponentLabel.Spanish;
         break;
@@ -71,5 +73,31 @@ export class LoginComponent implements OnInit {
       }
     })
   }
+
+  GoogleLogin() {
+    this.socialLogin.GoogleLogin()
+      .then(res => console.log(res.additionalUserInfo.profile))
+      .catch(err => console.log(err))
+  }
+
+  FacebookLogin() {
+    this.socialLogin.FacebookLogin()
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
+  }
+
+  GitHubLogin() {
+    this.socialLogin.GitHubLogin()
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
+  }
+
+  TwitterLogin() {
+    this.socialLogin.TwitterLogin()
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
+  }
+
+  
 
 }

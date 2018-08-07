@@ -27,7 +27,6 @@ export class GroupComponent implements OnInit {
     this.groupService.GetGroup().subscribe(
       res => {
       this.groupList = res.groups
-      console.log(res)
     },err => {
       console.log(err)
     })

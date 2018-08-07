@@ -73,22 +73,23 @@ export class UserListComponent implements OnInit {
 
   public async Follow(userId, followerId) {
     const data = { userId, followerId }
-    const x = await this.g(followerId)  
-    console.log(x)
     this.followerService.AddFollower(data).subscribe(
-      res => {     
-        this.socketService.AddFollower(res, this.user)       
+      res => {
+        this.socketService.AddFollower(res, this.user)
+        this.AddNotification(
+          followerId,
+          `@${this.user.username} ha comenzado a seguirte`)
       },
       err => {
         console.log(err)
       })
   }
 
-  public g(followerId){
+  public AddNotification(toUserId, message) {
     return this.notificationService.AddNotification({
-      description: `@${this.user.username} ha comenzado a seguirte`,
+      description: message,
       userFromNotification: this.user._id,
-      userToNotification: followerId
+      userToNotification: toUserId
     })
   }
 

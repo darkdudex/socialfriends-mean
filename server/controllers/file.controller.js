@@ -85,8 +85,6 @@ const UploadStorageServer = (files, userId, mainFolder) => {
 
       const blobStream = fs.createWriteStream(newFileName)
 
-      console.log(blobStream)
-
       blobStream.on('error', error => {
         _reject(error)
       })

@@ -10,10 +10,11 @@ import { ModalShow, ModalHide } from '../../../ngrx/actions/modal.actions';
 
 export class ModalFollowsComponent implements OnInit {
 
-  @Input() title:string;
+  @Input() title: string;
   @Input() userlist: Array<any>;
 
   @Input() visible: boolean;
+
   display: string
 
   constructor(
@@ -24,13 +25,13 @@ export class ModalFollowsComponent implements OnInit {
     this.visible ? this.display = this.Display('block') : this.display = this.Display('none');
   }
 
-  Display(value): any{
+  Display(value): any {
     return {
-      'display' : value
+      'display': value
     }
   }
 
-  ModalHide(){
+  ModalHide() {
     this.store.dispatch(new ModalHide());
   }
 

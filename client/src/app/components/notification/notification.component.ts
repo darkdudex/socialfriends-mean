@@ -22,7 +22,6 @@ export class NotificationComponent implements OnInit {
 
     this.notificationService.GetNotificationByUserId(this.user._id).subscribe(res => {
       this.notificationList = res.notifications
-      console.log(this.notificationList)
     },
       err => {
         console.log(err)

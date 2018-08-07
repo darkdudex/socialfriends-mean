@@ -60,14 +60,14 @@ export class UserProfileComponent implements OnInit {
   FollowsModal(value) {
 
     switch (value) {
-      case 'follower': {
+      case 'pfollower': {
         if (this.followerTotal > 0)
-          this.store.dispatch(new ModalShow('follower'));
+          this.store.dispatch(new ModalShow('pfollower'));
         break;
       }
-      case 'following': {
+      case 'pfollowing': {
         if (this.followingTotal > 0)
-          this.store.dispatch(new ModalShow('following'));
+          this.store.dispatch(new ModalShow('pfollowing'));
         break;
       }
     }
@@ -156,7 +156,6 @@ export class UserProfileComponent implements OnInit {
     this.publicationService.GetPublicationByUserId(this.user._id, this.page).subscribe(
       res => {
 
-        console.log(res)
         this.publicationTotal = res.total
 
         if (res.publications.length != 6)
@@ -210,7 +209,7 @@ export class UserProfileComponent implements OnInit {
   public AddLike(data) {
     this.likeService.AddLike(data).subscribe(
       res => {
-        console.log(res)
+ 
       },
       err => {
         console.log(err)
@@ -220,7 +219,7 @@ export class UserProfileComponent implements OnInit {
   public RemoveLike(data) {
     this.likeService.RemoveLike(data).subscribe(
       res => {
-        console.log(res)
+ 
       },
       err => {
         console.log(err)

@@ -17,16 +17,15 @@ app.use(compression({}))
 
 app.use(express.static('storage_files'))
 
+require('./routes/login.routes').default(app)
 require('./routes/comment.routes').default(app)
 require('./routes/filepublication.routes').default(app)
 require('./routes/follower.routes').default(app)
 require('./routes/like.routes').default(app)
 require('./routes/publication.routes').default(app)
 require('./routes/user.routes').default(app)
-require('./routes/login.routes').default(app)
 require('./routes/group.routes').default(app)
 require('./routes/notifications.routes').default(app)
-
 //require('./routes/chat.routes').default(app)
 
 

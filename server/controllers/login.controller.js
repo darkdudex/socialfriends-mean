@@ -14,9 +14,11 @@ export default {
       utilities.EncryptPassword(req)
       const user = await userModel.insertMany(req.body)
 
-      if (user.length > 0)
-        sendemail.SendEmail(user[0])
-      
+      /*
+        if (user.length > 0)
+          sendemail.SendEmail(user[0])
+      */
+
       return res.status(200).send({
         message: 'Verifica tu cuenta en el link que te enviamos por correo electrónico'
       })

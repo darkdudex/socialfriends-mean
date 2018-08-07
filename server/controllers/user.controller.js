@@ -20,10 +20,8 @@ export default {
 
     try {
 
-      if (displayname != null && displayname != 'undefined') {
+      if (displayname != null && displayname != 'undefined')
         findProperty = { displayName: new RegExp(displayname, 'i') }
-        console.log(displayname)
-      }
 
       const users = await userModel
         .find(findProperty)

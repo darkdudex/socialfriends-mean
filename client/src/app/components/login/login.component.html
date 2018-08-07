@@ -16,7 +16,7 @@
 
               <label for="exampleInputEmail1">
                 <b>
-                  <i class="fa fa-user" aria-hidden="true"></i>{{label.user_or_email}}</b>
+                  <fa-icon [icon]="['fas', 'user']" size="sm"></fa-icon> {{label.user_or_email}}</b>
               </label>
 
               <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="{{label.placeholder_user_or_email}}" name="account"
@@ -28,7 +28,7 @@
 
               <label for="exampleInputEmail1">
                 <b>
-                  <i class="fa fa-lock" aria-hidden="true"></i>{{label.password}}</b>
+                  <fa-icon [icon]="['fas', 'key']" size="sm"></fa-icon> {{label.password}}</b>
               </label>
 
               <input type="password" class="form-control" aria-describedby="emailHelp" placeholder="{{label.placeholder_password}}" name="password"
@@ -37,14 +37,15 @@
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">
               <b>
-                <i class="fa fa-sign-in"></i>{{label.signin}}</b>
+                <fa-icon [icon]="['fas', 'sign-in-alt']" size="sm"></fa-icon>
+                {{label.signin}}</b>
             </button>
 
           </form>
           <br>
 
-          <div *ngIf="statusLogin != null" style="text-align: center;" class="alert animated" [class.alert-info]="statusLogin?.code == 30" [class.alert-danger]="statusLogin?.code == 25"
-            role="alert">
+          <div *ngIf="statusLogin != null" style="text-align: center;" class="alert animated" [class.alert-info]="statusLogin?.code == 30"
+            [class.alert-danger]="statusLogin?.code == 25" role="alert">
             <strong>{{statusLogin?.message}}</strong>
           </div>
 
@@ -52,17 +53,19 @@
       </div>
 
       <div style="text-align: center;">
-        <a style="color: #2285E3" [routerLink]="['/forgetpassword']">{{label.forget_password}}</a>
+        <a style="color: #2285E3" [routerLink]="['/forgetpassword']">
+          <b>{{label.forget_password}}</b>
+        </a>
 
         <div style="cursor: pointer; margin-top: 10px">
 
-          <img style="margin: 10px" src="https://image.flaticon.com/icons/svg/145/145802.svg" height="50" width="50">
-          <img (click)="LoginByGoogle()" style="margin: 10px" src="https://image.flaticon.com/icons/svg/145/145804.svg" height="50"
+          <!-- <img (click)="FacebookLogin()" style="margin: 10px" src="https://image.flaticon.com/icons/svg/145/145802.svg" height="50"
+            width="50"> -->
+          <img (click)="GoogleLogin()" style="margin: 10px" src="https://image.flaticon.com/icons/svg/145/145804.svg" height="50" width="50">
+          <!-- <img (click)="TwitterLogin()" style="margin: 10px" src="https://image.flaticon.com/icons/svg/145/145812.svg" height="50"
             width="50">
-          <img (click)="LoginByTwitter()" style="margin: 10px" src="https://image.flaticon.com/icons/svg/145/145812.svg" height="50"
-            width="50">
-          <img (click)="epa()" style="margin: 10px" src="https://image.flaticon.com/icons/svg/919/919847.svg" height="50" width="50">
-        </div>
+          <img (click)="GitHubLogin()" style="margin: 10px" src="https://image.flaticon.com/icons/svg/919/919847.svg" height="50" width="50">
+        </div> -->
 
 
       </div>
@@ -70,6 +73,5 @@
       <br>
 
     </div>
-    
+
   </div>
-  

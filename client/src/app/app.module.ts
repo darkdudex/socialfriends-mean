@@ -13,6 +13,10 @@ import { ForgetPasswordComponent } from './components/forget-password/forget-pas
 import { HomeComponent } from './components/home/home.component';
 import { NavbarHomeComponent } from './components/_mini-components/navbar/home/navbar.home.component';
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
 /* Moment.js Angular Settings */
 import { MomentModule } from 'angular2-moment';
 import * as moment from 'moment';
@@ -55,6 +59,8 @@ import { ModalReducer } from './ngrx/reducers/modal.reducers';
 import { FilterUserPipeModule } from './pipes/filteruser.pipe';
 import { NotificationService } from './services/notification.service';
 import { NgProgressModule } from '@ngx-progressbar/core';
+import { SocialLoginService } from './services/social.login.service';
+import { CommentReducer } from './ngrx/reducers/comment.reducers';
 
 library.add(fas, far);
 
@@ -69,7 +75,8 @@ export const firebaseConfig = {
 
 const store = {
   login: LoginReducer,
-  modal: ModalReducer
+  modal: ModalReducer,
+  comment: CommentReducer
 }
 
 @NgModule({
@@ -112,7 +119,10 @@ const store = {
       customClass: 'modal-content',
       confirmButtonClass: 'btn btn-primary',
       cancelButtonClass: 'btn'
-    })
+    }),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
   providers: [
     GroupService,
@@ -124,7 +134,8 @@ const store = {
     FileService,
     LikeService,
     NotificationService,
-    WebSocketService
+    WebSocketService,
+    SocialLoginService
   ],
   bootstrap: [
     AppComponent

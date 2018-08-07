@@ -14,6 +14,8 @@ import { WebSocketService } from '../../services/websocket.service';
 import { Store } from '@ngrx/store';
 import { ModalShow, ModalHide } from '../../ngrx/actions/modal.actions';
 import { NgProgress } from '@ngx-progressbar/core';
+import { NotificationService } from '../../services/notification.service';
+import { _AddComment } from '../../ngrx/actions/comment.actions';
 
 @Component({
   selector: 'app-home',
@@ -57,6 +59,7 @@ export class HomeComponent implements OnInit {
 
   FollowsModal(value) {
 
+
     switch (value) {
       case 'follower': {
         if (this.followerTotal > 0)
@@ -82,13 +85,34 @@ export class HomeComponent implements OnInit {
     public iziToast: Ng2IzitoastService,
     private socketService: WebSocketService,
     private store: Store<any>,
-    public progress: NgProgress
+    public progress: NgProgress,
+    private notificationService: NotificationService,
   ) {
     this.user = JSON.parse(localStorage.getItem('user'));
     this.GetFollowerByUserId();
     this.GetFollowingByUserId();
     this.GetPublicationByUserId();
     this.GetPublicationByFollowerUserId();
+
+    this.socketService.OnResponse().subscribe(res => {
+
+      if (res.option === 'comment') {
+        this.NewCommentRealTime(res)
+      }
+
+
+    })
+
+  }
+
+  NewCommentRealTime(res) {
+    this.listPublications.forEach(item => {
+
+      if (item._id === res.data.publicationId[0]) {
+        item.comment.unshift(res.data)
+      }
+
+    })
   }
 
   ngOnInit() {
@@ -144,55 +168,6 @@ export class HomeComponent implements OnInit {
       })
   }
 
-  public Notification() {
-
-    this.iziToast.show({
-      id: 'haduken',
-      theme: 'dark',
-      title: 'Maria Batty',
-      message: 'Te ha seguido.',
-      position: 'topCenter',
-      transitionIn: 'flipInX',
-      transitionOut: 'flipOutX',
-      progressBarColor: 'rgb(0, 255, 184)',
-      image: 'https://instagram.fbaq1-1.fna.fbcdn.net/vp/170774ee276840af3c8469b97e4b95de/5C0F2BD6/t51.2885-19/s150x150/37786444_1087880661366353_2496499085679263744_n.jpg',
-      imageWidth: 70,
-      layout: 2,
-      backgroundColor: '#0275D8',
-      onClosing: function () {
-        console.info('onClosing');
-      },
-      onClosed: function (instance, toast, closedBy) {
-        console.info('Closed | closedBy: ' + closedBy);
-      },
-      iconColor: 'rgb(0, 255, 184)'
-    });
-
-    // this.iziToast.show({
-    //   id: 'haduken',
-    //   theme: 'dark',
-    //   icon: 'icon-contacts',
-    //   title: '@mariabatty',
-    //   message: '<b>Te ha dado un like',
-    //   position: 'bottomRight',
-    //   transitionIn: 'flipInX',
-    //   transitionOut: 'flipOutX',
-    //   progressBarColor: 'rgb(0, 255, 184)',
-    //   image: 'https://instagram.fbaq1-1.fna.fbcdn.net/vp/170774ee276840af3c8469b97e4b95de/5C0F2BD6/t51.2885-19/s150x150/37786444_1087880661366353_2496499085679263744_n.jpg',
-    //   imageWidth: 70,
-    //   layout: 2,
-    //   backgroundColor: '#D9534F',
-    //   onClosing: function () {
-    //     console.info('onClosing');
-    //   },
-    //   onClosed: function (instance, toast, closedBy) {
-    //     console.info('Closed | closedBy: ' + closedBy);
-    //   },
-    //   iconColor: 'rgb(0, 255, 184)'
-    // });
-
-  }
-
   onScroll() {
     this.page++;
     this.GetPublicationByUserId();
@@ -212,6 +187,12 @@ export class HomeComponent implements OnInit {
 
     let publication = dataForm.value
 
+    let user = [{
+      avatar: this.user.avatar,
+      _id: this.user._id,
+      displayName: this.user.displayName
+    }]
+
     publication.userId = this.user._id
 
     /* Si el usuario publica solo mensaje (sin imágen o vídeo) */
@@ -224,13 +205,8 @@ export class HomeComponent implements OnInit {
         this.publicationService.AddPublication(publication).subscribe(
           res => {
 
-            res[0].userId = [{
-              avatar: this.user.avatar,
-              _id: this.user._id,
-              displayName: this.user.displayName
-            }]
-
-            this.listPublications.unshift(res[0])
+            res[0].userId = user
+            // this.listPublications.unshift(res[0])
             dataForm.reset();
           },
           err => {
@@ -249,6 +225,7 @@ export class HomeComponent implements OnInit {
 
           this.publicationService.AddPublication(publication).subscribe(
             res => {
+              res[0].userId = user
               this.listPublications.unshift(res[0])
               dataForm.reset();
               this.filesToUpload = [];
@@ -284,7 +261,7 @@ export class HomeComponent implements OnInit {
           res.publications.forEach(item => {
             this.listPublications.push(item);
           })
-          }
+        }
 
       },
       err => {
@@ -297,12 +274,10 @@ export class HomeComponent implements OnInit {
     this.publicationService.GetPublicationFollowersByUserId(this.user._id, this.page).subscribe(
       res => {
 
-        console.log(res)
         res.publications.forEach(publication => {
           this.listPublications.push(publication)
         })
 
-        console.log(this.listPublications)
       },
       err => {
         console.log(err)
@@ -325,12 +300,14 @@ export class HomeComponent implements OnInit {
 
           let response = res
           delete response.userId
+
           response.userId = {
             avatar: this.user.avatar,
             displayName: this.user.displayName
           }
 
-          this.listPublications[pos].comment.unshift(response)
+          //this.listPublications[pos].comment.unshift(response)
+          this.socketService.AddComment(response, this.user)
           this.message = null
         },
         err => {
@@ -340,28 +317,47 @@ export class HomeComponent implements OnInit {
 
   }
 
+  ShowComments(id) {
+    let element = document.getElementById(`comment_${id}`)
+    element.classList.toggle('display-block')
+  }
 
-  public AddLike(data) {
+  public AddLike(data, pubUserId) {
     this.likeService.AddLike(data).subscribe(
       res => {
-        console.log(res)
+        this.socketService.AddLike(data, pubUserId, this.user);
+        this.AddNotification(
+          pubUserId,
+          `@${this.user.username} le ha dado me gusta a una de tus publicaciones`)
       },
       err => {
         console.log(err)
       })
+  }
+
+  public AddNotification(toUserId, message) {
+
+    if (toUserId === this.user._id) return;
+
+    return this.notificationService.AddNotification({
+      description: message,
+      userFromNotification: this.user._id,
+      userToNotification: toUserId
+    })
+
   }
 
   public RemoveLike(data) {
     this.likeService.RemoveLike(data).subscribe(
       res => {
-        console.log(res)
+
       },
       err => {
         console.log(err)
       })
   }
 
-  public Like_And_Unlike(pubId) {
+  public Like_And_Unlike(pubId, pubUserId) {
 
     let x = document.getElementById(`like_${pubId}`)
 
@@ -377,7 +373,7 @@ export class HomeComponent implements OnInit {
 
     if (x.innerHTML.includes(src.unlike)) {
       x.querySelector('img').src = src.like
-      this.AddLike(body)
+      this.AddLike(body, pubUserId)
     } else {
       x.querySelector('img').src = src.unlike
       this.RemoveLike(body)
@@ -406,7 +402,6 @@ export class HomeComponent implements OnInit {
     this.publicationService.GetPublicationByUserId(this.user._id, this.page).subscribe(
       res => {
 
-        console.log(res)
         this.publicationTotal = res.total
 
         if (res.publications.length != 6)

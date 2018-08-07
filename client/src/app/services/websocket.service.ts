@@ -1,24 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import * as socketIo from 'socket.io-client';
+import * as io from 'socket.io-client';
 import { config } from '../app.config';
 
-const SERVER_URL = config.url.replace('/api','');
+const SERVER_URL = config.url.replace('/api', '');
 
 @Injectable()
 export class WebSocketService {
+
   private socket;
 
-  public InitSocket(): void {
-    this.socket = socketIo(SERVER_URL);
+  constructor(){
+    this.socket = io(SERVER_URL);
   }
 
   public AddFollower(data, user): void {
     this.socket.emit('ALL_NOTIFICATIONS', { data, user, option: 'follower' });
   }
 
-  public AddLike(data, user): void {
-    this.socket.emit('ALL_NOTIFICATIONS', { data, user, option: 'like' });
+  public AddLike(data, pubUserId, user): void {
+    this.socket.emit('ALL_NOTIFICATIONS', { data, pubUserId, user, option: 'like' });
+  }
+
+  public AddComment(data, user): void {
+    this.socket.emit('ALL_NOTIFICATIONS', { data, user, option: 'comment' });
   }
 
   public OnResponse(): Observable<any> {

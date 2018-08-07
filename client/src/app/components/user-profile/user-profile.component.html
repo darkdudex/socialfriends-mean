@@ -1,9 +1,9 @@
 <navbar-home></navbar-home>
 
-<modal-follows [visible]="true" [title]="'Siguiendo'" [userlist]="followerUser" [ngStyle]="{ 'display': (stateModal?.type == 'follower') ? 'block' : 'none' }">
+<modal-follows [visible]="true" [title]="'Siguiendo'" [userlist]="followerUser" [ngStyle]="{ 'display': (stateModal?.type == 'pfollower') ? 'block' : 'none' }">
 </modal-follows>
 
-<modal-follows [visible]="true" [title]="'Seguidores'" [userlist]="followingUser" [ngStyle]="{ 'display': (stateModal?.type == 'following') ? 'block' : 'none' }">
+<modal-follows [visible]="true" [title]="'Seguidores'" [userlist]="followingUser" [ngStyle]="{ 'display': (stateModal?.type == 'pfollowing') ? 'block' : 'none' }">
 </modal-follows>
 
 <div class="container" style="z-index: -1 !important;">
@@ -20,12 +20,12 @@
             <br>
             <span class="badge badge-pill badge-success">Conectado</span>
             <div class="row" style="font-size: 70%; margin-top: 5px; margin-bottom: 7px; text-align: center">
-              <div (click)="FollowsModal('follower')" class="col-xl-4 col-lg-4 col-md-4 col-4" style="cursor: pointer;">
+              <div (click)="FollowsModal('pfollower')" class="col-xl-4 col-lg-4 col-md-4 col-4" style="cursor: pointer;">
                 <b>Siguiendo
                   <br>{{followerTotal}}</b>
 
               </div>
-              <div (click)="FollowsModal('following')" class="col-xl-4 col-lg-4 col-md-4 col-4" style="cursor: pointer;">
+              <div (click)="FollowsModal('pfollowing')" class="col-xl-4 col-lg-4 col-md-4 col-4" style="cursor: pointer;">
                 <b> Seguidores
                   <br>{{followingTotal}}</b>
 
@@ -173,7 +173,8 @@
 
                           <div class="input-group">
 
-                            <div onclick="$('#delete_pub').modal('show')" class="media" style="cursor: pointer">
+                            <label>{{userPublication.userId[0].displayName}}</label>
+                            <div *ngIf="userPublication.userId[0]._id == userinsession._id" class="media" style="cursor: pointer">
                               <img class="d-flex mr-3" src="https://image.flaticon.com/icons/svg/390/390902.svg" style="width: 25px" align="right">
                             </div>
 

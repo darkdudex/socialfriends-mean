@@ -89,8 +89,6 @@ export default {
         followersId.push(item.followerId)
       })
 
-      console.log(followersId)
-
       const publications = await publicationModel
         .find({ userId: { $in: followersId } })
         .limit(limit).skip(page * limit)

@@ -27,6 +27,18 @@ body::-webkit-scrollbar-thumb{
   border-radius: 0 !important;
 }
 
+.display-block{
+  display: block !important;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.display-none {
+  display: none;
+}
+
 @media only screen and (max-width: 400px){
 
   *,
@@ -40,5 +52,4 @@ body::-webkit-scrollbar-thumb{
 
 @media only screen and (max-width: 1204px){
 
-  
 }
