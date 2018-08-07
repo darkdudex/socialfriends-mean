@@ -13,7 +13,8 @@ const { body, params, query, headers } = {
     totalComment: Joi.number(),
   }),
   params: Joi.object({
-    userId: Joi.string().alphanum().required()
+    userId: Joi.string().alphanum(),
+    publicationId: Joi.string().alphanum()
   }).unknown(),
   query: {
 

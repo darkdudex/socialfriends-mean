@@ -28,7 +28,7 @@ cloudinary.config(`${__dirname}/../config/public_credentials/cloudinary_storage.
 
 const bucket = storage.bucket('gs://db-firebase-5cf99.appspot.com')
 
-
+//#region  UploadStorageCloudinary 
 const UploadStorageCloudinary = (files, userId, mainFolder) => {
 
   let prom = new Promise((_resolve, _reject) => {
@@ -63,7 +63,9 @@ const UploadStorageCloudinary = (files, userId, mainFolder) => {
   return prom
 
 }
+//#endregion 
 
+//#region UploadStorageServer 
 const UploadStorageServer = (files, userId, mainFolder) => {
 
   let prom = new Promise((_resolve, _reject) => {
@@ -108,7 +110,9 @@ const UploadStorageServer = (files, userId, mainFolder) => {
   return prom
 
 }
+//#endregion
 
+//#region UploadStorageFirebase 
 const UploadStorageFirebase = (files, userId, mainFolder) => {
 
   let prom = new Promise((_resolve, _reject) => {
@@ -159,6 +163,7 @@ const UploadStorageFirebase = (files, userId, mainFolder) => {
 
   return prom
 }
+//#endregion
 
 export default {
 

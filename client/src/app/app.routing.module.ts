@@ -11,6 +11,9 @@ import { GroupComponent } from './components/group/group.component';
 import { RegisterComponent } from './components/register/register.component';
 import { SettingComponent } from './components/setting/setting.component';
 import { NotificationComponent } from './components/notification/notification.component';
+import { GroupCreateComponent } from './components/group/group-create/group-create.component';
+import { GroupProfileComponent } from './components/group/group-profile/group-profile.component';
+import { GroupTypeComponent } from './components/group/group-type/group-type.component';
 
 const routes: Routes = [
   {
@@ -54,6 +57,15 @@ const routes: Routes = [
     component: NotificationComponent
   },
   {
+    path: 'group/create',
+    component: GroupCreateComponent
+  }, {
+    path: 'group/profile',
+    component: GroupProfileComponent
+  }, {
+    path: 'group/type',
+    component: GroupTypeComponent
+  }, {
     path: '**',
     component: LoginComponent
   },

@@ -61,6 +61,9 @@ import { NotificationService } from './services/notification.service';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { SocialLoginService } from './services/social.login.service';
 import { CommentReducer } from './ngrx/reducers/comment.reducers';
+import { GroupCreateComponent } from './components/group/group-create/group-create.component';
+import { GroupProfileComponent } from './components/group/group-profile/group-profile.component';
+import { GroupTypeComponent } from './components/group/group-type/group-type.component';
 
 library.add(fas, far);
 
@@ -96,7 +99,10 @@ const store = {
     RegisterComponent,
     SettingComponent,
     NotificationComponent,
-    FilterUserPipeModule
+    FilterUserPipeModule,
+    GroupCreateComponent,
+    GroupProfileComponent,
+    GroupTypeComponent
   ],
   imports: [
     BrowserModule,

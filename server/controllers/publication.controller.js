@@ -2,6 +2,8 @@
 
 import publicationModel from '../models/model.publication/publication.model'
 import followerModel from '../models/model.follower/follower.model'
+import likeModel from '../models/model.like/like.model'
+import commentModel from '../models/model.comment/comment.model'
 
 export default {
 
@@ -28,9 +30,24 @@ export default {
 
   RemovePublication: async (req, res) => {
 
-    const publicationId = req.params.publicationId
+    try {
 
-    const response = await publicationModel.findByIdAndRemove()
+      const publicationId = req.params.publicationId
+
+      const publication = await publicationModel
+        .findByIdAndRemove(publicationId)
+
+      const comments = await commentModel
+        .find({ publicationId: publicationId }).remove()
+
+      const likes = await likeModel
+        .find({ publicationId: publicationId }).remove()
+
+      res.status(200).send({ data: 'Publication deleted' })
+
+    } catch (err) {
+      return res.status(500).send(err)
+    }
 
   },
 

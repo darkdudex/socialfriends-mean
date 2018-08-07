@@ -27,4 +27,8 @@ export class PublicationService {
     return this.http.get(`${this.url}/publication/followers/${userId}?page=${page}`, { headers: this.headers });
   }
 
+  public DeletePublication(publicationId): Observable<any> {
+    return this.http.delete(`${this.url}/publication/${publicationId}`, { headers: this.headers });
+  }
+
 }
