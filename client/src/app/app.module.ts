@@ -43,7 +43,6 @@ import { LoginEffects } from './ngrx/effects/login.effects';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { GroupComponent } from './components/group/group.component';
-import { WebSocketService } from './services/websocket.service';
 import { RegisterComponent } from './components/register/register.component';
 import { SettingComponent } from './components/setting/setting.component';
 import { NotificationComponent } from './components/notification/notification.component';
@@ -64,6 +63,7 @@ import { CommentReducer } from './ngrx/reducers/comment.reducers';
 import { GroupCreateComponent } from './components/group/group-create/group-create.component';
 import { GroupProfileComponent } from './components/group/group-profile/group-profile.component';
 import { GroupTypeComponent } from './components/group/group-type/group-type.component';
+import { SocketService } from './services/socket.service';
 
 library.add(fas, far);
 
@@ -140,7 +140,7 @@ const store = {
     FileService,
     LikeService,
     NotificationService,
-    WebSocketService,
+    SocketService,
     SocialLoginService
   ],
   bootstrap: [

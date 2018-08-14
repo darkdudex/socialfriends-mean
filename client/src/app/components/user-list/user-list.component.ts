@@ -1,10 +1,10 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { FollowerService } from '../../services/follower.service';
-import { WebSocketService } from '../../services/websocket.service';
 
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from '../../services/notification.service';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'user-list',
@@ -28,7 +28,7 @@ export class UserListComponent implements OnInit {
     private userService: UserService,
     private followerService: FollowerService,
     private notificationService: NotificationService,
-    private socketService: WebSocketService
+    public socketservice: SocketService
   ) {
     this.user = JSON.parse(localStorage.getItem('user'));
   }
@@ -75,7 +75,7 @@ export class UserListComponent implements OnInit {
     const data = { userId, followerId }
     this.followerService.AddFollower(data).subscribe(
       res => {
-        this.socketService.AddFollower(res, this.user)
+        this.socketservice.AddFollower(res, this.user)
         this.AddNotification(
           followerId,
           `@${this.user.username} ha comenzado a seguirte`)

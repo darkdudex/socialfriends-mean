@@ -1,3 +1,9 @@
+@import '../../../sass/_mixins';
+
+.center {
+  @include center;
+}
+
 #user {
   color: white
 }

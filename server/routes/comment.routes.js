@@ -11,7 +11,7 @@ export default (app) => {
   app.post('/api/comment', auth.isAuth, commentValidate.BODY, commentController.AddComment)
   // app.put('/comment', commentController.Updatecomment)
   // app.delete('/comment', commentController.Removecomment)
-  app.get('/api/comment/:publicationId', auth.isAuth,commentValidate.PARAMS, commentController.GetcommentByPublicationId)
+  app.get('/api/comment/:id', auth.isAuth,commentValidate.PARAMS, commentController.GetcommentByPublicationId)
 
   app.use(errors())
 

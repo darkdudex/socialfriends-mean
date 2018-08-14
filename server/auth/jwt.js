@@ -27,7 +27,7 @@ export default {
         if (payload.exp <= moment().unix()) {
           reject({
             status: 401,
-            message: 'El token ha expirado'
+            message: 'The token has expired'
           })
         }
 

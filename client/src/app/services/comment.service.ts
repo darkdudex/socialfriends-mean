@@ -19,8 +19,8 @@ export class CommentService {
     return this.http.post(`${this.url}/comment`, comment, { headers: this.headers });
   }
 
-  public GetCommentByPublicationId(publicationId): Observable<any> {
-    return this.http.get(`${this.url}/publication/${publicationId}`, { headers: this.headers });
+  public GetCommentByPublicationId(page = 0, publicationId): Observable<any> {
+    return this.http.get(`${this.url}/comment/${publicationId}?page=${page}`, { headers: this.headers });
   }
 
 }

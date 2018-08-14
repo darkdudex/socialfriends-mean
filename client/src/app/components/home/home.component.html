@@ -14,7 +14,7 @@
 <div class="container" style="z-index: -1 !important;">
   <div class="row">
 
-    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4">
       <div class="card">
         <div class="card-block">
           <div style="text-align: center; margin-top: 10px">
@@ -75,7 +75,7 @@
       </div>
     </div>
 
-    <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8">
 
       <br>
 
@@ -136,8 +136,10 @@
                     </div>
 
 
-                    <div style="text-align: justify; -moz-text-align-last: center; text-align-last: center; font-size: 90%; margin-bottom: 10px"
-                      [innerHTML]="userPublication.message"></div>
+                    <div style="text-align: justify; -moz-text-align-last: center; text-align-last: center; font-size: 90%; margin-bottom: 10px; margin-left: 30px; margin-right: 30px">
+                        {{userPublication.message}}
+
+                    </div>
 
                     <br>
 
@@ -147,14 +149,7 @@
 
                         <ul class="bow afa">
 
-                          <div style="text-align: center">
-                            <a class="pointer" (click)="ShowComments(userPublication._id)" *ngIf="userPublication?.comment?.length > 0" style="color: #2285E3">
-                              <fa-icon [icon]="['fas', 'comments']" size="sm"></fa-icon>
-                              <b style="font-size: 13px;">&nbsp;Ver comentarios</b>
-                            </a>
-                          </div>
-
-                          <div id="comment_{{userPublication._id}}" class="display-none">
+                          <div id="comment_{{userPublication._id}}" >
                             <li style="list-style: none; margin-left: -20px" *ngFor="let p of userPublication.comment" class="rv afh">
 
                               <div class="container" style="margin-top: 10px">
@@ -179,7 +174,13 @@
 
                     </div>
 
-
+                    
+                    <div *ngIf="userPublication.totalComment >= 5 && userPublication.comment.length != userPublication.totalComment" style="text-align: center">
+                        <a class="pointer" (click)="SeeMoreComments($event,i,userPublication._id)" *ngIf="userPublication?.comment?.length > 0" style="color: #2285E3">
+                          <fa-icon [icon]="['fas', 'comments']" size="sm"></fa-icon>
+                          <b style="font-size: 13px;">&nbsp;Ver más comentarios</b>
+                        </a>
+                      </div><br>
                     <!-- <button *ngIf="userPublication.totalComment > 5" type="button" class="btn btn-primary  btn-sm" style="font-size: 10px">Ver más</button> -->
 
                     <br>
@@ -205,11 +206,9 @@
                         <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
                           <div class="btn-group" role="group" aria-label="First group">
 
-                            <div *ngIf="userPublication?.like?.length > 0" onclick="$('#modaLike').modal('show')" (click)="t(userPublication.like)" class="media"
+                            <div *ngIf="userPublication.totalLike > 0" (click)="t(userPublication.like)" class="media"
                               style="cursor: pointer; margin-left: 20px">
-                              <b class="mt-0" style="color:#389FEB">{{userPublication?.like?.length}} Me gusta</b>&nbsp;
-                              <!-- <img class="d-flex align-self-start mr-3" src="assets/img/icons/456115.svg" style="width: 22px;"> -->
-
+                              <b class="mt-0" style="color:#389FEB">{{userPublication.totalLike}} Me gusta</b>&nbsp;
                             </div>
 
                           </div>

@@ -50,6 +50,14 @@ body::-webkit-scrollbar-thumb{
   
 }
 
+.custom-select.is-invalid, .form-control.is-invalid, .was-validated .custom-select:invalid, .was-validated .form-control:invalid {
+  border-color: #DC4E41 !important;
+}
+
+.invalid-feedback {
+  color: #DC4E41 !important;
+}
+
 @media only screen and (max-width: 1204px){
 
 }

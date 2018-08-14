@@ -32,7 +32,7 @@ export default {
 
       const total = await userModel
         .find()
-        .count()
+        .countDocuments()
 
       return res.status(200).send({ users, total })
 

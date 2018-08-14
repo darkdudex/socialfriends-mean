@@ -1,30 +1,20 @@
 'use strict'
 
-/* 
-  OBS: 
-    Tengo que mejorar los métodos de subida de archivos (redundancia).
-*/
-
 import googleStorage from '@google-cloud/storage'
-import Multer from 'multer'
 import shortid from 'shortid'
-import fs from 'fs'
 import { resolve } from 'path'
 import cloudinary from 'cloudinary'
 import utilities from '../utilities/utilities'
+import config from '../config/config'
+import fs from 'fs'
 
-let formData_Key = 'file'
 let tokenId = shortid.generate()
-
-const multer = Multer({
-  storage: Multer.memoryStorage()
-})
 
 const storage = googleStorage({
   keyFilename: `${__dirname}/../config/public_credentials/firebase_storage.json`
 })
 
-cloudinary.config(`${__dirname}/../config/public_credentials/cloudinary_storage.json`)
+cloudinary.config(require(`${__dirname}/../config/public_credentials/cloudinary_storage.json`))
 
 const bucket = storage.bucket('gs://db-firebase-5cf99.appspot.com')
 
@@ -39,14 +29,14 @@ const UploadStorageCloudinary = (files, userId, mainFolder) => {
       _reject('Not file')
     }
 
-
     files.map((file, i) => {
 
-      let nameFile = Date.now()
+      let nameFile = `${Date.now()}${i}`
 
       const resource_type = file.mimetype.includes('image') ? 'image' : 'video';
 
       cloudinary.uploader.upload_stream(
+
         result => {
 
           const url = result.url
@@ -56,6 +46,7 @@ const UploadStorageCloudinary = (files, userId, mainFolder) => {
             _resolve(arrayFile)
 
         }, { resource_type: resource_type }).end(file.buffer)
+        
     })
 
   })
@@ -78,9 +69,9 @@ const UploadStorageServer = (files, userId, mainFolder) => {
 
     let folderPath = resolve(`./storage_files`)
 
-    files.map((file, i) => {
+    files.forEach((file, i) => {
 
-      let nameFile = Date.now()
+      let nameFile = `${Date.now()}${i}`
       let ext = utilities.GetFileExtension(file.originalname)
 
       let newFileName = `${folderPath}/${nameFile}.${ext}`
@@ -93,7 +84,7 @@ const UploadStorageServer = (files, userId, mainFolder) => {
 
       blobStream.on('finish', data => {
 
-        const url = `http://192.168.1.66:3000/${nameFile}.${ext}`
+        const url = `${config.url}/${nameFile}.${ext}`
         arrayFile.push({ url: url, type: file.mimetype, code: nameFile.toString() })
 
         if (arrayFile.length == (files.length))
@@ -125,7 +116,7 @@ const UploadStorageFirebase = (files, userId, mainFolder) => {
 
     files.map((file, i) => {
 
-      let nameFile = Date.now()
+      let nameFile = `${Date.now()}${i}`
       let folderPath = `socialfriends-mean/${mainFolder}/${userId}`
       let newFileName = `${folderPath}/${nameFile}`
 
@@ -177,7 +168,7 @@ export default {
         folderName: req.body.folderName
       }
 
-      if (data.files.length >= 1) {
+      if (data.files.length > 0) {
 
         const response = await UploadStorageServer(data.files, data.userId, data.folderName)
         return res.status(200).send(response)

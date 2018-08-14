@@ -10,7 +10,6 @@ import { CommentService } from '../../services/comment.service';
 import { FollowerService } from '../../services/follower.service';
 import { FileService } from '../../services/file.service';
 import { LikeService } from '../../services/like.service';
-import { WebSocketService } from '../../services/websocket.service';
 import { Store } from '@ngrx/store';
 import { ModalShow, ModalHide } from '../../ngrx/actions/modal.actions';
 import { NgProgress } from '@ngx-progressbar/core';
@@ -82,7 +81,6 @@ export class UserProfileComponent implements OnInit {
     private likeService: LikeService,
     private route: Router,
     public iziToast: Ng2IzitoastService,
-    private socketService: WebSocketService,
     private store: Store<any>,
     public progress: NgProgress,
     private activeRoute: ActivatedRoute

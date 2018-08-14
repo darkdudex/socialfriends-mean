@@ -2,6 +2,7 @@
 
 import likeModel from '../models/model.like/like.model'
 import publicationModel from '../models/model.publication/publication.model'
+import beautify from 'json-beautify'
 
 export default {
 
@@ -9,17 +10,23 @@ export default {
 
     try {
 
-      const body = {
-        publicationId: req.body.publicationId,
-        userId: req.body.userId,
-      }
+      const { publicationId, userId } = req.body
 
-      const find = await likeModel.findOne(body)
+      const find = await likeModel.findOne({ publicationId, userId })
 
-      if (find == null) {
-        const response = await likeModel.insertMany(body)
-        const x = await publicationModel.findOneAndUpdate({ _id: body.publicationId }, { $push: { like: response[0] } }, { new: true })
+      if (find === null) {
+        const response = await likeModel.insertMany({ publicationId, userId })
+
+        await publicationModel.findOneAndUpdate(
+          { _id: publicationId },
+          {
+            $push: { like: response[0] },
+            $inc: { totalLike: 1 }
+          },
+          { new: true })
+
         return res.status(200).send(response[0])
+
       }
 
       return res.status(500).send({
@@ -42,6 +49,14 @@ export default {
         publicationId: req.body.publicationId,
         userId: req.body.userId,
       })
+
+      await publicationModel.findOneAndUpdate(
+        { _id: req.body.publicationId },
+        {
+          $pull: { like: Like._id },
+          $inc: { totalLike: -1 }
+        },
+        { new: true })
 
       return res.status(200).send(Like)
 
@@ -67,8 +82,13 @@ export default {
     try {
 
       const publicationId = req.params.publicationId
-      const Likes = await likeModel.find({ publicationId })//.limit(limit).skip(page * limit)
-      const total = await likeModel.find({ publicationId }).count()
+
+      const Likes = await likeModel
+        .find({ publicationId })//.limit(limit).skip(page * limit)
+
+      const total = await likeModel
+        .find({ publicationId })
+        .countDocuments()
 
       return res.status(200).send({ Likes, total })
 

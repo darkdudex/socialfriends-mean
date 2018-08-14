@@ -6,6 +6,7 @@ import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SocialLoginService } from '../../services/social.login.service';
+import { forEach } from '../../../../node_modules/@angular/router/src/utils/collection';
 
 enum CodeResponse {
   CHECK_EMAIL = 30,
@@ -30,13 +31,15 @@ export class LoginComponent implements OnInit {
   statusLogin: LoginResponse;
   response: string;
 
+  validForm: any;
+
   constructor(
     private store: Store<any>,
     private loginService: LoginService,
     private route: Router,
     private socialLogin: SocialLoginService
   ) {
-
+    this.InitialValidationForm();
   }
 
   ngOnInit() {
@@ -53,25 +56,58 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  InitialValidationForm() {
+    this.validForm = {
+      account: false,
+      password: false
+    }
+  }
+
+  Change(event,value,type){
+    this.validForm[type] = value.length == 0 ? true : false;
+  }
+
+  InvalidValidation(json) {
+
+    let flag = true;
+
+    for (let key in json) {
+      if (json[key] === "") {
+        this.validForm[key] = true;
+        flag = false;
+      }
+    }
+
+    return flag;
+
+  }
+
   Login(dataForm) {
-    const account_and_password = dataForm.value
-    this.loginService.Login(account_and_password).subscribe(res => {
 
-      if (res.token != undefined || res.token != null) {
-        localStorage.setItem('token', res.token)
-        localStorage.setItem('user', JSON.stringify(res.user))
-        this.route.navigate(['home'])
-      }
+    this.InitialValidationForm();
 
-      this.statusLogin = {
-        status: res.status, code: res.code, message: 'Verifica tu cuenta mediante el link que te envíamos al correo electrónico.'
-      }
+    if (this.InvalidValidation(dataForm.value)) {
 
-    }, err => {
-      this.statusLogin = {
-        status: err.error.status, code: err.error.code, message: 'Usuario no encontrado'
-      }
-    })
+      const account_and_password = dataForm.value
+
+      this.loginService.Login(account_and_password).subscribe(res => {
+
+        if (res.token != undefined || res.token != null) {
+          localStorage.setItem('token', res.token)
+          localStorage.setItem('user', JSON.stringify(res.user))
+          window.location.href = '/home'
+        }
+
+        this.statusLogin = {
+          status: res.status, code: res.code, message: 'Verifica tu cuenta mediante el link que te envíamos al correo electrónico.'
+        }
+
+      }, err => {
+        this.statusLogin = {
+          status: err.error.status, code: err.error.code, message: 'Usuario no encontrado'
+        }
+      })
+    }
   }
 
   GoogleLogin() {
@@ -98,6 +134,6 @@ export class LoginComponent implements OnInit {
       .catch(err => console.log(err))
   }
 
-  
+
 
 }

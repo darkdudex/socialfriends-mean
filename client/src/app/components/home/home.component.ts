@@ -10,12 +10,12 @@ import { CommentService } from '../../services/comment.service';
 import { FollowerService } from '../../services/follower.service';
 import { FileService } from '../../services/file.service';
 import { LikeService } from '../../services/like.service';
-import { WebSocketService } from '../../services/websocket.service';
 import { Store } from '@ngrx/store';
 import { ModalShow, ModalHide } from '../../ngrx/actions/modal.actions';
 import { NgProgress } from '@ngx-progressbar/core';
 import { NotificationService } from '../../services/notification.service';
 import { _AddComment } from '../../ngrx/actions/comment.actions';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-home',
@@ -50,6 +50,7 @@ export class HomeComponent implements OnInit {
 
   t(array) {
     this.clickDynamicArrayLoad = array
+    console.log(this.clickDynamicArrayLoad)
   }
 
   p(likeArray, userId) {
@@ -83,10 +84,10 @@ export class HomeComponent implements OnInit {
     private likeService: LikeService,
     private route: Router,
     public iziToast: Ng2IzitoastService,
-    private socketService: WebSocketService,
     private store: Store<any>,
     public progress: NgProgress,
     private notificationService: NotificationService,
+    public socketservice: SocketService
   ) {
     this.user = JSON.parse(localStorage.getItem('user'));
     this.GetFollowerByUserId();
@@ -94,12 +95,19 @@ export class HomeComponent implements OnInit {
     this.GetPublicationByUserId();
     this.GetPublicationByFollowerUserId();
 
-    this.socketService.OnResponse().subscribe(res => {
+    this.socketservice.onSocket().subscribe(res => {
 
       if (res.option === 'comment') {
         this.NewCommentRealTime(res)
       }
 
+      if (res.option === 'like') {
+        this.NewLikeRealTime(res)
+      }
+
+      if (res.option === 'dislike') {
+        this.NewDisLikeRealTime(res)
+      }
 
     })
 
@@ -110,9 +118,34 @@ export class HomeComponent implements OnInit {
 
       if (item._id === res.data.publicationId[0]) {
         item.comment.unshift(res.data)
+        item.totalComment += 1
       }
 
     })
+  }
+
+  NewLikeRealTime(res) {
+
+    this.listPublications.forEach(item => {
+
+      if (item._id === res.data.publicationId) {
+        item.totalLike += 1
+      }
+
+    })
+
+  }
+
+  NewDisLikeRealTime(res) {
+
+    this.listPublications.forEach(item => {
+
+      if (item._id === res.data.publicationId) {
+        item.totalLike -= 1
+      }
+
+    })
+
   }
 
   ngOnInit() {
@@ -284,7 +317,6 @@ export class HomeComponent implements OnInit {
       })
   }
 
-
   public AddComment(event, id, pos) {
 
     const body = {
@@ -307,7 +339,7 @@ export class HomeComponent implements OnInit {
           }
 
           //this.listPublications[pos].comment.unshift(response)
-          this.socketService.AddComment(response, this.user)
+          this.socketservice.AddComment(response, this.user)
           this.message = null
         },
         err => {
@@ -317,18 +349,25 @@ export class HomeComponent implements OnInit {
 
   }
 
-  ShowComments(id) {
-    let element = document.getElementById(`comment_${id}`)
-    element.classList.toggle('display-block')
+
+  SeeMoreComments(event,index,publicationId) {   
+    
+    let indexPage = this.listPublications[index].indexCommentPagination++;
+
+    this.commentService.GetCommentByPublicationId(indexPage, publicationId).subscribe(
+      res => {
+        const newArray = this.listPublications[index].comment.concat(res)
+        this.listPublications[index].comment = newArray
+      },
+      err => {
+        console.log(err)
+      })
   }
 
   public AddLike(data, pubUserId) {
     this.likeService.AddLike(data).subscribe(
       res => {
-        this.socketService.AddLike(data, pubUserId, this.user);
-        this.AddNotification(
-          pubUserId,
-          `@${this.user.username} le ha dado me gusta a una de tus publicaciones`)
+        this.socketservice.AddLike(data, pubUserId, this.user);
       },
       err => {
         console.log(err)
@@ -347,10 +386,10 @@ export class HomeComponent implements OnInit {
 
   }
 
-  public RemoveLike(data) {
+  public RemoveLike(data, pubUserId) {
     this.likeService.RemoveLike(data).subscribe(
       res => {
-
+        this.socketservice.RemoveLike(data, pubUserId, this.user);
       },
       err => {
         console.log(err)
@@ -376,7 +415,7 @@ export class HomeComponent implements OnInit {
       this.AddLike(body, pubUserId)
     } else {
       x.querySelector('img').src = src.unlike
-      this.RemoveLike(body)
+      this.RemoveLike(body, pubUserId)
     }
 
   }

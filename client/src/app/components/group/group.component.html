@@ -30,37 +30,39 @@
           <br><b>Aún no hay grupos registrados.</b>
         </div> -->
 
-        <div>
+        <div><br>
 
-          <div *ngFor="let group of groupList" class="card card-user" style="margin-top: 20px">
-            <div class="row" style="margin: 10px;">
-              <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-lg-2 text-center">
-                <img class="d-flex align-self-center mr-3" [src]="group.avatar" class="rounded-circle" style="width: 100px; border: 2px solid #D8D8D8">
-              </div>
-              <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10 col-lg-10">
-                <h5 class="text-xl-left text-lg-left text-md-left text-center">
-                  <b>{{group.name}}</b>
-                </h5>
-
-                <div class="text-xl-left text-lg-left text-md-left text-center">
-                  <p>
-                    {{group.description}}
-                  </p>
-                  <b>Integrantes: {{group.users?.length}} Personas</b>
-                  <br>
-                  <a>
-                    <b>
-                      <i class="fa fa-male" aria-hidden="true"></i> Ver perfil</b>
-                  </a>
-                  <br>
-
-
-                  <button type="submit" class="btn btn-primary btn-sm" (click)="Follow_And_UnFollow(p._id)">
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i> Seguir</button>
-
+          <div *ngFor="let group of groupList" >
+           
+              <div  class="card card-user">
+                  <div class="row" style="margin: 10px">
+                    <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-lg-2 text-center">
+                      <img class="rounded-circle" style="width: 100px; border: 2px solid #D8D8D8" [src]="group.avatar">
+                    </div>
+                    <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 col-lg-8">
+                      <h5 class="text-xl-left text-lg-left text-md-center text-center">
+                        <b>{{group.name}}</b>
+                      </h5>
+                      <div class="text-xl-left text-lg-left text-md-center text-center">
+                        <label class="mt-0 mb-1" style="font-size: 13px">{{group.description}}</label>
+                      </div>
+                      <div class="text-xl-left text-lg-left text-md-center text-center">
+                        <a [routerLink]="['/group/profile']">
+                          <b>
+                            <i aria-hidden="true" class="fa fa-male"></i> Ver perfil</b>
+                        </a>
+                        <br>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-lg-2 text-center ">
+                      <button class="btn btn-sm btn-primary" style="width: 145px" type="submit" id="5b61e3dd8b787c245c9b4c63">
+                        <b>
+                          <fa-icon [icon]="['fas', 'share-square']" size="lg"></fa-icon> Enviar solicitud </b>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+
             <br>
           </div>
 

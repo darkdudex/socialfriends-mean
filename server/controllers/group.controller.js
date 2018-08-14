@@ -32,8 +32,15 @@ export default {
 
     try {
 
-      const groups = await groupModel.find().limit(limit).skip(page * limit)
-      const total = await groupModel.find().count()
+      const groups = await groupModel
+        .find()
+        .limit(limit)
+        .skip(page * limit)
+
+      const total = await groupModel
+        .find()
+        .countDocuments()
+        
       return res.status(200).send({ groups, total })
 
     } catch (error) {

@@ -2,7 +2,6 @@
 
 import mongoose from 'mongoose'
 import winston from './logs'
-// import { } from 'dotenv/config' /* npm i dotenv */
 
 const host = {
   DEV: 'mongodb://localhost:27017/socialfriends-mean',

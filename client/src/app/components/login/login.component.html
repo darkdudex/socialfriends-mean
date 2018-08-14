@@ -14,13 +14,16 @@
 
             <div class="form-group" style="text-align: left">
 
-              <label for="exampleInputEmail1">
+              <label>
                 <b>
                   <fa-icon [icon]="['fas', 'user']" size="sm"></fa-icon> {{label.user_or_email}}</b>
               </label>
 
-              <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="{{label.placeholder_user_or_email}}" name="account"
+              <input (input)="Change($event,form.value.account,'account')" type="text" [ngClass]="{ 'is-invalid': validForm?.account }" class="form-control" aria-describedby="emailHelp" placeholder="{{label.placeholder_user_or_email}}" name="account"
                 ngModel>
+                <div class="invalid-feedback">
+                  Ingresa un usuario o un correo electrónico
+                </div>
 
             </div>
 
@@ -31,8 +34,11 @@
                   <fa-icon [icon]="['fas', 'key']" size="sm"></fa-icon> {{label.password}}</b>
               </label>
 
-              <input type="password" class="form-control" aria-describedby="emailHelp" placeholder="{{label.placeholder_password}}" name="password"
+              <input (input)="Change($event,form.value.password,'password')" type="password" [ngClass]="{ 'is-invalid': validForm?.password }" class="form-control" aria-describedby="emailHelp" placeholder="{{label.placeholder_password}}" name="password"
                 ngModel>
+                <div class="invalid-feedback">
+                  Ingresa tu contraseña
+                </div>
 
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { WebSocketService } from './services/websocket.service';
+import { SocketService } from './services/socket.service';
 import { Ng2IzitoastService } from 'ng2-izitoast';
 
 import * as AOS from 'aos';
 import { Router } from '@angular/router';
 import { Store } from '../../node_modules/@ngrx/store';
+
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ export class AppComponent implements OnInit {
   public user: any;
 
   constructor(
-    private socketService: WebSocketService,
+    public socketservice: SocketService,
     public iziToast: Ng2IzitoastService,
     public router: Router,
     private store: Store<any>
@@ -65,7 +66,8 @@ export class AppComponent implements OnInit {
 
   AllEvents() {
 
-    this.socketService.OnResponse().subscribe(res => {
+    
+    this.socketservice.onSocket().subscribe(res => {
 
       switch (res.option) {
 

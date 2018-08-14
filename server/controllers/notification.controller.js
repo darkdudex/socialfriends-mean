@@ -44,7 +44,7 @@ export default {
 
       const total = await notificationModel
         .find({ userToNotification: userId })
-        .count()
+        .countDocuments()
 
       return res.status(200).send({ notifications, total })
 

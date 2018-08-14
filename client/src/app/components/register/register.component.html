@@ -1,13 +1,7 @@
 <navbar-login></navbar-login>
 
-<swal
-  #deleteSwal
-  title="Registro exitoso"
-  text="Revise su correo, y verifique su cuenta en link envíado"
-  type="success"
-  [showCancelButton]="false"
-  [showConfirmButton]="false"
-  [focusCancel]="false">
+<swal #deleteSwal title="Registro exitoso" text="Verifica tu cuenta en el link que te enviamos por correo electrónico." type="success"
+  [showCancelButton]="false" [showConfirmButton]="false" [focusCancel]="false">
 </swal>
 
 <button style="display: none" id="showNotification" (click)="deleteSwal.show()">Epa</button>
@@ -22,52 +16,74 @@
       </h3>
       <div class="card-block">
         <form style="margin: 15px" id="form" #form="ngForm" (ngSubmit)="Register(form)">
+
           <div class="form-group" style="text-align: left">
             <label for="exampleInputEmail1">
               <b>Nombre Completo</b>
             </label>
-            <input type="text" class="form-control" name="displayName" id="displayName" aria-describedby="emailHelp" placeholder="Nombre Completo" ngModel>
+            <input (input)="Change($event,form.value.displayName,'displayName')" [ngClass]="{ 'is-invalid': validForm?.displayName }"
+              type="text" [ngClass]="{ 'is-invalid': validForm?.displayName }" class="form-control is-invalid" name="displayName"
+              id="displayName" aria-describedby="emailHelp" placeholder="Nombre Completo" ngModel>
+            <div class="invalid-feedback">
+              Ingresa un nombre completo
+            </div>
           </div>
+
           <div class="form-group" style="text-align: left">
             <label for="exampleInputEmail1">
               <b>Usuario</b>
             </label>
-            <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp" placeholder="Usuario"
+            <input (input)="Change($event,form.value.username,'username')" [ngClass]="{ 'is-invalid': validForm?.username }" type="text"
+              class="form-control is-invalid" name="username" id="username" aria-describedby="emailHelp" placeholder="Usuario"
               ngModel>
+            <div class="invalid-feedback">
+              {{viewdata_username}}
+            </div>
           </div>
+
           <div class="form-group" style="text-align: left">
             <label for="exampleInputEmail1">
               <b>Correo Electrónico</b>
             </label>
-            <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Correo Electrónico"
-              ngModel>
+            <input (input)="Change($event,form.value.email,'email')" [ngClass]="{ 'is-invalid': validForm?.email }" type="email" class="form-control is-invalid"
+              name="email" id="email" aria-describedby="emailHelp" placeholder="Correo Electrónico" ngModel>
+            <div class="invalid-feedback">
+              {{viewdata_email}}
+            </div>
           </div>
-          <div class="form-group" style="text-align: left">
-            <label for="exampleInputEmail1">
-              <b>Confirmar Correo Electrónico</b>
-            </label>
-            <input type="email" class="form-control" name="Verificationemail" id="Verificationemail" aria-describedby="emailHelp"
-              placeholder="Confirmar Correo Electrónico" ngModel>
-          </div>
+
           <div class="form-group" style="text-align: left">
             <label for="exampleInputEmail1">
               <b>Contraseña</b>
             </label>
-            <input type="password" class="form-control" name="password" id="password" aria-describedby="emailHelp" placeholder="Contraseña" ngModel>
+            <input (input)="Change($event,form.value.password,'password')" [ngClass]="{ 'is-invalid': validForm?.password }" type="password"
+              class="form-control is-invalid" name="password" id="password" aria-describedby="emailHelp" placeholder="Contraseña"
+              ngModel>
+            <div class="invalid-feedback">
+              {{viewdata_password}}
+            </div>
           </div>
+
           <div class="form-group" style="text-align: left">
             <label for="exampleInputEmail1">
               <b>Confirmar contraseña</b>
             </label>
-            <input type="password" class="form-control" name="Verificationpassword" id="Verificationpassword" aria-describedby="emailHelp"
+            <input (input)="Change($event,form.value.verificationPassword,'verificationPassword')" [ngClass]="{ 'is-invalid': validForm?.verificationPassword }"
+              type="password" class="form-control is-invalid" name="verificationPassword" id="verificationPassword" aria-describedby="emailHelp"
               placeholder="Confirmar contraseña" ngModel>
+            <div class="invalid-feedback">
+              {{viewdata_password}}
+            </div>
           </div>
+
           <div style="text-align: left">
             <button type="submit" class="btn btn-primary">Registrarse</button>
           </div>
+
         </form>
       </div>
     </div>
   </div>
 
 </div>
+<br>

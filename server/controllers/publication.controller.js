@@ -65,14 +65,18 @@ export default {
 
       const userId = req.params.userId
 
-      const publications = await publicationModel.find({ userId }).limit(limit).skip(page * limit).sort({ creationDate: 'desc' })
-        // .populate({
-        //   path: 'comment', options: { limit: 5, skip: 1, sort: { creationDate: 'desc' },
-        .populate({ path: 'comment', options: { sort: { creationDate: 'desc' }, populate: { path: 'userId', select: ' avatar displayName _id' } } })
+      const publications = await publicationModel
+        .find({ userId })
+        .limit(limit)
+        .skip(page * limit)
+        .sort({ creationDate: 'desc' })
+        .populate({ path: 'comment', options: { limit: 5, skip: 0, sort: { creationDate: 'desc' }, populate: { path: 'userId', select: ' avatar displayName _id' } } })
         .populate({ path: 'like', populate: { path: 'userId', select: ' avatar displayName _id' }, })
         .populate({ path: 'userId', select: ' avatar displayName _id' })
 
-      const total = await publicationModel.find({ userId }).count()
+      const total = await publicationModel
+        .find({ userId })
+        .countDocuments()
 
       return res.status(200).send({ publications, total })
 
@@ -110,7 +114,7 @@ export default {
         .find({ userId: { $in: followersId } })
         .limit(limit).skip(page * limit)
         .sort({ creationDate: 'desc' })
-        .populate({ path: 'comment', options: { sort: { creationDate: 'desc' }, populate: { path: 'userId', select: ' avatar displayName _id' } } })
+        .populate({ path: 'comment', options: { limit: 5, skip: 0, sort: { creationDate: 'desc' }, populate: { path: 'userId', select: ' avatar displayName _id' } } })
         .populate({ path: 'like', populate: { path: 'userId', select: ' avatar displayName _id' }, })
         .populate({ path: 'userId', select: ' avatar displayName _id' })
 

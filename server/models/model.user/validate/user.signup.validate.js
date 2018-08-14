@@ -9,6 +9,7 @@ const { body, params, query, headers } = {
     email: Joi.string().email().required(),
     username: Joi.string().required(),
     password: Joi.string().required(),
+    verificationPassword: Joi.string().required(),
     signupDate: Joi.date().optional(),
     lastLogin: Joi.date(),
     state: Joi.boolean().optional(),

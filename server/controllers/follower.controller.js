@@ -55,10 +55,14 @@ export default {
 
     try {
 
-      const response = await followerModel.find({ userId: req.params.userId })
+      const response = await followerModel
+        .find({ userId: req.params.userId })
         .populate({ path: 'followerId', select: '-password -state' })
 
-      const total = await followerModel.find({ userId: req.params.userId }).count()
+      const total = await followerModel
+        .find({ userId: req.params.userId })
+        .countDocuments()
+
       return res.status(200).send({ response, total })
 
 
@@ -74,10 +78,14 @@ export default {
 
     try {
 
-      const response = await followerModel.find({ followerId: req.params.userId })
+      const response = await followerModel
+        .find({ followerId: req.params.userId })
         .populate({ path: 'userId', select: '-password -state' })
 
-      const total = await followerModel.find({ followerId: req.params.userId }).count()
+      const total = await followerModel
+        .find({ followerId: req.params.userId })
+        .countDocuments()
+
       return res.status(200).send({ response, total })
 
 

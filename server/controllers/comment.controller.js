@@ -12,12 +12,12 @@ export default {
       req.body.creationDate = Date.now()
       const response = await commentModel.insertMany(req.body)
       const { publicationId } = req.body
-      const commentsNum = await publicationModel.findOne({ _id: publicationId })
+
       const x = await publicationModel.findOneAndUpdate(
         { _id: publicationId },
         {
           $push: { comment: response[0] },
-          $set: { totalComment: commentsNum.comment.length }
+          $inc: { totalComment: 1 }
         }
         , { new: true })
 
@@ -33,10 +33,17 @@ export default {
 
     try {
 
-      const publicationId = req.params.publicationId
+      const publicationId = req.params.id
       const page = req.query.page
-      const response = await commentModel.find({ publicationId })
-        .populate({ path: 'userId', select: ' avatar displayName _id' }).limit(5).skip(page * 5)
+      const response = await commentModel
+        .find({ publicationId })
+        .populate({
+          path: 'userId',
+          select: ' avatar displayName _id'
+        })
+        .limit(5)
+        .skip(page * 5)
+        .sort({ creationDate: 'desc' })
 
       return res.status(200).send(response)
 

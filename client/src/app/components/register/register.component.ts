@@ -9,31 +9,84 @@ import { LoginService } from '../../services/login.service';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private userService: UserService, private loginService: LoginService) { }
+  validForm: any;
+  viewdata_password = 'Ingresa una contraseña';
+  viewdata_username = 'Ingresa un nombre de usuario';
+  viewdata_email = 'Ingresa un correo electrónico';
 
-  ngOnInit() {
-
+  constructor(private userService: UserService, private loginService: LoginService) {
+    this.InitialValidationForm();
   }
+
+  ngOnInit() { }
 
   Register(dataForm) {
 
-    let user = dataForm.value;
+    if (this.InvalidValidation(dataForm.value)) {
 
-    if (user.email != user.Verificationemail || user.password != user.Verificationpassword)
-      return;
+      let user = dataForm.value;
 
-    user.providerId = 'email.com';
-    user.avatar = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
-    delete user.Verificationemail;
-    delete user.Verificationpassword;
+      if (dataForm.value.password !== dataForm.value.verificationPassword) {
+        this.validForm['password'] = true
+        this.validForm['verificationPassword'] = true
+        this.viewdata_password = 'Las contraseñas no coinciden.'
+        return;
+      }
 
-    this.loginService.RegisterUser(user).subscribe(res => {
-      document.getElementById('showNotification').click()
-    }, err => {
-      console.log(err)
-    });
+      user.providerId = 'email.com';
+      user.avatar = 'https://image.ibb.co/dw49o9/user_2517433_640.png';
 
-    dataForm.reset();
+      this.loginService.RegisterUser(user).subscribe(res => {
+
+        if (res.email) {
+          this.validForm['email'] = true
+          this.viewdata_email = 'Este correo electrónico ya existe.'
+        }
+
+        if (res.username) {
+          this.validForm['username'] = true
+          this.viewdata_username = 'Este usuario ya existe.'
+        }
+
+        if (res.success){
+          document.getElementById('showNotification').click()
+          dataForm.reset();
+        }
+
+      }, err => {
+        console.error(err)
+      });
+
+    }
+  }
+
+  InitialValidationForm() {
+    this.validForm = {
+      verificationPassword: false,
+      displayName: false,
+      email: false,
+      password: false,
+      username: false
+    }
+  }
+
+  Change(event, value, type) {
+    this.validForm[type] = value.length == 0 ? true : false;
+  }
+
+  InvalidValidation(json) {
+
+    let flag = true;
+
+    for (let key in json) {
+      if (json[key] === "") {
+        this.validForm[key] = true;
+        flag = false;
+      }
+    }
+
+    return flag;
+
   }
 
 }

@@ -19,11 +19,11 @@ export class PublicationService {
     return this.http.post(`${this.url}/publication`, publication, { headers: this.headers });
   }
 
-  public GetPublicationByUserId(userId, page): Observable<any> {
+  public GetPublicationByUserId(userId, page = 0): Observable<any> {
     return this.http.get(`${this.url}/publication/${userId}?page=${page}`, { headers: this.headers });
   }
 
-  public GetPublicationFollowersByUserId(userId, page): Observable<any> {
+  public GetPublicationFollowersByUserId(userId, page = 0): Observable<any> {
     return this.http.get(`${this.url}/publication/followers/${userId}?page=${page}`, { headers: this.headers });
   }
 

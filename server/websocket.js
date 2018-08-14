@@ -24,6 +24,11 @@ io.on('connection', socket => {
                 break
             }
 
+            case 'dislike': {
+                io.emit('ALL_NOTIFICATIONS', res)
+                break
+            }
+
             case 'comment': {
           
                 io.emit('ALL_NOTIFICATIONS', res)

@@ -11,17 +11,42 @@ export default {
 
     try {
 
-      utilities.EncryptPassword(req)
-      const user = await userModel.insertMany(req.body)
+      let validateResponse = { email: false, username: false }
 
-      /*
-        if (user.length > 0)
-          sendemail.SendEmail(user[0])
-      */
+      const { email, username } = req.body
 
-      return res.status(200).send({
-        message: 'Verifica tu cuenta en el link que te enviamos por correo electrónico'
+      let find = await userModel.find({
+        $or: [
+          { email },
+          { username }
+        ]
       })
+
+      if (find.length === 0) {
+
+        delete req.body.verificationPassword
+        utilities.EncryptPassword(req)
+        const user = await userModel.insertMany(req.body)
+        // sendemail.SendEmail(user[0])
+
+        return res.status(200).send({
+          message: 'Verifica tu cuenta en el link que te enviamos por correo electrónico.',
+          success: true
+        })
+
+      }
+
+      find.forEach(user => {
+
+        if (user.email === email)
+          validateResponse.email = true
+
+        if (user.username === username)
+          validateResponse.username = true
+
+      })
+
+      return res.status(200).send(validateResponse)
 
     } catch (error) {
 
@@ -72,11 +97,12 @@ export default {
 
       return res.status(403).send({
         code: 25,
-        status: 403
+        status: 404
       })
 
     } catch (error) {
       return res.status(404).send({
+        code: 25,
         status: 404
       })
     }
