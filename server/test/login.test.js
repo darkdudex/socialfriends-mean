@@ -3,13 +3,16 @@
 import chai from 'chai'
 import chaiHttp from 'chai-http'
 import server from '../app'
+
+const beautify = require("json-beautify")
 const should = chai.should()
 const assert = chai.assert
+
 chai.use(chaiHttp)
 
 describe('Login Controller Test', () => {
 
-  after(done => process.exit(0))
+  let should = chai.should()
 
   it('[SignUp]', (done) => {
 
@@ -27,7 +30,7 @@ describe('Login Controller Test', () => {
 
         try {
           res.should.have.status(200)
-          res.should.be.json
+          console.log(beautify(res.body, null, 2, 100))
           done()
         } catch (err) {
           done(err)
@@ -47,13 +50,10 @@ describe('Login Controller Test', () => {
       })
       .end((err, res) => {
 
-        try {
-          res.should.have.status(200)
-          res.should.be.json
-          done()
-        } catch (err) {
-          done(err)
-        }
+        if (err) done(err)
+        res.should.have.status(200)
+        console.log(beautify(res.body, null, 2, 100))
+        done()
 
       })
 

@@ -10,31 +10,9 @@ const io = new SocketIO(server);
 
 io.on('connection', socket => {
 
-    socket.on('ALL_NOTIFICATIONS', res => {
-        
-        switch (res.option) {
-
-            case 'follower': {
-                io.emit('ALL_NOTIFICATIONS', res)
-                break
-            }
-
-            case 'like': {
-                io.emit('ALL_NOTIFICATIONS', res)
-                break
-            }
-
-            case 'dislike': {
-                io.emit('ALL_NOTIFICATIONS', res)
-                break
-            }
-
-            case 'comment': {
-          
-                io.emit('ALL_NOTIFICATIONS', res)
-                break
-            }
-        }
+    socket.on('ALL_NOTIFICATIONS', res => {    
+        console.log(res)  
+        io.emit('ALL_NOTIFICATIONS', res)               
     })
 })
 
