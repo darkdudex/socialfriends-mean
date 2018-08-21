@@ -1,7 +1,7 @@
 'use strict'
 
 import publicationController from '../controllers/publication.controller'
-import publicationValidate from '../models/model.publication/publication.validate'
+import publicationValidate from '../models/publication/publication.validate'
 import auth from '../auth/auth'
 
 import { errors } from 'celebrate'

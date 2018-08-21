@@ -6,20 +6,22 @@ import { config } from '../app.config';
 @Injectable()
 export class LoginService {
 
-  public url: string = config.url;
+  private url: string = config.url;
+  private headers: HttpHeaders;
 
   constructor(private http: HttpClient) {
+  
+    this.headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
 
   }
 
   public Login(account_and_password): Observable<any>  {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post(`${this.url}/signin`, account_and_password, { headers: headers });
+    return this.http.post(`${this.url}/signin`, account_and_password, { headers: this.headers });
   }
 
   public RegisterUser(user): Observable<any> {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post(`${this.url}/signup`, user, { headers: headers });
+    return this.http.post(`${this.url}/signup`, user, { headers: this.headers });
   }
 
 }

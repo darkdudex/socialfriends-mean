@@ -1,7 +1,7 @@
 'use strict'
 
 import loginController from '../controllers/login.controller'
-import userValidate from '../models/model.user/user.validate'
+import userValidate from '../models/user/user.validate'
 import auth from '../auth/auth'
 
 import { errors } from 'celebrate'

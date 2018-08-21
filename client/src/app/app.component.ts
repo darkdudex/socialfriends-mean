@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketService } from './services/socket.service';
 import { Ng2IzitoastService } from 'ng2-izitoast';
-
 import * as AOS from 'aos';
 import { Router } from '@angular/router';
 import { Store } from '../../node_modules/@ngrx/store';
-
 
 @Component({
   selector: 'app-root',
@@ -25,32 +23,30 @@ export class AppComponent implements OnInit {
   }
 
   RedirectInit(user) {
-    if (user == null)
+    if (user === null)
       this.router.navigate(['/login'])
     else
       this.router.navigate(['/home'])
   }
 
   ngOnInit() {
-
     this.user = JSON.parse(localStorage.getItem('user'));
     AOS.init();
     this.AllEvents();
-
   }
 
-  IziToast(user, avatar, msj, bColor) {
+  IziToast(user, msj, bColor) {
 
     this.iziToast.show({
       id: 'haduken',
       theme: 'dark',
-      title: user,
+      title: user.displayName,
       message: msj,
       position: 'bottomLeft',
       transitionIn: 'flipInX',
       transitionOut: 'flipOutX',
       progressBarColor: 'rgb(0, 255, 184)',
-      image: avatar,
+      image: user.avatar,
       imageWidth: 70,
       layout: 2,
       backgroundColor: bColor,
@@ -66,27 +62,19 @@ export class AppComponent implements OnInit {
 
   AllEvents() {
 
-    
     this.socketservice.onSocket().subscribe(res => {
+
+      const user = {
+        displayName: res.user.displayName,
+        avatar: res.user.avatar
+      }
 
       switch (res.option) {
 
         case "follower": {
 
           if (res.data.followerId === this.user._id) {
-
-            const user = {
-              displayName: res.user.displayName,
-              avatar: res.user.avatar
-            }
-
-            this.IziToast(
-              user.displayName,
-              user.avatar,
-              'Te ha seguido.',
-              '#0275D8'
-            )
-
+            this.IziToast(user, 'Te ha seguido.', '#0275D8')
           }
           break;
         }
@@ -97,17 +85,8 @@ export class AppComponent implements OnInit {
 
             if (res.data.userId === this.user._id) return;
 
-            const user = {
-              displayName: res.user.displayName,
-              avatar: res.user.avatar
-            }
-
-            this.IziToast(
-              user.displayName,
-              user.avatar,
-              'Te ha dado un like.',
-              '#D9534F'
-            )
+            this.IziToast(user, 'Te ha dado un like.', '#D9534F')
+            
           }
         }
       }

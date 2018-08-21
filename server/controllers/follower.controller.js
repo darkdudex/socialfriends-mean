@@ -5,7 +5,7 @@
     Tengo que añadir paginación a algunas peticiones.
 */
 
-import followerModel from '../models/model.follower/follower.model'
+import followerModel from '../models/follower/follower.model'
 
 export default {
 

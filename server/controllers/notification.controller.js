@@ -1,6 +1,6 @@
 'use strict'
 
-import notificationModel from '../models/model.notification/notification.model'
+import notificationModel from '../models/notification/notification.model'
 
 export default {
 

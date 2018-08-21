@@ -15,7 +15,10 @@ const FollowerSchema = new Schema({
     ref: 'User',
     required: [true, 'Required field']
   },
-  followDate: { type: Date, default: Date.now() }
+  followDate: {
+    type: Date,
+    default: Date.now()
+  }
 }, { versionKey: false })
 
 export default config.mongoose.model('Follower', FollowerSchema)

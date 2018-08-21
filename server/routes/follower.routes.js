@@ -1,7 +1,7 @@
 'use strict'
 
 import followerController from '../controllers/follower.controller'
-import followerValidate from '../models/model.follower/follower.validate'
+import followerValidate from '../models/follower/follower.validate'
 import auth from '../auth/auth'
 
 import { errors } from 'celebrate'

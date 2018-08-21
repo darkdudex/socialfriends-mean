@@ -29,7 +29,11 @@ export class UserService {
   }
 
   public GetUserById(userId): Observable<any> {
-    return this.http.get<User>(`${this.url}/user/${userId}`, { headers: this.headers });
+    return this.http.get<User>(`${this.url}/user/id/${userId}`, { headers: this.headers });
+  }
+
+  public GetUserByUsername(username): Observable<any> {
+    return this.http.get<User>(`${this.url}/user/username/${username}`, { headers: this.headers });
   }
 
 }

@@ -3,7 +3,8 @@
   "version": "3.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0 --port 4200",
+    "start": "node server.js",
+    "dev": "ng serve --host 0.0.0.0 --port 4200",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -33,6 +34,8 @@
     "angularfire2": "^5.0.0-rc.11",
     "aos": "^2.3.3",
     "core-js": "^2.5.4",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
     "firebase": "^5.3.1",
     "moment": "^2.22.1",
     "ng2-izitoast": "^2.0.0",

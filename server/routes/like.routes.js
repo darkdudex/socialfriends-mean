@@ -1,7 +1,7 @@
 'use strict'
 
 import likeController from '../controllers/like.controller'
-import likeValidate from '../models/model.like/like.validate'
+import likeValidate from '../models/like/like.validate'
 import auth from '../auth/auth'
 
 import { errors } from 'celebrate'

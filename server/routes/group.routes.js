@@ -1,7 +1,7 @@
 'use strict'
 
 import groupController from '../controllers/group.controller'
-import groupValidate from '../models/model.group/group.validate'
+import groupValidate from '../models/group/group.validate'
 import auth from '../auth/auth'
 
 import { errors } from 'celebrate'

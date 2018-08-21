@@ -7,19 +7,21 @@ import { User } from '../models/user.model';
 @Injectable()
 export class GroupService {
 
-  public url: string = config.url;
-  public headers: HttpHeaders;
+  private url: string = config.url;
+  private headers: HttpHeaders;
+  private token: string;
 
-  constructor(
-    private http: HttpClient
-  ) {
+  constructor(private http: HttpClient) {
+
+    this.token = localStorage.getItem('token')
 
     this.headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
-      .set('Authorization', localStorage.getItem('token'));
+      .set('Authorization', this.token);
+
   }
 
-  public AddGroup(data): Observable<any> {
+  public AddGroup(data: any): Observable<any> {
     return this.http.post(`${this.url}/group`, data, { headers: this.headers });
   }
 

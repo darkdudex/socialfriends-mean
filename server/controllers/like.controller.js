@@ -1,7 +1,7 @@
 'use strict'
 
-import likeModel from '../models/model.like/like.model'
-import publicationModel from '../models/model.publication/publication.model'
+import likeModel from '../models/like/like.model'
+import publicationModel from '../models/publication/publication.model'
 import beautify from 'json-beautify'
 
 export default {

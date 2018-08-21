@@ -1,6 +1,6 @@
 'use strict'
 
-import groupModel from '../models/model.group/group.model'
+import groupModel from '../models/group/group.model'
 
 export default {
 

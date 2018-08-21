@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { config } from '../app.config';
 
 const SERVER_URL = config.url.replace('/api', '');
-
 import * as io from 'socket.io-client';
 
 @Injectable()
@@ -21,7 +20,7 @@ export class SocketService {
   }
   
   onSocket(): Observable<any> {
-    let observable = new Observable(observer => {
+    return new Observable(observer => {
       this.socket = io(this.url);
       this.socket.on('ALL_NOTIFICATIONS', (data) => {
         observer.next(data);    
@@ -30,7 +29,6 @@ export class SocketService {
         this.socket.disconnect();
       };  
     })     
-    return observable;
   } 
 
   public AddFollower(data, user): void {

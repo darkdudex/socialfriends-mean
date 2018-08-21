@@ -1,6 +1,6 @@
 'use strict'
 
-import userModel from '../models/model.user/user.model'
+import userModel from '../models/user/user.model'
 import utilities from '../utilities/utilities'
 
 export default {
@@ -100,6 +100,9 @@ export default {
         .findOne({ _id: id })
         .select(['-password'])
 
+      if (user === null)
+        return res.status(200).send({ data: 'User not found' })
+
       return res.status(200).send(user)
 
     } catch (error) {
@@ -112,11 +115,14 @@ export default {
 
     try {
 
-      const username = req.params.username
+      const username = req.params.id
 
       const user = await userModel
         .findOne({ username: username })
         .select(['-password'])
+
+      if (user === null)
+        return res.status(200).send({ data: 'User not found' })
 
       return res.status(200).send(user)
 

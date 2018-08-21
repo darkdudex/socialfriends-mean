@@ -15,7 +15,6 @@ const GetItemsToRegularExpression = (regex, value) => {
 }
 
 
-
 export default {
 
   EncodePassword:(password) => {

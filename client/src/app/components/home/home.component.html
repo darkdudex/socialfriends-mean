@@ -96,13 +96,13 @@
 
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-lg-12 text-center">
 
-                    <img class="profile-img" [src]="userPublication.userId[0].avatar" class="rounded-circle" height="60" width="60" style="border: 2px solid #D8D8D8; margin-top: -40px">
+                    <img class="profile-img" [src]="userPublication.userId.avatar" class="rounded-circle" height="60" width="60" style="border: 2px solid #D8D8D8; margin-top: -40px">
 
                   </div>
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-lg-12">
 
                     <h5 href="#" class="text-xl-center text-lg-center text-md-center text-center">
-                      <b>{{userPublication.userId[0].displayName}} {{userPublication?.length}}</b>
+                      <b>{{userPublication.userId.displayName}} {{userPublication?.length}}</b>
                     </h5>
                     <p class="text-muted text-xl-center text-lg-center text-md-center text-center" style="font-size: 11px; margin-top: -5px">
                       {{userPublication.creationDate | amTimeAgo}}
@@ -222,7 +222,7 @@
                             <div id="like_{{userPublication._id}}" class="media" style="cursor: pointer">
                               <h1></h1>
                               <img class="d-flex mr-3" src="{{p(listPublications[i].like,user._id) ? 'assets/img/svg/456115.svg' : 'assets/img/svg/456257.svg'}}"
-                                style="width: 25px" align="right" (click)="Like_And_Unlike(userPublication._id,userPublication.userId[0]._id)">
+                                style="width: 25px" align="right" (click)="Like_And_Unlike(userPublication._id,userPublication.userId._id)">
                             </div>
 
                           </div>

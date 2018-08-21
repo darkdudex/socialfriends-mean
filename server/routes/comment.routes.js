@@ -1,7 +1,7 @@
 'use strict'
 
 import commentController from '../controllers/comment.controller'
-import commentValidate from '../models/model.comment/comment.validate'
+import commentValidate from '../models/comment/comment.validate'
 import auth from '../auth/auth'
 
 import { errors } from 'celebrate'

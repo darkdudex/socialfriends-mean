@@ -6,15 +6,20 @@ import { config } from '../app.config';
 @Injectable()
 export class FileService {
 
-  public url: string = config.url;
-  public headers: HttpHeaders;
+  private url: string = config.url;
+  private headers: HttpHeaders;
+  private token: string;
 
   constructor(private http: HttpClient) {
+
+    this.token = localStorage.getItem('token')
+    
     this.headers = new HttpHeaders()
-      .set('Authorization', localStorage.getItem('token'));
+      .set('Authorization', this.token);
+
   }
 
-  public AddFile(files: Array<File>, userId, folderName) {
+  public AddFile(files: Array<File>, userId, folderName): Observable<any> {
 
     const formData: any = new FormData();
 

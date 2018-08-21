@@ -4,7 +4,7 @@ import mongoose from './mongoose'
 
 const url = {
   localhost: 'http://localhost:3000',
-  laptop: 'http://192.168.1.66:3000',
+  laptop: 'http://192.168.1.59:3000',
   heroku: 'https://socialfriends-restapi.herokuapp.com'
 }
 

@@ -13,6 +13,9 @@ import { LikeService } from '../../services/like.service';
 import { Store } from '@ngrx/store';
 import { ModalShow, ModalHide } from '../../ngrx/actions/modal.actions';
 import { NgProgress } from '@ngx-progressbar/core';
+import { NotificationService } from '../../services/notification.service';
+import { _AddComment } from '../../ngrx/actions/comment.actions';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'userprofile',
@@ -23,9 +26,8 @@ export class UserProfileComponent implements OnInit {
 
   public listPublications: Array<any> = []
   public listComments: Array<any> = []
-
-  public userinsession: any = {};
   public user: any = {}
+  public userinsession: any = {};
   public page = 1;
   public page2 = 1;
   public finished: boolean = true;
@@ -49,6 +51,7 @@ export class UserProfileComponent implements OnInit {
 
   t(array) {
     this.clickDynamicArrayLoad = array
+    console.log(this.clickDynamicArrayLoad)
   }
 
   p(likeArray, userId) {
@@ -58,15 +61,16 @@ export class UserProfileComponent implements OnInit {
 
   FollowsModal(value) {
 
+
     switch (value) {
-      case 'pfollower': {
+      case 'follower': {
         if (this.followerTotal > 0)
-          this.store.dispatch(new ModalShow('pfollower'));
+          this.store.dispatch(new ModalShow('follower'));
         break;
       }
-      case 'pfollowing': {
+      case 'following': {
         if (this.followingTotal > 0)
-          this.store.dispatch(new ModalShow('pfollowing'));
+          this.store.dispatch(new ModalShow('following'));
         break;
       }
     }
@@ -83,25 +87,81 @@ export class UserProfileComponent implements OnInit {
     public iziToast: Ng2IzitoastService,
     private store: Store<any>,
     public progress: NgProgress,
+    private notificationService: NotificationService,
+    public socketservice: SocketService,
     private activeRoute: ActivatedRoute
   ) {
     this.userinsession = JSON.parse(localStorage.getItem('user'));
     this.GetUserProfile();
+  
+
+    this.socketservice.onSocket().subscribe(res => {
+
+      if (res.option === 'comment') {
+        this.NewCommentRealTime(res)
+      }
+
+      if (res.option === 'like') {
+        this.NewLikeRealTime(res)
+      }
+
+      if (res.option === 'dislike') {
+        this.NewDisLikeRealTime(res)
+      }
+
+    })
+
   }
 
   GetUserProfile() {
     this.activeRoute.params.subscribe(params => {
-      this.userService.GetUserById(params.userId).subscribe(
+      this.userService.GetUserByUsername(params.username).subscribe(
         res => {
           this.user = res;
-          this.GetPublicationByUserId();
           this.GetFollowerByUserId();
           this.GetFollowingByUserId();
+          this.GetPublicationByUserId();
+          this.GetPublicationByFollowerUserId();
         },
         err => {
           console.log(err)
         })
     })
+  }
+
+  NewCommentRealTime(res) {
+    this.listPublications.forEach(item => {
+
+      if (item._id === res.data.publicationId[0]) {
+        item.comment.unshift(res.data)
+        item.totalComment += 1
+      }
+
+    })
+  }
+
+  NewLikeRealTime(res) {
+
+    this.listPublications.forEach(item => {
+
+      if (item._id === res.data.publicationId) {
+        item.totalLike += 1
+      }
+
+    })
+
+  }
+
+  NewDisLikeRealTime(res) {
+
+    this.listPublications.forEach(item => {
+
+      if (item._id === res.data.publicationId) {
+        item.totalLike -= 1
+      }
+
+    })
+
   }
 
   ngOnInit() {
@@ -114,6 +174,24 @@ export class UserProfileComponent implements OnInit {
       console.log(err)
     })
   }
+
+  options = {
+    min: 8,
+    max: 100,
+    ease: 'linear',
+    speed: 200,
+    trickleSpeed: 300,
+    meteor: true,
+    spinner: true,
+    spinnerPosition: 'left',
+    direction: 'ltr+',
+    color: '#DC3545',
+    thick: true,
+  };
+
+  startedClass = false;
+  completedClass = false;
+  preventAbuse = false;
 
   GetFollowerByUserId() {
     this.followerService.GetFollowerByUserId(this.user._id).subscribe(
@@ -142,11 +220,78 @@ export class UserProfileComponent implements OnInit {
   onScroll() {
     this.page++;
     this.GetPublicationByUserId();
+    this.GetPublicationByFollowerUserId();
   }
 
   onScroll2() {
     this.page2++;
     this.GetFollowerByUserId();
+  }
+
+  Files(event: any) {
+    this.filesToUpload = Array.from(event.target.files);
+  }
+
+  public AddPublication(dataForm) {
+
+    let publication = dataForm.value
+
+    let user = [{
+      avatar: this.user.avatar,
+      _id: this.user._id,
+      displayName: this.user.displayName
+    }]
+
+    publication.userId = this.user._id
+
+    /* Si el usuario publica solo mensaje (sin imágen o vídeo) */
+    if (this.filesToUpload.length == 0) {
+
+      if (publication.message != null) {
+
+        publication.filePublication = []
+
+        this.publicationService.AddPublication(publication).subscribe(
+          res => {
+
+            res[0].userId = user
+            // this.listPublications.unshift(res[0])
+            dataForm.reset();
+          },
+          err => {
+            console.log(err.error)
+          })
+      }
+
+    } else {
+
+      this.progress.start()
+
+      this.fileService.AddFile(this.filesToUpload, this.user._id, 'publications').subscribe(
+        res => {
+
+          publication.filePublication = res
+
+          this.publicationService.AddPublication(publication).subscribe(
+            res => {
+              res[0].userId = user
+              this.listPublications.unshift(res[0])
+              dataForm.reset();
+              this.filesToUpload = [];
+              this.progress.complete()
+            },
+            err => {
+              console.log(err)
+            })
+
+        },
+        err => {
+          console.log(err)
+        }
+      )
+
+    }
+
   }
 
   public GetPublicationByUserId() {
@@ -173,6 +318,21 @@ export class UserProfileComponent implements OnInit {
       })
   }
 
+  public GetPublicationByFollowerUserId() {
+
+    this.publicationService.GetPublicationFollowersByUserId(this.user._id, this.page).subscribe(
+      res => {
+
+        res.publications.forEach(publication => {
+          this.listPublications.push(publication)
+        })
+
+      },
+      err => {
+        console.log(err)
+      })
+  }
+
   public AddComment(event, id, pos) {
 
     const body = {
@@ -188,12 +348,14 @@ export class UserProfileComponent implements OnInit {
 
           let response = res
           delete response.userId
+
           response.userId = {
             avatar: this.userinsession.avatar,
             displayName: this.userinsession.displayName
           }
 
-          this.listPublications[pos].comment.unshift(response)
+          //this.listPublications[pos].comment.unshift(response)
+          this.socketservice.AddComment(response, this.userinsession)
           this.message = null
         },
         err => {
@@ -204,27 +366,53 @@ export class UserProfileComponent implements OnInit {
   }
 
 
-  public AddLike(data) {
+  SeeMoreComments(event,index,publicationId) {   
+    
+    let indexPage = this.listPublications[index].indexCommentPagination++;
+
+    this.commentService.GetCommentByPublicationId(indexPage, publicationId).subscribe(
+      res => {
+        const newArray = this.listPublications[index].comment.concat(res)
+        this.listPublications[index].comment = newArray
+      },
+      err => {
+        console.log(err)
+      })
+  }
+
+  public AddLike(data, pubUserId) {
     this.likeService.AddLike(data).subscribe(
       res => {
- 
+        this.socketservice.AddLike(data, pubUserId, this.userinsession);
       },
       err => {
         console.log(err)
       })
   }
 
-  public RemoveLike(data) {
+  public AddNotification(toUserId, message) {
+
+    if (toUserId === this.user._id) return;
+
+    return this.notificationService.AddNotification({
+      description: message,
+      userFromNotification: this.user._id,
+      userToNotification: toUserId
+    })
+
+  }
+
+  public RemoveLike(data, pubUserId) {
     this.likeService.RemoveLike(data).subscribe(
       res => {
- 
+        this.socketservice.RemoveLike(data, pubUserId, this.userinsession);
       },
       err => {
         console.log(err)
       })
   }
 
-  public Like_And_Unlike(pubId) {
+  public Like_And_Unlike(pubId, pubUserId) {
 
     let x = document.getElementById(`like_${pubId}`)
 
@@ -240,10 +428,10 @@ export class UserProfileComponent implements OnInit {
 
     if (x.innerHTML.includes(src.unlike)) {
       x.querySelector('img').src = src.like
-      this.AddLike(body)
+      this.AddLike(body, pubUserId)
     } else {
       x.querySelector('img').src = src.unlike
-      this.RemoveLike(body)
+      this.RemoveLike(body, pubUserId)
     }
 
   }
@@ -263,5 +451,29 @@ export class UserProfileComponent implements OnInit {
     )
     return likes
   }
-  
+
+  public GetPublicationByUserIdTEST2() {
+
+    this.publicationService.GetPublicationByUserId(this.user._id, this.page).subscribe(
+      res => {
+
+        this.publicationTotal = res.total
+
+        if (res.publications.length != 6)
+          this.finished = false
+
+        if (this.listPublications.length == 0) {
+          this.listPublications = res.publications;
+        } else {
+          res.publications.forEach(item => {
+            this.listPublications.push(item);
+          })
+        }
+
+      },
+      err => {
+        console.log(err)
+      })
+  }
+
 }

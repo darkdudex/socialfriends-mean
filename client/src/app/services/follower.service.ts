@@ -6,13 +6,18 @@ import { config } from '../app.config';
 @Injectable()
 export class FollowerService {
 
-  public url: string = config.url;
-  public headers: HttpHeaders;
+  private url: string = config.url;
+  private headers: HttpHeaders;
+  private token: string;
 
   constructor(private http: HttpClient) {
+
+    this.token = localStorage.getItem('token')
+    
     this.headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
-      .set('Authorization', localStorage.getItem('token'));
+      .set('Authorization', this.token);
+
   }
 
   public AddFollower(data): Observable<any> {

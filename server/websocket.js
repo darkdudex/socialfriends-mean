@@ -9,9 +9,7 @@ const server = http.Server(app);
 const io = new SocketIO(server);
 
 io.on('connection', socket => {
-
     socket.on('ALL_NOTIFICATIONS', res => {    
-        console.log(res)  
         io.emit('ALL_NOTIFICATIONS', res)               
     })
 })

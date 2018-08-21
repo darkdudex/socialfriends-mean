@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "my-sassy-app": {
+    "socialfriends": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/my-sassy-app",
+            "outputPath": "dist/socialfriends",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "my-sassy-app:build"
+            "browserTarget": "socialfriends:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "my-sassy-app:build:production"
+              "browserTarget": "socialfriends:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "my-sassy-app:build"
+            "browserTarget": "socialfriends:build"
           }
         },
         "test": {
@@ -107,7 +107,7 @@
         }
       }
     },
-    "my-sassy-app-e2e": {
+    "socialfriends-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -115,11 +115,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "my-sassy-app:serve"
+            "devServerTarget": "socialfriends:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "my-sassy-app:serve:production"
+              "devServerTarget": "socialfriends:serve:production"
             }
           }
         },
@@ -135,5 +135,5 @@
       }
     }
   },
-  "defaultProject": "my-sassy-app"
+  "defaultProject": "socialfriends"
 }

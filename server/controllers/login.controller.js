@@ -1,6 +1,6 @@
 'use strict'
 
-import userModel from '../models/model.user/user.model'
+import userModel from '../models/user/user.model'
 import service from '../auth/jwt'
 import utilities from '../utilities/utilities'
 import sendemail from '../utilities/send_email'

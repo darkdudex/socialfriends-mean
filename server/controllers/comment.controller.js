@@ -1,7 +1,7 @@
 'use strict'
 
-import commentModel from '../models/model.comment/comment.model'
-import publicationModel from '../models/model.publication/publication.model'
+import commentModel from '../models/comment/comment.model'
+import publicationModel from '../models/publication/publication.model'
 
 export default {
 

@@ -1,9 +1,9 @@
 'use strict'
 
-import publicationModel from '../models/model.publication/publication.model'
-import followerModel from '../models/model.follower/follower.model'
-import likeModel from '../models/model.like/like.model'
-import commentModel from '../models/model.comment/comment.model'
+import publicationModel from '../models/publication/publication.model'
+import followerModel from '../models/follower/follower.model'
+import likeModel from '../models/like/like.model'
+import commentModel from '../models/comment/comment.model'
 
 export default {
 

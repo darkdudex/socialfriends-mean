@@ -1,6 +1,6 @@
 'use strict'
 
-import chatModel from '../models/model.chat/chat.model'
+import chatModel from '../models/chat/chat.model'
 
 export default {
 

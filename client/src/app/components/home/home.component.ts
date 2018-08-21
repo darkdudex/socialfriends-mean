@@ -3,19 +3,26 @@ import { Router } from '@angular/router';
 
 import { HomeComponentLabel } from './home.label';
 
-import { Ng2IzitoastService } from 'ng2-izitoast';
+import { Publication } from '../../models/publication.model';
+import { User } from '../../models/user.model';
+import { Comment } from '../../models/comment.model';
+
 import { UserService } from '../../services/user.service';
 import { PublicationService } from '../../services/publication.service';
 import { CommentService } from '../../services/comment.service';
 import { FollowerService } from '../../services/follower.service';
 import { FileService } from '../../services/file.service';
 import { LikeService } from '../../services/like.service';
-import { Store } from '@ngrx/store';
-import { ModalShow, ModalHide } from '../../ngrx/actions/modal.actions';
-import { NgProgress } from '@ngx-progressbar/core';
+import { Ng2IzitoastService } from 'ng2-izitoast';
 import { NotificationService } from '../../services/notification.service';
-import { _AddComment } from '../../ngrx/actions/comment.actions';
 import { SocketService } from '../../services/socket.service';
+
+import { _AddComment } from '../../ngrx/actions/comment.actions';
+import { ModalShow, ModalHide } from '../../ngrx/actions/modal.actions';
+import { Store } from '@ngrx/store';
+
+import { NgProgress } from '@ngx-progressbar/core';
+import { Like } from '../../models/like.comment';
 
 @Component({
   selector: 'app-home',
@@ -24,56 +31,27 @@ import { SocketService } from '../../services/socket.service';
 })
 export class HomeComponent implements OnInit {
 
-  public listPublications: Array<any> = []
-  public listComments: Array<any> = []
-  public user: any = {}
-  public page = 1;
-  public page2 = 1;
-  public finished: boolean = true;
+  public listPublications: Array<Publication> = [];
+  public listComments: Array<Comment> = [];
   public filesToUpload: Array<any> = [];
-  public typeFiles = ['image', 'video'];
+  public finished: boolean = true;
+  public user: User
+  public page: number = 1;
+  public page2: number = 1;
+
+  public typeFiles: Array<string> = ['image', 'video'];
 
   public label = HomeComponentLabel.Spanish
 
   public publicationTotal: number;
-
-  public followerUser: Array<any> = [];
-  public followingUser: Array<any> = [];
+  public followerUser: Array<User> = [];
+  public followingUser: Array<User> = [];
   public followerTotal: number;
   public followingTotal: number;
-
-  public message: String;
-
+  public message: string;
   public stateModal: any
 
   public clickDynamicArrayLoad: Array<any> = []
-
-  t(array) {
-    this.clickDynamicArrayLoad = array
-    console.log(this.clickDynamicArrayLoad)
-  }
-
-  p(likeArray, userId) {
-    const x = likeArray.filter(item => item.userId._id == this.user._id)
-    return x.length > 0 ? true : false
-  }
-
-  FollowsModal(value) {
-
-
-    switch (value) {
-      case 'follower': {
-        if (this.followerTotal > 0)
-          this.store.dispatch(new ModalShow('follower'));
-        break;
-      }
-      case 'following': {
-        if (this.followingTotal > 0)
-          this.store.dispatch(new ModalShow('following'));
-        break;
-      }
-    }
-  }
 
   constructor(
     private userService: UserService,
@@ -97,23 +75,60 @@ export class HomeComponent implements OnInit {
 
     this.socketservice.onSocket().subscribe(res => {
 
-      if (res.option === 'comment') {
-        this.NewCommentRealTime(res)
-      }
+      switch (res.option) {
 
-      if (res.option === 'like') {
-        this.NewLikeRealTime(res)
-      }
+        case 'comment': {
+          this.NewCommentRealTime(res);
+          break;
+        }
 
-      if (res.option === 'dislike') {
-        this.NewDisLikeRealTime(res)
+        case 'like': {
+          this.NewLikeRealTime(res)
+          break;
+        }
+
+        case 'dislike': {
+          this.NewDisLikeRealTime(res)
+          break;
+        }
+
       }
 
     })
 
   }
 
+  t(array) {
+    this.clickDynamicArrayLoad = array
+    console.log(this.clickDynamicArrayLoad)
+  }
+
+  p(likeArray, userId) {
+    const x = likeArray.filter(item => item.userId._id == this.user._id)
+    return x.length > 0 ? true : false
+  }
+
+  FollowsModal(value) {
+
+    switch (value) {
+
+      case 'follower': {
+        if (this.followerTotal > 0)
+          this.store.dispatch(new ModalShow('follower'));
+        break;
+      }
+
+      case 'following': {
+        if (this.followingTotal > 0)
+          this.store.dispatch(new ModalShow('following'));
+        break;
+      }
+
+    }
+  }
+
   NewCommentRealTime(res) {
+
     this.listPublications.forEach(item => {
 
       if (item._id === res.data.publicationId[0]) {
@@ -184,6 +199,7 @@ export class HomeComponent implements OnInit {
         this.followerUser = res.response.map(item => {
           return item.followerId
         })
+        console.log(this.followerUser)
       }, err => {
         console.log(err)
       })
@@ -278,6 +294,7 @@ export class HomeComponent implements OnInit {
 
   }
 
+
   public GetPublicationByUserId() {
 
     this.publicationService.GetPublicationByUserId(this.user._id, this.page).subscribe(
@@ -350,8 +367,8 @@ export class HomeComponent implements OnInit {
   }
 
 
-  SeeMoreComments(event,index,publicationId) {   
-    
+  SeeMoreComments(event, index, publicationId) {
+
     let indexPage = this.listPublications[index].indexCommentPagination++;
 
     this.commentService.GetCommentByPublicationId(indexPage, publicationId).subscribe(
